@@ -23,3 +23,20 @@ Never edit an old entry; add a new one that supersedes it.
 
 ## D4: Stable `doc_id` = ATT&CK external ID
 - **Why:** every later stage (chunks, eval golden set, citations) references documents by this ID. If it changed on re-ingest, the eval set would break.
+
+## D5: Public corpus uses one tenant, `tenant_id = "attack"`
+- **Chose:** every ATT&CK document gets the same `tenant_id`.
+- **Rejected:** a nullable `tenant_id` meaning "public"; per-document tenants.
+- **Why:** a required, never-empty `tenant_id` means retrieval can always filter by it with no special case for null. Public data is just one more tenant.
+- **Cost:** sharing public docs across tenants later needs an explicit "also search tenant X" rule rather than a null match.
+
+## D6: Schema is a pydantic model that rejects unknown fields
+- **Chose:** `core.schema.Document` (pydantic v2, `extra="forbid"`, frozen, hash checked against text). Corpus-specific fields go in `metadata`.
+- **Rejected:** plain dicts / TypedDict (no runtime check); a dataclass (would need hand-written validation); one column per corpus field.
+- **Why:** bad documents fail at ingest time with a clear error instead of producing odd retrieval later. Pydantic is also what FastAPI uses in phase 3.
+- **Cost:** a runtime dependency in the core; `metadata` contents are not type-checked, so filters on metadata need their own tests.
+
+## D7: Real-data tests skip when the data isn't built
+- **Chose:** tests that read `data/processed/` call `pytest.skip` if the file is missing; a small hand-made bundle covers the logic always.
+- **Why:** CI stays fast and doesn't download 50 MB per run, while local runs after `make ingest` check all 2,530 real docs.
+- **Cost:** CI does not check the real bundle. Revisit in phase 2 when the eval CI job needs the data anyway.

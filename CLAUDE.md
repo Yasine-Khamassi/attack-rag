@@ -37,24 +37,24 @@ plug into. Corpus-specific code lives in `products/<name>/`.
 Do not start a phase until the previous gate passes.
 
 ## Current state (2026-10-29)
-- Phase 0 in progress.
-- Step 1 done: `src/ingest/attack.py` → `data/processed/attack_docs.jsonl` (2,530 docs: 706 techniques,
-  703 detection strategies, 842 software, 178 groups, 57 campaigns, 44 mitigations) and
-  `attack_relations.jsonl` (21,660 relationships).
+- **Phase 0 done** (gate passed: all 2,530 docs validate against `core.schema.Document`).
+- Step 1: ingestion → `data/processed/attack_docs.jsonl` (2,530 docs: 706 techniques, 703 detection strategies,
+  842 software, 178 groups, 57 campaigns, 44 mitigations) and `attack_relations.jsonl` (21,660 relationships).
+- Step 2: split into `core/` (shared `Document` schema, pydantic, rejects unknown fields, checks `content_hash`)
+  and `products/attack/ingest.py`. ATT&CK uses one tenant, `tenant_id = "attack"` (D5). 20 tests pass.
 - Finding: current ATT&CK has no `x_mitre_detection` field; detection lives in detection-strategy
   (DETxxxx) + analytic (ANxxxx) objects. Built separate detection docs (DECISIONS D3).
+- Dev machine (Windows) has no `make` and no Docker yet; run the Makefile commands directly until installed.
 
 ## Next step
-1. Restructure: move ingestion to `products/attack/ingest.py`; create `core/schema.py` with the shared
-   document model (`doc_id`, `tenant_id`, `source`, `type`, `title`, `text`, `url`, `metadata`, `content_hash`).
-2. Add `pyproject.toml`, a Makefile (`make ingest`, `make test`), and a test that the ATT&CK output validates
-   against the core schema.
-3. Then phase 1: Docker Compose with Postgres + pgvector. Before choosing the embedding model, run a small
-   test of 2–3 multilingual models (English technique IDs + Arabic sentences) and log the result.
+Phase 1, step 3: Docker Compose with Postgres + pgvector. Before choosing the embedding model, run a small
+test of 2–3 multilingual models (English technique IDs + Arabic sentences) and log the result.
 
 ## Stack
 Python 3.11+, Postgres + pgvector (Docker), rank_bm25 or Postgres full-text, Claude API, FastAPI, pytest,
 GitHub Actions.
 
 ## Commands
-- `python -m src.ingest.attack` — download ATT&CK and build processed docs (will move in the restructure)
+- `make install` — create `.venv` and install the package + pytest
+- `make ingest` — download ATT&CK (cached in `data/raw/`) and build `data/processed/*.jsonl`
+- `make test` — run pytest (real-data tests skip until `make ingest` has run)

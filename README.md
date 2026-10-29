@@ -37,8 +37,13 @@ _(filled in as the project goes)_
 ## Run it
 
 ```bash
-python -m src.ingest.attack     # step 1: download + build data/processed/*.jsonl
+make install    # once: .venv + package + dev tools
+make ingest     # download ATT&CK (cached) + build data/processed/*.jsonl
+make test
 ```
+
+Layout: `core/` is the reusable RAG core (document schema now; retrieval, eval and guardrails next).
+`products/attack/` is the ATT&CK-specific code.
 
 ## Project log
 
