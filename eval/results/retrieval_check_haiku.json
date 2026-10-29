@@ -143,25 +143,25 @@
       "n": 6,
       "hit@1": 0.5,
       "hit@5": 1.0,
-      "mrr@10": 0.75
+      "mrr@10": 0.722
      },
      "en": {
       "n": 8,
-      "hit@1": 0.5,
+      "hit@1": 0.875,
       "hit@5": 1.0,
-      "mrr@10": 0.729
+      "mrr@10": 0.938
      },
      "mixed": {
       "n": 6,
-      "hit@1": 0.833,
-      "hit@5": 0.833,
-      "mrr@10": 0.833
+      "hit@1": 1.0,
+      "hit@5": 1.0,
+      "mrr@10": 1.0
      },
      "all": {
       "n": 20,
-      "hit@1": 0.6,
-      "hit@5": 0.95,
-      "mrr@10": 0.767
+      "hit@1": 0.8,
+      "hit@5": 1.0,
+      "mrr@10": 0.892
      }
     }
    },
@@ -170,40 +170,88 @@
      "id": "s01",
      "lang": "en",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1047",
       "T1546.003",
-      "DET0364"
+      "DET0364",
+      "DET0477",
+      "T1564.006",
+      "T1210",
+      "T1053.005",
+      "T1557",
+      "T1219.003",
+      "T1554"
      ],
      "keyword": 2,
-     "keyword_top3": [
+     "keyword_strict": 2,
+     "keyword_top10": [
       "T1546.003",
       "T1047",
-      "DET0477"
+      "DET0477",
+      "T1216.001",
+      "T1574.014",
+      "DET0364",
+      "T1053.005",
+      "T1203",
+      "T1219.001",
+      "T1046"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1047",
       "T1546.003",
-      "DET0477"
+      "DET0477",
+      "DET0364",
+      "T1053.005",
+      "T1203",
+      "T1204",
+      "T1219.001",
+      "T1059.008",
+      "T1018"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1047",
       "T1546.003",
-      "DET0477"
+      "DET0477",
+      "DET0364",
+      "T1053.005",
+      "T1203",
+      "T1204",
+      "T1219.001",
+      "T1059.008",
+      "T1018"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1047",
       "T1546.003",
-      "DET0477"
+      "DET0477",
+      "DET0364",
+      "T1053.005",
+      "T1203",
+      "T1204",
+      "T1219.001",
+      "T1059.008",
+      "T1018"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1047",
       "DET0364",
-      "DET0477"
+      "DET0477",
+      "T1546.003",
+      "T1021",
+      "T1219",
+      "T1204",
+      "T1018",
+      "T1675",
+      "T1554"
      ],
      "translation": null
     },
@@ -211,40 +259,88 @@
      "id": "s02",
      "lang": "en",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1055",
       "DET0508",
-      "DET0203"
+      "DET0203",
+      "T1055.009",
+      "T1055.008",
+      "M1025",
+      "T1055.004",
+      "DET0300",
+      "DET0349",
+      "T1055.012"
      ],
      "keyword": 5,
-     "keyword_top3": [
+     "keyword_strict": 5,
+     "keyword_top10": [
       "T1218.013",
       "T1200",
-      "T1055.002"
+      "T1055.002",
+      "T1055.008",
+      "T1055",
+      "T1055.009",
+      "T1055.004",
+      "T1620",
+      "T1574.014",
+      "T1055.001"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1055",
       "T1055.008",
-      "T1055.009"
+      "T1055.009",
+      "T1055.004",
+      "T1055.002",
+      "T1620",
+      "T1055.012",
+      "M1025",
+      "T1055.001",
+      "T1218.013"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1055",
       "T1055.008",
-      "T1055.009"
+      "T1055.009",
+      "T1055.004",
+      "T1055.002",
+      "T1620",
+      "T1055.012",
+      "M1025",
+      "T1055.001",
+      "T1218.013"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1055",
       "T1055.008",
-      "T1055.009"
+      "T1055.009",
+      "T1055.004",
+      "T1055.002",
+      "T1620",
+      "T1055.012",
+      "M1025",
+      "T1055.001",
+      "T1218.013"
      ],
-     "+rerank": 2,
-     "+rerank_top3": [
-      "DET0433",
+     "+rerank": 1,
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "DET0508",
-      "DET0203"
+      "DET0203",
+      "DET0541",
+      "DET0106",
+      "DET0433",
+      "DET0300",
+      "DET0493",
+      "DET0597",
+      "M1025",
+      "M1040"
      ],
      "translation": null
     },
@@ -252,40 +348,88 @@
      "id": "s03",
      "lang": "en",
      "dense": 2,
-     "dense_top3": [
+     "dense_strict": 2,
+     "dense_top10": [
       "G1031",
       "G0007",
-      "G0035"
+      "G0035",
+      "G1003",
+      "G0137",
+      "G0011",
+      "G0010",
+      "G0016",
+      "G0022",
+      "G0034"
      ],
      "keyword": 1,
-     "keyword_top3": [
+     "keyword_strict": 1,
+     "keyword_top10": [
       "G0007",
       "G1031",
-      "G1003"
+      "G1003",
+      "G0034",
+      "G0089",
+      "G0016",
+      "G0046",
+      "G0010",
+      "G0055",
+      "T1218.014"
      ],
      "hybrid": 2,
-     "hybrid_top3": [
+     "hybrid_strict": 2,
+     "hybrid_top10": [
       "G1031",
       "G0007",
-      "G1003"
+      "G1003",
+      "G0034",
+      "G0016",
+      "G0010",
+      "G0035",
+      "G0003",
+      "G0047",
+      "G0017"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "G1031",
       "G0007",
-      "G1003"
+      "G1003",
+      "G0034",
+      "G0016",
+      "G0010",
+      "G0035",
+      "G0003",
+      "G0047",
+      "G0017"
      ],
      "+pin": 2,
-     "+pin_top3": [
+     "+pin_strict": 2,
+     "+pin_top10": [
       "G1031",
       "G0007",
-      "G1003"
+      "G1003",
+      "G0034",
+      "G0016",
+      "G0010",
+      "G0035",
+      "G0003",
+      "G0047",
+      "G0017"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "G0007",
+      "G0016",
       "G1031",
-      "G0016"
+      "G1003",
+      "G0034",
+      "G0010",
+      "G0035",
+      "G0003",
+      "G0047",
+      "G0017"
      ],
      "translation": null
     },
@@ -293,40 +437,88 @@
      "id": "s04",
      "lang": "en",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "S0154",
       "S0637",
-      "DET0852"
+      "DET0852",
+      "G0080",
+      "T1205",
+      "T1546.005",
+      "G0060",
+      "DET0065",
+      "DET0524",
+      "C0015"
      ],
      "keyword": 2,
-     "keyword_top3": [
+     "keyword_strict": 2,
+     "keyword_top10": [
       "G0080",
       "S0154",
-      "S1156"
+      "S1156",
+      "S1130",
+      "DET0250",
+      "G0079",
+      "C0015",
+      "S0637",
+      "DET0850",
+      "G0052"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "S0154",
       "G0080",
-      "S0637"
+      "S0637",
+      "S1156",
+      "C0015",
+      "DET0852",
+      "DET0850",
+      "G0143",
+      "T1071.004",
+      "S1138"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "S0154",
       "G0080",
-      "S0637"
+      "S0637",
+      "S1156",
+      "C0015",
+      "DET0852",
+      "DET0850",
+      "G0143",
+      "T1071.004",
+      "S1138"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "S0154",
       "G0080",
-      "S0637"
+      "S0637",
+      "S1156",
+      "C0015",
+      "DET0852",
+      "DET0850",
+      "G0143",
+      "T1071.004",
+      "S1138"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "S0154",
       "G0080",
-      "S1138"
+      "S0637",
+      "S1156",
+      "S1138",
+      "S1130",
+      "T1205",
+      "T1205.001",
+      "G0037",
+      "DET0524"
      ],
      "translation": null
     },
@@ -334,40 +526,88 @@
      "id": "s05",
      "lang": "en",
      "dense": 2,
-     "dense_top3": [
+     "dense_strict": 2,
+     "dense_top10": [
       "DET0016",
       "T1685",
-      "S1234"
+      "S1234",
+      "DET0497",
+      "T1480",
+      "T1679",
+      "T1486",
+      "G0121",
+      "S1029",
+      "T1687"
      ],
      "keyword": 2,
-     "keyword_top3": [
+     "keyword_strict": 2,
+     "keyword_top10": [
       "DET0497",
       "T1685",
-      "DET0016"
+      "DET0016",
+      "T1687",
+      "S1063",
+      "M1055",
+      "M1049",
+      "T1685.003",
+      "DET0293",
+      "DET0595"
      ],
      "hybrid": 2,
-     "hybrid_top3": [
+     "hybrid_strict": 2,
+     "hybrid_top10": [
       "DET0016",
       "T1685",
-      "DET0497"
+      "DET0497",
+      "T1687",
+      "DET0595",
+      "T1685.003",
+      "DET0189",
+      "T1480",
+      "T1686.003",
+      "S1234"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "DET0016",
       "T1685",
-      "DET0497"
+      "DET0497",
+      "T1687",
+      "DET0595",
+      "T1685.003",
+      "DET0189",
+      "T1480",
+      "T1686.003",
+      "S1234"
      ],
      "+pin": 2,
-     "+pin_top3": [
+     "+pin_strict": 2,
+     "+pin_top10": [
       "DET0016",
       "T1685",
-      "DET0497"
-     ],
-     "+rerank": 3,
-     "+rerank_top3": [
-      "DET0016",
       "DET0497",
-      "T1685"
+      "T1687",
+      "DET0595",
+      "T1685.003",
+      "DET0189",
+      "T1480",
+      "T1686.003",
+      "S1234"
+     ],
+     "+rerank": 2,
+     "+rerank_strict": 2,
+     "+rerank_top10": [
+      "DET0497",
+      "T1685",
+      "DET0016",
+      "T1685.003",
+      "DET0189",
+      "T1686.003",
+      "DET0289",
+      "DET0187",
+      "DET0595",
+      "T1687"
      ],
      "translation": null
     },
@@ -375,40 +615,88 @@
      "id": "s06",
      "lang": "en",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1567.002",
       "T1537",
-      "DET0484"
+      "DET0484",
+      "DET0570",
+      "DET0573",
+      "S0136",
+      "S9041",
+      "T1567.003",
+      "T1530",
+      "T1485"
      ],
      "keyword": 4,
-     "keyword_top3": [
+     "keyword_strict": 4,
+     "keyword_top10": [
       "T1041",
       "M1041",
-      "S1102"
+      "S1102",
+      "T1567.002",
+      "S9009",
+      "S0683",
+      "G1053",
+      "S0638",
+      "DET0590",
+      "T1530"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1567.002",
       "T1041",
-      "T1530"
+      "T1530",
+      "S1102",
+      "T1048",
+      "T1537",
+      "M1057",
+      "T1048.003",
+      "T1485",
+      "T1586.003"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1567.002",
       "T1041",
-      "T1530"
+      "T1530",
+      "S1102",
+      "T1048",
+      "T1537",
+      "M1057",
+      "T1048.003",
+      "T1485",
+      "T1586.003"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1567.002",
       "T1041",
-      "T1530"
+      "T1530",
+      "S1102",
+      "T1048",
+      "T1537",
+      "M1057",
+      "T1048.003",
+      "T1485",
+      "T1586.003"
      ],
-     "+rerank": 2,
-     "+rerank_top3": [
-      "DET0570",
+     "+rerank": 1,
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1567.002",
-      "T1567"
+      "T1537",
+      "S1040",
+      "S1102",
+      "T1530",
+      "S9041",
+      "T1041",
+      "T1048",
+      "T1567",
+      "T1567.003"
      ],
      "translation": null
     },
@@ -416,40 +704,88 @@
      "id": "s07",
      "lang": "en",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1110.001",
       "DET0551",
-      "T1110.003"
+      "T1110.003",
+      "DET0460",
+      "T1110.004",
+      "T1563",
+      "T1555.005",
+      "T1021.001",
+      "DET0079",
+      "T1558.004"
      ],
      "keyword": 1,
-     "keyword_top3": [
+     "keyword_strict": 1,
+     "keyword_top10": [
       "T1110.001",
       "T1110.003",
-      "DET0460"
+      "DET0460",
+      "DET0551",
+      "DET0354",
+      "T1021",
+      "T1110.004",
+      "DET0538",
+      "M1018",
+      "DET0487"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1110.001",
       "T1110.003",
-      "DET0551"
+      "DET0551",
+      "DET0460",
+      "T1110.004",
+      "T1021",
+      "DET0079",
+      "T1563",
+      "DET0538",
+      "T1021.001"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1110.001",
       "T1110.003",
-      "DET0551"
+      "DET0551",
+      "DET0460",
+      "T1110.004",
+      "T1021",
+      "DET0079",
+      "T1563",
+      "DET0538",
+      "T1021.001"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1110.001",
       "T1110.003",
-      "DET0551"
+      "DET0551",
+      "DET0460",
+      "T1110.004",
+      "T1021",
+      "DET0079",
+      "T1563",
+      "DET0538",
+      "T1021.001"
      ],
-     "+rerank": 2,
-     "+rerank_top3": [
-      "T1110.003",
+     "+rerank": 1,
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1110.001",
-      "T1110"
+      "T1110.003",
+      "T1110.004",
+      "DET0551",
+      "DET0460",
+      "DET0487",
+      "T1110",
+      "T1110.002",
+      "M1042",
+      "T1021"
      ],
      "translation": null
     },
@@ -457,40 +793,88 @@
      "id": "s08",
      "lang": "en",
      "dense": 2,
-     "dense_top3": [
+     "dense_strict": 2,
+     "dense_top10": [
       "M1018",
       "M1026",
-      "M1036"
+      "M1036",
+      "M1024",
+      "M1015",
+      "M1035",
+      "M1022",
+      "M1039",
+      "M1052",
+      "M1043"
      ],
      "keyword": 2,
-     "keyword_top3": [
+     "keyword_strict": 2,
+     "keyword_top10": [
       "M1018",
       "M1026",
-      "M1015"
+      "M1015",
+      "M1036",
+      "M1033",
+      "T1586.003",
+      "M1055",
+      "T1134.004",
+      "T1649",
+      "DET0465"
      ],
      "hybrid": 2,
-     "hybrid_top3": [
+     "hybrid_strict": 2,
+     "hybrid_top10": [
       "M1018",
       "M1026",
-      "M1036"
+      "M1036",
+      "M1015",
+      "M1033",
+      "M1024",
+      "M1055",
+      "M1027",
+      "M1035",
+      "M1052"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "M1018",
       "M1026",
-      "M1036"
+      "M1036",
+      "M1015",
+      "M1033",
+      "M1024",
+      "M1055",
+      "M1027",
+      "M1035",
+      "M1052"
      ],
      "+pin": 2,
-     "+pin_top3": [
+     "+pin_strict": 2,
+     "+pin_top10": [
       "M1018",
       "M1026",
-      "M1036"
+      "M1036",
+      "M1015",
+      "M1033",
+      "M1024",
+      "M1055",
+      "M1027",
+      "M1035",
+      "M1052"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "M1026",
       "M1018",
-      "M1036"
+      "M1027",
+      "M1052",
+      "M1035",
+      "M1015",
+      "M1036",
+      "M1032",
+      "M1033",
+      "M1024"
      ],
      "translation": null
     },
@@ -498,73 +882,155 @@
      "id": "s09",
      "lang": "ar",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1219",
       "S0336",
-      "T1219.003"
+      "T1219.003",
+      "T1105",
+      "T1653",
+      "T1588.005",
+      "T1210",
+      "T1203",
+      "T1176",
+      "T1127"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1219",
       "S0336",
-      "T1219.003"
+      "T1219.003",
+      "T1105",
+      "T1653",
+      "T1588.005",
+      "T1210",
+      "T1203",
+      "T1176",
+      "T1127"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "T1219.003",
       "T1219",
-      "T1203"
+      "T1203",
+      "T1219.002",
+      "T1210",
+      "T1105",
+      "T1176",
+      "S0336",
+      "T1653",
+      "T1563.002"
      ],
      "+pin": 2,
-     "+pin_top3": [
+     "+pin_strict": 2,
+     "+pin_top10": [
       "T1219.003",
       "T1219",
+      "T1203",
+      "T1219.002",
+      "T1210",
+      "T1105",
+      "T1176",
+      "S0336",
+      "T1653",
+      "T1563.002"
+     ],
+     "+rerank": 3,
+     "+rerank_strict": 3,
+     "+rerank_top10": [
+      "T1219.003",
+      "T1219.002",
+      "T1219",
+      "T1021.005",
+      "T1674",
+      "T1134",
+      "T1563.002",
+      "T1563",
+      "T1021",
       "T1203"
      ],
-     "+rerank": 2,
-     "+rerank_top3": [
-      "T1219.003",
-      "T1219",
-      "T1219.002"
-     ],
-     "translation": "How do attackers use legitimate remote control software to take control of devices?"
+     "translation": "How do attackers use legitimate remote access software to take control of devices?"
     },
     {
      "id": "s10",
      "lang": "ar",
      "dense": 2,
-     "dense_top3": [
+     "dense_strict": 2,
+     "dense_top10": [
       "S1178",
       "T1486",
-      "T1684.001"
+      "T1684.001",
+      "T1598",
+      "T1657",
+      "G0037",
+      "T1566",
+      "T1598.002",
+      "T1598.001",
+      "T1187"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": 2,
-     "hybrid_top3": [
+     "hybrid_strict": 2,
+     "hybrid_top10": [
       "S1178",
       "T1486",
-      "T1684.001"
+      "T1684.001",
+      "T1598",
+      "T1657",
+      "G0037",
+      "T1566",
+      "T1598.002",
+      "T1598.001",
+      "T1187"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "S1178",
       "T1486",
-      "T1187"
+      "T1187",
+      "T1679",
+      "T1657",
+      "T1684.001",
+      "DET0215",
+      "T1598",
+      "G0037",
+      "S1247"
      ],
      "+pin": 2,
-     "+pin_top3": [
+     "+pin_strict": 2,
+     "+pin_top10": [
       "S1178",
       "T1486",
-      "T1187"
+      "T1187",
+      "T1679",
+      "T1657",
+      "T1684.001",
+      "DET0215",
+      "T1598",
+      "G0037",
+      "S1247"
      ],
      "+rerank": 2,
-     "+rerank_top3": [
-      "S1178",
+     "+rerank_strict": 2,
+     "+rerank_top10": [
+      "S0449",
       "T1486",
-      "S1247"
+      "S1178",
+      "DET0215",
+      "S1139",
+      "T1556.005",
+      "S1247",
+      "G1040",
+      "S1200",
+      "T1684"
      ],
      "translation": "Encrypting victim data to disable systems and demand a ransom"
     },
@@ -572,36 +1038,77 @@
      "id": "s11",
      "lang": "ar",
      "dense": 2,
-     "dense_top3": [
+     "dense_strict": 2,
+     "dense_top10": [
       "T1185",
       "T1539",
-      "DET0507"
+      "DET0507",
+      "T1555.003",
+      "S9062",
+      "T1550.004",
+      "DET0509",
+      "T1563",
+      "DET0074",
+      "DET0260"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": 2,
-     "hybrid_top3": [
+     "hybrid_strict": 2,
+     "hybrid_top10": [
       "T1185",
       "T1539",
-      "DET0507"
+      "DET0507",
+      "T1555.003",
+      "S9062",
+      "T1550.004",
+      "DET0509",
+      "T1563",
+      "DET0074",
+      "DET0260"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1539",
       "T1185",
-      "T1550.004"
+      "T1550.004",
+      "DET0509",
+      "DET0507",
+      "DET0074",
+      "T1606.001",
+      "DET0260",
+      "T1563.002",
+      "T1555.003"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1539",
       "T1185",
-      "T1550.004"
+      "T1550.004",
+      "DET0509",
+      "DET0507",
+      "DET0074",
+      "T1606.001",
+      "DET0260",
+      "T1563.002",
+      "T1555.003"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1539",
       "T1550.004",
-      "DET0509"
+      "T1185",
+      "T1606",
+      "DET0509",
+      "DET0074",
+      "DET0171",
+      "S1207",
+      "S9062",
+      "S9003"
      ],
      "translation": "Stealing a user's session cookies from the browser"
     },
@@ -609,36 +1116,77 @@
      "id": "s12",
      "lang": "ar",
      "dense": null,
-     "dense_top3": [
+     "dense_strict": null,
+     "dense_top10": [
       "T1055.009",
       "T1055.003",
-      "T1055.011"
+      "T1055.011",
+      "T1055.005",
+      "T1055.004",
+      "T1055.008",
+      "T1027.009",
+      "T1574.006",
+      "T1055.001",
+      "T1055.012"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": null,
-     "hybrid_top3": [
+     "hybrid_strict": null,
+     "hybrid_top10": [
       "T1055.009",
       "T1055.003",
-      "T1055.011"
+      "T1055.011",
+      "T1055.005",
+      "T1055.004",
+      "T1055.008",
+      "T1027.009",
+      "T1574.006",
+      "T1055.001",
+      "T1055.012"
      ],
      "+translate": 7,
-     "+translate_top3": [
+     "+translate_strict": 7,
+     "+translate_top10": [
       "T1055.009",
       "T1055.012",
-      "T1055.008"
+      "T1055.008",
+      "T1055.003",
+      "T1055.011",
+      "T1055.005",
+      "T1055",
+      "T1620",
+      "T1055.004",
+      "T1677"
      ],
      "+pin": 7,
-     "+pin_top3": [
+     "+pin_strict": 7,
+     "+pin_top10": [
       "T1055.009",
       "T1055.012",
-      "T1055.008"
+      "T1055.008",
+      "T1055.003",
+      "T1055.011",
+      "T1055.005",
+      "T1055",
+      "T1620",
+      "T1055.004",
+      "T1677"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1055",
+      "T1574.007",
+      "T1674",
+      "T1055.008",
       "T1055.009",
-      "T1055.008"
+      "T1055.012",
+      "T1055.003",
+      "T1055.005",
+      "T1055.004",
+      "T1055.002"
      ],
      "translation": "Injecting malicious code into other processes in memory"
     },
@@ -646,114 +1194,244 @@
      "id": "s13",
      "lang": "ar",
      "dense": 4,
-     "dense_top3": [
+     "dense_strict": 4,
+     "dense_top10": [
       "DET0376",
       "DET0357",
-      "T1016.001"
+      "T1016.001",
+      "T1046",
+      "DET0571",
+      "DET0552",
+      "DET0483",
+      "T1007",
+      "DET0425",
+      "DET0053"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": 4,
-     "hybrid_top3": [
+     "hybrid_strict": 4,
+     "hybrid_top10": [
       "DET0376",
       "DET0357",
-      "T1016.001"
+      "T1016.001",
+      "T1046",
+      "DET0571",
+      "DET0552",
+      "DET0483",
+      "T1007",
+      "DET0425",
+      "DET0053"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "DET0376",
       "T1046",
-      "DET0817"
+      "DET0817",
+      "DET0524",
+      "DET0885",
+      "DET0357",
+      "DET0227",
+      "DET0483",
+      "T1016.001",
+      "DET0874"
      ],
      "+pin": 2,
-     "+pin_top3": [
+     "+pin_strict": 2,
+     "+pin_top10": [
       "DET0376",
       "T1046",
-      "DET0817"
+      "DET0817",
+      "DET0524",
+      "DET0885",
+      "DET0357",
+      "DET0227",
+      "DET0483",
+      "T1016.001",
+      "DET0874"
      ],
      "+rerank": 2,
-     "+rerank_top3": [
+     "+rerank_strict": 2,
+     "+rerank_top10": [
       "DET0376",
       "T1046",
-      "DET0483"
+      "T1049",
+      "T1057",
+      "DET0483",
+      "DET0118",
+      "T1007",
+      "DET0421",
+      "DET0838",
+      "DET0817"
      ],
-     "translation": "Port scanning and discovery of services running on the network"
+     "translation": "Port scanning and discovering the services running on a network"
     },
     {
      "id": "s14",
      "lang": "ar",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1136",
       "T1136.001",
-      "T1136.002"
+      "T1136.002",
+      "T1136.003",
+      "T1098.007",
+      "T1098.001",
+      "T1078.001",
+      "T1543",
+      "T1666",
+      "T1578.002"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1136",
       "T1136.001",
-      "T1136.002"
+      "T1136.002",
+      "T1136.003",
+      "T1098.007",
+      "T1098.001",
+      "T1078.001",
+      "T1543",
+      "T1666",
+      "T1578.002"
      ],
      "+translate": 1,
-     "+translate_top3": [
-      "T1136",
-      "T1136.002",
-      "T1136.001"
-     ],
-     "+pin": 1,
-     "+pin_top3": [
-      "T1136",
-      "T1136.002",
-      "T1136.001"
-     ],
-     "+rerank": 1,
-     "+rerank_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1136",
       "T1136.001",
-      "T1136.002"
+      "T1136.002",
+      "T1136.003",
+      "T1543",
+      "T1098.003",
+      "T1098.007",
+      "T1578.002",
+      "T1078.004",
+      "T1671"
      ],
-     "translation": "Create a new user account to maintain access to the system"
+     "+pin": 1,
+     "+pin_strict": 1,
+     "+pin_top10": [
+      "T1136",
+      "T1136.001",
+      "T1136.002",
+      "T1136.003",
+      "T1543",
+      "T1098.003",
+      "T1098.007",
+      "T1578.002",
+      "T1078.004",
+      "T1671"
+     ],
+     "+rerank": 1,
+     "+rerank_strict": 1,
+     "+rerank_top10": [
+      "T1136",
+      "T1136.001",
+      "T1136.002",
+      "T1136.003",
+      "T1098",
+      "T1098.006",
+      "T1098.007",
+      "T1078",
+      "T1098.001",
+      "T1543"
+     ],
+     "translation": "Create a new user account to maintain persistence in the system"
     },
     {
      "id": "s15",
      "lang": "mixed",
      "dense": 2,
-     "dense_top3": [
+     "dense_strict": 2,
+     "dense_top10": [
       "M1047",
       "T1047",
-      "M1037"
+      "M1037",
+      "DET0364",
+      "DET0054",
+      "M1045",
+      "G1017",
+      "DET0090",
+      "M1026",
+      "G1047"
      ],
      "keyword": null,
-     "keyword_top3": [
+     "keyword_strict": null,
+     "keyword_top10": [
       "S0483",
       "C0015",
-      "G0143"
+      "G0143",
+      "S1081",
+      "S9035",
+      "S0089",
+      "S0496",
+      "S0386",
+      "S0559",
+      "C0022"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1047",
       "DET0364",
-      "G1017"
+      "G1017",
+      "M1026",
+      "M1047",
+      "S0483",
+      "C0015",
+      "M1037",
+      "G0143",
+      "S1081"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1047",
       "DET0364",
-      "G1017"
+      "G1017",
+      "M1026",
+      "M1047",
+      "S0483",
+      "C0015",
+      "M1037",
+      "G0143",
+      "S1081"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1047",
       "DET0364",
-      "G1017"
+      "G1017",
+      "M1026",
+      "M1047",
+      "S0483",
+      "C0015",
+      "M1037",
+      "G0143",
+      "S1081"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1047",
       "DET0364",
-      "M1026"
+      "M1026",
+      "M1047",
+      "G1017",
+      "C0015",
+      "M1037",
+      "S1081",
+      "G0143",
+      "DET0054"
      ],
      "translation": null
     },
@@ -761,40 +1439,88 @@
      "id": "s16",
      "lang": "mixed",
      "dense": null,
-     "dense_top3": [
+     "dense_strict": null,
+     "dense_top10": [
       "DET0283",
       "T1542.003",
-      "DET0176"
+      "DET0176",
+      "DET0538",
+      "T1480",
+      "DET0278",
+      "T1685",
+      "DET0422",
+      "S1223",
+      "DET0208"
      ],
      "keyword": null,
-     "keyword_top3": [
+     "keyword_strict": null,
+     "keyword_top10": [
       "S0639",
       "S1137",
-      "S0389"
+      "S0389",
+      "S0400",
+      "DET0215",
+      "S0370",
+      "S0372",
+      "S0616",
+      "M1053",
+      "S0617"
      ],
      "hybrid": null,
-     "hybrid_top3": [
+     "hybrid_strict": null,
+     "hybrid_top10": [
       "DET0215",
       "DET0283",
-      "S0639"
+      "S0639",
+      "T1542.003",
+      "S1137",
+      "DET0176",
+      "S0389",
+      "DET0538",
+      "S0400",
+      "T1480"
      ],
      "+translate": null,
-     "+translate_top3": [
+     "+translate_strict": null,
+     "+translate_top10": [
       "DET0215",
       "T1690",
-      "DET0283"
+      "DET0283",
+      "S0639",
+      "T1542.003",
+      "DET0176",
+      "S1137",
+      "S0389",
+      "DET0538",
+      "T1480"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1486",
       "DET0215",
-      "T1690"
+      "T1690",
+      "DET0283",
+      "S0639",
+      "T1542.003",
+      "DET0176",
+      "S1137",
+      "S0389",
+      "DET0538"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1486",
-      "DET0215",
-      "S0639"
+      "S0389",
+      "S0400",
+      "S0370",
+      "S0616",
+      "S1194",
+      "S1191",
+      "S0617",
+      "T1690",
+      "DET0215"
      ],
      "translation": "What is T1486?"
     },
@@ -802,40 +1528,88 @@
      "id": "s17",
      "lang": "mixed",
      "dense": null,
-     "dense_top3": [
+     "dense_strict": null,
+     "dense_top10": [
       "DET0296",
       "T1049",
-      "DET0525"
+      "DET0525",
+      "DET0195",
+      "DET0102",
+      "DET0197",
+      "DET0034",
+      "DET0348",
+      "S1060",
+      "DET0338"
      ],
      "keyword": null,
-     "keyword_top3": [
+     "keyword_strict": null,
+     "keyword_top10": [
       "M1040",
       "C0057",
-      "S0581"
+      "S0581",
+      "T1055.009",
+      "S0534",
+      "T1055.008",
+      "T1055.012",
+      "S9050",
+      "T1055.003",
+      "S0681"
      ],
      "hybrid": null,
-     "hybrid_top3": [
+     "hybrid_strict": null,
+     "hybrid_top10": [
       "S0154",
       "S0266",
-      "DET0296"
+      "DET0296",
+      "M1040",
+      "T1049",
+      "C0057",
+      "DET0525",
+      "S0581",
+      "DET0195",
+      "T1055.009"
      ],
      "+translate": null,
-     "+translate_top3": [
+     "+translate_strict": null,
+     "+translate_top10": [
       "DET0296",
       "DET0102",
-      "DET0195"
+      "DET0195",
+      "DET0525",
+      "DET0034",
+      "DET0197",
+      "DET0524",
+      "DET0338",
+      "M1040",
+      "DET0348"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1055",
       "DET0296",
-      "DET0102"
+      "DET0102",
+      "DET0195",
+      "DET0525",
+      "DET0034",
+      "DET0197",
+      "DET0524",
+      "DET0338",
+      "M1040"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1055",
+      "T1049",
+      "DET0053",
+      "DET0579",
       "DET0508",
-      "M1040"
+      "DET0348",
+      "S0154",
+      "DET0034",
+      "DET0197",
+      "DET0296"
      ],
      "translation": "How do I detect T1055?"
     },
@@ -843,40 +1617,88 @@
      "id": "s18",
      "lang": "mixed",
      "dense": 5,
-     "dense_top3": [
+     "dense_strict": 5,
+     "dense_top10": [
       "T1686.002",
       "T1685.003",
-      "T1546.001"
+      "T1546.001",
+      "T1592.002",
+      "T1685",
+      "M1026",
+      "T1542.003",
+      "M1056",
+      "T1684.001",
+      "T1542.001"
      ],
      "keyword": 1,
-     "keyword_top3": [
+     "keyword_strict": 1,
+     "keyword_top10": [
       "T1685",
-      "T1686.002",
-      "T1685.003"
-     ],
-     "hybrid": 3,
-     "hybrid_top3": [
       "T1686.002",
       "T1685.003",
-      "T1685"
+      "T1685.004",
+      "T1690",
+      "T1685.001",
+      "T1686.001",
+      "T1686",
+      "T1688",
+      "T1685.002"
+     ],
+     "hybrid": 3,
+     "hybrid_strict": 3,
+     "hybrid_top10": [
+      "T1686.002",
+      "T1685.003",
+      "T1685",
+      "T1685.004",
+      "T1689",
+      "T1686",
+      "T1546.001",
+      "T1592.002",
+      "T1690",
+      "M1026"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "T1686.002",
       "T1685",
-      "T1685.003"
+      "T1685.003",
+      "T1685.004",
+      "T1689",
+      "T1686",
+      "T1546.001",
+      "T1690",
+      "T1592.002",
+      "M1026"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1685",
       "T1686.002",
-      "T1685.003"
+      "T1685.003",
+      "T1685.004",
+      "T1689",
+      "T1686",
+      "T1546.001",
+      "T1690",
+      "T1592.002",
+      "M1026"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1685",
-      "T1688",
-      "T1686.002"
+      "T1686.002",
+      "T1685.003",
+      "T1685.004",
+      "T1689",
+      "T1686",
+      "T1546.001",
+      "T1690",
+      "T1592.002",
+      "M1026"
      ],
      "translation": "What does T1562.001 mean?"
     },
@@ -884,40 +1706,88 @@
      "id": "s19",
      "lang": "mixed",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "S0154",
       "G0080",
-      "DET0852"
+      "DET0852",
+      "S0637",
+      "C0015",
+      "G0114",
+      "DET0453",
+      "C0021",
+      "DET0524",
+      "G0049"
      ],
      "keyword": 1,
-     "keyword_top3": [
+     "keyword_strict": 1,
+     "keyword_top10": [
       "S0154",
       "G0079",
-      "G0080"
+      "G0080",
+      "G0052",
+      "C0015",
+      "G1020",
+      "C0018",
+      "C0021",
+      "G0050",
+      "G0129"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "S0154",
       "G0080",
-      "C0015"
+      "C0015",
+      "C0021",
+      "G0079",
+      "C0017",
+      "C0018",
+      "S0637",
+      "G0052",
+      "G0114"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "S0154",
       "G0080",
-      "C0015"
+      "C0015",
+      "C0021",
+      "G0079",
+      "C0017",
+      "C0018",
+      "S0637",
+      "G0052",
+      "G0114"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "S0154",
       "G0080",
-      "C0015"
+      "C0015",
+      "C0021",
+      "G0079",
+      "C0017",
+      "C0018",
+      "S0637",
+      "G0052",
+      "G0114"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "S0154",
       "G0080",
-      "C0015"
+      "C0015",
+      "C0018",
+      "C0017",
+      "C0021",
+      "C0024",
+      "G1022",
+      "G0067",
+      "G1020"
      ],
      "translation": null
     },
@@ -925,40 +1795,88 @@
      "id": "s20",
      "lang": "mixed",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "G0032",
       "S0497",
-      "S0245"
+      "S0245",
+      "S0181",
+      "S0241",
+      "S0694",
+      "S1182",
+      "G1004",
+      "S0665",
+      "S0347"
      ],
      "keyword": 1,
-     "keyword_top3": [
+     "keyword_strict": 1,
+     "keyword_top10": [
       "G0032",
       "S0181",
-      "S0245"
+      "S0245",
+      "S0498",
+      "S0665",
+      "S0347",
+      "S0497",
+      "S0263",
+      "S0586",
+      "S0103"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "G0032",
       "S0181",
-      "S0245"
+      "S0245",
+      "S0497",
+      "S0665",
+      "S0498",
+      "S0347",
+      "S0694",
+      "S1182",
+      "S0241"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "G0032",
       "S0181",
-      "S0245"
+      "S0245",
+      "S0497",
+      "S0694",
+      "S0347",
+      "S0665",
+      "S0498",
+      "S1182",
+      "S0241"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "G0032",
       "S0181",
-      "S0245"
+      "S0245",
+      "S0497",
+      "S0694",
+      "S0347",
+      "S0665",
+      "S0498",
+      "S1182",
+      "S0241"
      ],
-     "+rerank": null,
-     "+rerank_top3": [
-      "S0678",
-      "S0586",
-      "S0665"
+     "+rerank": 1,
+     "+rerank_strict": 1,
+     "+rerank_top10": [
+      "G0032",
+      "S0181",
+      "S0245",
+      "S0497",
+      "S0347",
+      "S0665",
+      "S0498",
+      "S1182",
+      "S0241",
+      "S0263"
      ],
      "translation": "What software does the Lazarus group use?"
     }
@@ -1007,15 +1925,15 @@
      },
      "mixed": {
       "n": 8,
-      "hit@1": 0.25,
+      "hit@1": 0.375,
       "hit@5": 1.0,
-      "mrr@10": 0.535
+      "mrr@10": 0.629
      },
      "all": {
       "n": 32,
-      "hit@1": 0.25,
+      "hit@1": 0.281,
       "hit@5": 0.469,
-      "mrr@10": 0.351
+      "mrr@10": 0.375
      }
     },
     "hybrid": {
@@ -1047,9 +1965,9 @@
     "+translate": {
      "ar": {
       "n": 12,
-      "hit@1": 0.667,
+      "hit@1": 0.583,
       "hit@5": 1.0,
-      "mrr@10": 0.799
+      "mrr@10": 0.736
      },
      "en": {
       "n": 12,
@@ -1065,17 +1983,17 @@
      },
      "all": {
       "n": 32,
-      "hit@1": 0.625,
+      "hit@1": 0.594,
       "hit@5": 1.0,
-      "mrr@10": 0.792
+      "mrr@10": 0.768
      }
     },
     "+pin": {
      "ar": {
       "n": 12,
-      "hit@1": 0.667,
+      "hit@1": 0.583,
       "hit@5": 1.0,
-      "mrr@10": 0.799
+      "mrr@10": 0.736
      },
      "en": {
       "n": 12,
@@ -1091,35 +2009,35 @@
      },
      "all": {
       "n": 32,
-      "hit@1": 0.656,
+      "hit@1": 0.625,
       "hit@5": 1.0,
-      "mrr@10": 0.807
+      "mrr@10": 0.784
      }
     },
     "+rerank": {
      "ar": {
       "n": 12,
-      "hit@1": 0.917,
+      "hit@1": 0.667,
       "hit@5": 1.0,
-      "mrr@10": 0.958
+      "mrr@10": 0.819
      },
      "en": {
       "n": 12,
-      "hit@1": 0.917,
+      "hit@1": 0.833,
       "hit@5": 1.0,
-      "mrr@10": 0.958
+      "mrr@10": 0.903
      },
      "mixed": {
       "n": 8,
-      "hit@1": 0.75,
+      "hit@1": 1.0,
       "hit@5": 1.0,
-      "mrr@10": 0.875
+      "mrr@10": 1.0
      },
      "all": {
       "n": 32,
-      "hit@1": 0.875,
+      "hit@1": 0.812,
       "hit@5": 1.0,
-      "mrr@10": 0.938
+      "mrr@10": 0.896
      }
     }
    },
@@ -1128,40 +2046,88 @@
      "id": "en01",
      "lang": "en",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1059.001",
       "T1202",
-      "S0457"
+      "S0457",
+      "S0145",
+      "S0194",
+      "T1059.003",
+      "S0029",
+      "S1193",
+      "T1674",
+      "S9039"
      ],
      "keyword": 6,
-     "keyword_top3": [
+     "keyword_strict": 6,
+     "keyword_top10": [
       "T1216.002",
       "T1651",
-      "T1059.012"
+      "T1059.012",
+      "T1505.004",
+      "T1564.003",
+      "T1059.001",
+      "T1546.017",
+      "T1027.018",
+      "T1059.008",
+      "T1675"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1059.001",
       "T1202",
-      "T1216.002"
+      "T1216.002",
+      "T1059.003",
+      "T1653",
+      "T1070.003",
+      "T1552.003",
+      "T1218.007",
+      "DET0455",
+      "T1651"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1059.001",
       "T1202",
-      "T1216.002"
+      "T1216.002",
+      "T1059.003",
+      "T1653",
+      "T1070.003",
+      "T1552.003",
+      "T1218.007",
+      "DET0455",
+      "T1651"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1059.001",
       "T1202",
-      "T1216.002"
+      "T1216.002",
+      "T1059.003",
+      "T1653",
+      "T1070.003",
+      "T1552.003",
+      "T1218.007",
+      "DET0455",
+      "T1651"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1059.001",
+      "S0194",
+      "DET0455",
+      "T1059.003",
+      "T1202",
+      "S0029",
+      "T1218.007",
       "T1059",
-      "T1569"
+      "T1027.018",
+      "T1564.003"
      ],
      "translation": null
     },
@@ -1169,40 +2135,88 @@
      "id": "en02",
      "lang": "en",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1003.001",
       "T1003.004",
-      "T1003.002"
+      "T1003.002",
+      "T1547.008",
+      "T1547.002",
+      "T1555.005",
+      "T1078.003",
+      "T1555.004",
+      "T1003.005",
+      "T1556"
      ],
      "keyword": 8,
-     "keyword_top3": [
+     "keyword_strict": 8,
+     "keyword_top10": [
       "T1003.004",
       "T1555.003",
-      "M1043"
+      "M1043",
+      "T1556.002",
+      "T1552.001",
+      "T1555.001",
+      "T1555.002",
+      "T1003.001",
+      "M1027",
+      "DET0464"
      ],
      "hybrid": 2,
-     "hybrid_top3": [
+     "hybrid_strict": 2,
+     "hybrid_top10": [
       "T1003.004",
       "T1003.001",
-      "T1556.002"
+      "T1556.002",
+      "T1003.002",
+      "T1555.003",
+      "T1555.005",
+      "T1547.008",
+      "M1027",
+      "T1555.004",
+      "T1547.005"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "T1003.004",
       "T1003.001",
-      "T1556.002"
+      "T1556.002",
+      "T1003.002",
+      "T1555.003",
+      "T1555.005",
+      "T1547.008",
+      "M1027",
+      "T1555.004",
+      "T1547.005"
      ],
      "+pin": 2,
-     "+pin_top3": [
+     "+pin_strict": 2,
+     "+pin_top10": [
       "T1003.004",
       "T1003.001",
-      "T1556.002"
+      "T1556.002",
+      "T1003.002",
+      "T1555.003",
+      "T1555.005",
+      "T1547.008",
+      "M1027",
+      "T1555.004",
+      "T1547.005"
      ],
      "+rerank": 2,
-     "+rerank_top3": [
+     "+rerank_strict": 2,
+     "+rerank_top10": [
       "T1003.004",
       "T1003.001",
-      "T1003.005"
+      "T1003.005",
+      "M1043",
+      "T1003.007",
+      "S0368",
+      "DET0234",
+      "T1003.002",
+      "DET0085",
+      "T1552.002"
      ],
      "translation": null
     },
@@ -1210,40 +2224,88 @@
      "id": "en03",
      "lang": "en",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1566.001",
       "T1566.002",
-      "T1598.002"
+      "T1598.002",
+      "DET0070",
+      "DET0236",
+      "T1566",
+      "T1586.002",
+      "T1598.003",
+      "DET0107",
+      "DET0054"
      ],
      "keyword": 6,
-     "keyword_top3": [
+     "keyword_strict": 6,
+     "keyword_top10": [
       "G1033",
       "DET0070",
-      "T1566"
+      "T1566",
+      "T1586.002",
+      "M1054",
+      "T1566.001",
+      "T1598.002",
+      "S9044",
+      "DET0236",
+      "G0085"
      ],
      "hybrid": 2,
-     "hybrid_top3": [
+     "hybrid_strict": 2,
+     "hybrid_top10": [
       "DET0070",
       "T1566.001",
-      "T1566"
+      "T1566",
+      "T1598.002",
+      "T1586.002",
+      "DET0236",
+      "T1566.002",
+      "T1598.003",
+      "G0085",
+      "T1598"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "DET0070",
       "T1566.001",
-      "T1566"
+      "T1566",
+      "T1598.002",
+      "T1586.002",
+      "DET0236",
+      "T1566.002",
+      "T1598.003",
+      "G0085",
+      "T1598"
      ],
      "+pin": 2,
-     "+pin_top3": [
+     "+pin_strict": 2,
+     "+pin_top10": [
       "DET0070",
       "T1566.001",
-      "T1566"
+      "T1566",
+      "T1598.002",
+      "T1586.002",
+      "DET0236",
+      "T1566.002",
+      "T1598.003",
+      "G0085",
+      "T1598"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1566.001",
       "DET0236",
-      "T1566.002"
+      "T1566",
+      "T1566.002",
+      "T1204.002",
+      "T1203",
+      "M1017",
+      "DET0070",
+      "T1598.002",
+      "T1586.002"
      ],
      "translation": null
     },
@@ -1251,40 +2313,88 @@
      "id": "en04",
      "lang": "en",
      "dense": 3,
-     "dense_top3": [
+     "dense_strict": 3,
+     "dense_top10": [
       "S0659",
       "S1053",
-      "T1486"
-     ],
-     "keyword": null,
-     "keyword_top3": [
-      "T1657",
-      "G1051",
+      "T1486",
+      "S0640",
+      "S0570",
+      "S1178",
+      "S0583",
+      "S9051",
+      "S0372",
       "S1070"
      ],
+     "keyword": null,
+     "keyword_strict": null,
+     "keyword_top10": [
+      "T1657",
+      "G1051",
+      "S1070",
+      "S0654",
+      "S1228",
+      "S1178",
+      "T1684.001",
+      "S1247",
+      "S1244",
+      "DET0215"
+     ],
      "hybrid": 4,
-     "hybrid_top3": [
+     "hybrid_strict": 4,
+     "hybrid_top10": [
       "S1178",
       "S1070",
-      "T1657"
+      "T1657",
+      "T1486",
+      "S1244",
+      "S1247",
+      "S9051",
+      "S1053",
+      "G0119",
+      "S1162"
      ],
      "+translate": 4,
-     "+translate_top3": [
+     "+translate_strict": 4,
+     "+translate_top10": [
       "S1178",
       "S1070",
-      "T1657"
+      "T1657",
+      "T1486",
+      "S1244",
+      "S1247",
+      "S9051",
+      "S1053",
+      "G0119",
+      "S1162"
      ],
      "+pin": 4,
-     "+pin_top3": [
+     "+pin_strict": 4,
+     "+pin_top10": [
       "S1178",
       "S1070",
-      "T1657"
+      "T1657",
+      "T1486",
+      "S1244",
+      "S1247",
+      "S9051",
+      "S1053",
+      "G0119",
+      "S1162"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1486",
       "T1657",
-      "S1247"
+      "S1247",
+      "S1244",
+      "S1070",
+      "S1053",
+      "S1181",
+      "S1139",
+      "S0654",
+      "S0570"
      ],
      "translation": null
     },
@@ -1292,40 +2402,88 @@
      "id": "en05",
      "lang": "en",
      "dense": 6,
-     "dense_top3": [
+     "dense_strict": 6,
+     "dense_top10": [
       "T1053",
       "T1543.002",
-      "T1653"
+      "T1653",
+      "T1547.014",
+      "S0111",
+      "T1053.005",
+      "T1543",
+      "T1547.007",
+      "T1053.006",
+      "T1037.004"
      ],
      "keyword": 1,
-     "keyword_top3": [
+     "keyword_strict": 1,
+     "keyword_top10": [
       "T1053.005",
       "T1505.006",
-      "T1529"
+      "T1529",
+      "S0140",
+      "T1197",
+      "DET0559",
+      "DET0441",
+      "DET0117",
+      "S1235",
+      "DET0569"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1053.005",
       "T1529",
-      "T1053.006"
+      "T1053.006",
+      "T1197",
+      "T1653",
+      "T1053.007",
+      "T1053.002",
+      "DET0559",
+      "T1053",
+      "DET0094"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1053.005",
       "T1529",
-      "T1053.006"
+      "T1053.006",
+      "T1197",
+      "T1653",
+      "T1053.007",
+      "T1053.002",
+      "DET0559",
+      "T1053",
+      "DET0094"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1053.005",
       "T1529",
-      "T1053.006"
+      "T1053.006",
+      "T1197",
+      "T1653",
+      "T1053.007",
+      "T1053.002",
+      "DET0559",
+      "T1053",
+      "DET0094"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1053.005",
+      "T1053.002",
       "T1053",
-      "T1053.002"
+      "DET0094",
+      "T1053.003",
+      "T1053.007",
+      "T1197",
+      "T1529",
+      "T1053.006",
+      "S0110"
      ],
      "translation": null
     },
@@ -1333,40 +2491,88 @@
      "id": "en06",
      "lang": "en",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1550.002",
       "T1563.001",
-      "T1563"
+      "T1563",
+      "T1550.003",
+      "T1550",
+      "T1110.001",
+      "T1110.002",
+      "T1210",
+      "T1021.002",
+      "S0122"
      ],
      "keyword": 1,
-     "keyword_top3": [
+     "keyword_strict": 1,
+     "keyword_top10": [
       "T1550.002",
       "T1563.001",
-      "T1003.005"
+      "T1003.005",
+      "S0039",
+      "T1611",
+      "T1021.002",
+      "T1110.002",
+      "T1550.003",
+      "S0122",
+      "T1558.004"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1550.002",
       "T1563.001",
-      "T1550.003"
+      "T1550.003",
+      "T1110.002",
+      "T1021.002",
+      "T1550",
+      "S0122",
+      "T1563",
+      "T1210",
+      "DET0409"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1550.002",
       "T1563.001",
-      "T1550.003"
+      "T1550.003",
+      "T1110.002",
+      "T1021.002",
+      "T1550",
+      "S0122",
+      "T1563",
+      "T1210",
+      "DET0409"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1550.002",
       "T1563.001",
-      "T1550.003"
+      "T1550.003",
+      "T1110.002",
+      "T1021.002",
+      "T1550",
+      "S0122",
+      "T1563",
+      "T1210",
+      "DET0409"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1550.002",
+      "T1550.003",
+      "T1550",
       "DET0409",
-      "T1550"
+      "T1021.002",
+      "S0122",
+      "T1563.001",
+      "T1563",
+      "T1003.005",
+      "T1003"
      ],
      "translation": null
     },
@@ -1374,40 +2580,88 @@
      "id": "en07",
      "lang": "en",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1685.005",
       "T1685.001",
-      "DET0187"
+      "DET0187",
+      "T1490",
+      "T1561",
+      "DET0532",
+      "S1178",
+      "T1070.004",
+      "T1070.007",
+      "T1485"
      ],
      "keyword": 1,
-     "keyword_top3": [
+     "keyword_strict": 1,
+     "keyword_top10": [
       "T1685.005",
       "T1690",
-      "T1027.003"
+      "T1027.003",
+      "M1036",
+      "M1052",
+      "S1135",
+      "T1685.006",
+      "S1134",
+      "T1685.002",
+      "T1564.001"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1685.005",
       "T1685.001",
-      "S1178"
+      "S1178",
+      "T1070.003",
+      "DET0532",
+      "T1070.004",
+      "T1654",
+      "S0697",
+      "S0645",
+      "T1690"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1685.005",
       "T1685.001",
-      "S1178"
+      "S1178",
+      "T1070.003",
+      "DET0532",
+      "T1070.004",
+      "T1654",
+      "S0697",
+      "S0645",
+      "T1690"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1685.005",
       "T1685.001",
-      "S1178"
+      "S1178",
+      "T1070.003",
+      "DET0532",
+      "T1070.004",
+      "T1654",
+      "S0697",
+      "S0645",
+      "T1690"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1685.005",
+      "T1685.001",
+      "DET0532",
+      "T1690",
       "S1178",
-      "DET0532"
+      "S0697",
+      "M1052",
+      "DET0187",
+      "T1070.003",
+      "T1070.007"
      ],
      "translation": null
     },
@@ -1415,40 +2669,88 @@
      "id": "en08",
      "lang": "en",
      "dense": 3,
-     "dense_top3": [
+     "dense_strict": 3,
+     "dense_top10": [
       "G1031",
       "G1003",
-      "G0016"
+      "G0016",
+      "G0035",
+      "G0007",
+      "G0034",
+      "G0010",
+      "G0102",
+      "G0047",
+      "G0133"
      ],
      "keyword": 1,
-     "keyword_top3": [
+     "keyword_strict": 1,
+     "keyword_top10": [
       "G0016",
       "G1003",
-      "G1031"
+      "G1031",
+      "C0063",
+      "G0010",
+      "G0007",
+      "G0063",
+      "G0133",
+      "G0053",
+      "G0047"
      ],
      "hybrid": 2,
-     "hybrid_top3": [
+     "hybrid_strict": 2,
+     "hybrid_top10": [
       "G1031",
-      "G0016",
-      "G1003"
-     ],
-     "+translate": 2,
-     "+translate_top3": [
-      "G1031",
-      "G0016",
-      "G1003"
-     ],
-     "+pin": 2,
-     "+pin_top3": [
-      "G1031",
-      "G0016",
-      "G1003"
-     ],
-     "+rerank": 1,
-     "+rerank_top3": [
       "G0016",
       "G1003",
-      "G0007"
+      "G0007",
+      "G0010",
+      "G0034",
+      "G0133",
+      "G0047",
+      "G0022",
+      "G0003"
+     ],
+     "+translate": 2,
+     "+translate_strict": 2,
+     "+translate_top10": [
+      "G1031",
+      "G0016",
+      "G1003",
+      "G0007",
+      "G0010",
+      "G0034",
+      "G0133",
+      "G0047",
+      "G0022",
+      "G0003"
+     ],
+     "+pin": 2,
+     "+pin_strict": 2,
+     "+pin_top10": [
+      "G1031",
+      "G0016",
+      "G1003",
+      "G0007",
+      "G0010",
+      "G0034",
+      "G0133",
+      "G0047",
+      "G0022",
+      "G0003"
+     ],
+     "+rerank": 3,
+     "+rerank_strict": 3,
+     "+rerank_top10": [
+      "G0080",
+      "G1003",
+      "G0016",
+      "C0024",
+      "G1031",
+      "G0007",
+      "G0010",
+      "G0034",
+      "G0133",
+      "G0047"
      ],
      "translation": null
     },
@@ -1456,40 +2758,88 @@
      "id": "en09",
      "lang": "en",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "S0002",
       "S0179",
-      "S0007"
+      "S0007",
+      "G0108",
+      "S1182",
+      "C0032",
+      "S0154",
+      "M1049",
+      "G1016",
+      "S0468"
      ],
      "keyword": null,
-     "keyword_top3": [
+     "keyword_strict": null,
+     "keyword_top10": [
       "T1036.002",
       "T1690",
-      "T1574.008"
+      "T1574.008",
+      "T1685.002",
+      "T1027.016",
+      "T1548.003",
+      "T1499.001",
+      "S0231",
+      "T1036.006",
+      "S0378"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "S0002",
       "C0032",
-      "G0107"
+      "G0107",
+      "G0135",
+      "T1036.002",
+      "S0179",
+      "T1690",
+      "S0007",
+      "T1574.008",
+      "G0108"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "S0002",
       "C0032",
-      "G0107"
+      "G0107",
+      "G0135",
+      "T1036.002",
+      "S0179",
+      "T1690",
+      "S0007",
+      "T1574.008",
+      "G0108"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "S0002",
       "C0032",
-      "G0107"
+      "G0107",
+      "G0135",
+      "T1036.002",
+      "S0179",
+      "T1690",
+      "S0007",
+      "T1574.008",
+      "G0108"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "S0002",
-      "C0032",
-      "S0179"
+      "S0154",
+      "S0007",
+      "S0179",
+      "T1690",
+      "G0107",
+      "G0135",
+      "G1023",
+      "S0020",
+      "C0032"
      ],
      "translation": null
     },
@@ -1497,40 +2847,88 @@
      "id": "en10",
      "lang": "en",
      "dense": 2,
-     "dense_top3": [
+     "dense_strict": 2,
+     "dense_top10": [
       "T1556.006",
       "M1032",
-      "M1036"
+      "M1036",
+      "T1111",
+      "T1078.004",
+      "T1621",
+      "T1098.001",
+      "M1018",
+      "T1078",
+      "T1697"
      ],
      "keyword": 1,
-     "keyword_top3": [
+     "keyword_strict": 1,
+     "keyword_top10": [
       "M1032",
       "S1104",
-      "T1556.006"
+      "T1556.006",
+      "T1621",
+      "T1098.001",
+      "T1110",
+      "T1556.007",
+      "S0018",
+      "T1556.001",
+      "T1110.004"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "M1032",
       "T1556.006",
-      "T1621"
+      "T1621",
+      "T1098.001",
+      "T1111",
+      "M1036",
+      "T1078.004",
+      "T1556.001",
+      "T1110.004",
+      "T1556.007"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "M1032",
       "T1556.006",
-      "T1621"
+      "T1621",
+      "T1098.001",
+      "T1111",
+      "M1036",
+      "T1078.004",
+      "T1556.001",
+      "T1110.004",
+      "T1556.007"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "M1032",
       "T1556.006",
-      "T1621"
+      "T1621",
+      "T1098.001",
+      "T1111",
+      "M1036",
+      "T1078.004",
+      "T1556.001",
+      "T1110.004",
+      "T1556.007"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "M1032",
+      "T1110",
+      "T1110.004",
+      "M1036",
+      "M1018",
+      "T1098.005",
+      "T1556.007",
       "T1556.006",
-      "T1621"
+      "T1621",
+      "T1111"
      ],
      "translation": null
     },
@@ -1538,40 +2936,88 @@
      "id": "en11",
      "lang": "en",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1110.003",
       "DET0487",
-      "DET0460"
+      "DET0460",
+      "T1110.004",
+      "T1110.001",
+      "DET0551",
+      "T1078",
+      "DET0463",
+      "T1534",
+      "T1586"
      ],
      "keyword": 1,
-     "keyword_top3": [
+     "keyword_strict": 1,
+     "keyword_top10": [
       "T1110.003",
       "DET0487",
-      "T1499"
+      "T1499",
+      "T1566.001",
+      "DET0551",
+      "T1498.001",
+      "T1201",
+      "M1018",
+      "C0028",
+      "T1573.002"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1110.003",
       "DET0487",
-      "DET0551"
+      "DET0551",
+      "DET0460",
+      "T1201",
+      "T1110.001",
+      "M1036",
+      "T1110",
+      "T1078.002",
+      "T1499"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1110.003",
       "DET0487",
-      "DET0551"
+      "DET0551",
+      "DET0460",
+      "T1201",
+      "T1110.001",
+      "M1036",
+      "T1110",
+      "T1078.002",
+      "T1499"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1110.003",
       "DET0487",
-      "DET0551"
+      "DET0551",
+      "DET0460",
+      "T1201",
+      "T1110.001",
+      "M1036",
+      "T1110",
+      "T1078.002",
+      "T1499"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1110.003",
       "DET0487",
-      "DET0551"
+      "DET0551",
+      "T1110.001",
+      "DET0460",
+      "DET0463",
+      "T1201",
+      "T1110",
+      "T1110.004",
+      "T1110.002"
      ],
      "translation": null
     },
@@ -1579,40 +3025,88 @@
      "id": "en12",
      "lang": "en",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1071.004",
       "T1071",
-      "T1568.002"
+      "T1568.002",
+      "T1557.003",
+      "T1095",
+      "T1021.001",
+      "T1071.001",
+      "T1021",
+      "T1572",
+      "T1090.002"
      ],
      "keyword": 2,
-     "keyword_top3": [
+     "keyword_strict": 2,
+     "keyword_top10": [
       "T1583.002",
       "T1071.004",
-      "T1568"
+      "T1568",
+      "T1568.001",
+      "DET0885",
+      "DET0891",
+      "T1505.003",
+      "DET0895",
+      "T1568.002",
+      "T1071"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1071.004",
       "T1071",
-      "T1568.002"
+      "T1568.002",
+      "T1583.002",
+      "T1568",
+      "T1071.001",
+      "T1568.001",
+      "T1071.003",
+      "T1095",
+      "T1071.005"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1071.004",
       "T1071",
-      "T1568.002"
+      "T1568.002",
+      "T1583.002",
+      "T1568",
+      "T1071.001",
+      "T1568.001",
+      "T1071.003",
+      "T1095",
+      "T1071.005"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1071.004",
       "T1071",
-      "T1568.002"
+      "T1568.002",
+      "T1583.002",
+      "T1568",
+      "T1071.001",
+      "T1568.001",
+      "T1071.003",
+      "T1095",
+      "T1071.005"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1071.004",
+      "T1071",
       "T1583.002",
-      "T1568.002"
+      "T1584.002",
+      "T1583.001",
+      "T1584.001",
+      "DET0892",
+      "DET0885",
+      "DET0891",
+      "DET0895"
      ],
      "translation": null
     },
@@ -1620,36 +3114,77 @@
      "id": "ar01",
      "lang": "ar",
      "dense": null,
-     "dense_top3": [
+     "dense_strict": null,
+     "dense_top10": [
       "S0137",
       "T1202",
-      "S0457"
+      "S0457",
+      "T1105",
+      "S1239",
+      "T1574.007",
+      "T1674",
+      "S0029",
+      "T1053.005",
+      "S0194"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": null,
-     "hybrid_top3": [
+     "hybrid_strict": null,
+     "hybrid_top10": [
       "S0137",
       "T1202",
-      "S0457"
+      "S0457",
+      "T1105",
+      "S1239",
+      "T1574.007",
+      "T1674",
+      "S0029",
+      "T1053.005",
+      "S0194"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "T1202",
       "T1059.001",
-      "T1059.003"
+      "T1059.003",
+      "T1204.002",
+      "S0457",
+      "S0194",
+      "T1674",
+      "S0029",
+      "T1216.002",
+      "T1053.005"
      ],
      "+pin": 2,
-     "+pin_top3": [
+     "+pin_strict": 2,
+     "+pin_top10": [
       "T1202",
       "T1059.001",
-      "T1059.003"
+      "T1059.003",
+      "T1204.002",
+      "S0457",
+      "S0194",
+      "T1674",
+      "S0029",
+      "T1216.002",
+      "T1053.005"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1059.001",
+      "S0194",
+      "S0029",
+      "T1216.002",
+      "T1053.005",
       "T1059",
-      "T1202"
+      "S0457",
+      "S0145",
+      "S1239",
+      "DET0200"
      ],
      "translation": "How do attackers abuse PowerShell to execute malicious commands on Windows machines?"
     },
@@ -1657,73 +3192,155 @@
      "id": "ar02",
      "lang": "ar",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1003.001",
       "T1555.005",
-      "T1003.002"
+      "T1003.002",
+      "T1555.004",
+      "T1187",
+      "T1003.004",
+      "T1555.003",
+      "DET0085",
+      "DET0380",
+      "T1078.003"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1003.001",
       "T1555.005",
-      "T1003.002"
+      "T1003.002",
+      "T1555.004",
+      "T1187",
+      "T1003.004",
+      "T1555.003",
+      "DET0085",
+      "DET0380",
+      "T1078.003"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1003.001",
       "T1003.004",
-      "T1555.005"
+      "T1555.005",
+      "T1003.002",
+      "T1547.002",
+      "T1555",
+      "DET0363",
+      "T1547.008",
+      "T1555.003",
+      "M1027"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1003.001",
       "T1003.004",
-      "T1555.005"
+      "T1555.005",
+      "T1003.002",
+      "T1547.002",
+      "T1555",
+      "DET0363",
+      "T1547.008",
+      "T1555.003",
+      "M1027"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1003.001",
+      "T1003.002",
       "T1003.004",
-      "T1003.002"
+      "T1003.005",
+      "S0349",
+      "T1555.004",
+      "T1556",
+      "DET0234",
+      "S0056",
+      "T1547.005"
      ],
-     "translation": "How do attackers extract passwords and credentials from the memory of the Local Security Authority Subsystem Service (LSASS) in Windows?"
+     "translation": "How do attackers extract passwords and credentials from the Local Security Authority Subsystem Service (LSASS) memory in Windows?"
     },
     {
      "id": "ar03",
      "lang": "ar",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1566.001",
       "T1566.002",
-      "T1598.002"
+      "T1598.002",
+      "T1598.003",
+      "DET0054",
+      "DET0115",
+      "T1667",
+      "DET0236",
+      "G0085",
+      "T1566.003"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1566.001",
       "T1566.002",
-      "T1598.002"
+      "T1598.002",
+      "T1598.003",
+      "DET0054",
+      "DET0115",
+      "T1667",
+      "DET0236",
+      "G0085",
+      "T1566.003"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1566.001",
       "T1598.002",
-      "DET0070"
+      "DET0070",
+      "DET0236",
+      "T1598.003",
+      "DET0107",
+      "DET0115",
+      "T1586.002",
+      "G0085",
+      "T1598"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1566.001",
       "T1598.002",
-      "DET0070"
-     ],
-     "+rerank": 1,
-     "+rerank_top3": [
-      "T1566.001",
+      "DET0070",
       "DET0236",
-      "T1566.003"
+      "T1598.003",
+      "DET0107",
+      "DET0115",
+      "T1586.002",
+      "G0085",
+      "T1598"
+     ],
+     "+rerank": 2,
+     "+rerank_strict": 2,
+     "+rerank_top10": [
+      "DET0236",
+      "T1566.001",
+      "T1566",
+      "T1566.002",
+      "DET0115",
+      "T1204.002",
+      "DET0294",
+      "T1204.001",
+      "T1566.003",
+      "T1598"
      ],
      "translation": "Phishing email containing a malicious attachment"
     },
@@ -1731,147 +3348,311 @@
      "id": "ar04",
      "lang": "ar",
      "dense": null,
-     "dense_top3": [
+     "dense_strict": null,
+     "dense_top10": [
       "T1657",
       "T1684.001",
-      "S0556"
+      "S0556",
+      "G0037",
+      "G0053",
+      "S0517",
+      "S1178",
+      "S0570",
+      "S0503",
+      "T1598"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": null,
-     "hybrid_top3": [
+     "hybrid_strict": null,
+     "hybrid_top10": [
       "T1657",
       "T1684.001",
-      "S0556"
+      "S0556",
+      "G0037",
+      "G0053",
+      "S0517",
+      "S1178",
+      "S0570",
+      "S0503",
+      "T1598"
      ],
      "+translate": 3,
-     "+translate_top3": [
+     "+translate_strict": 3,
+     "+translate_top10": [
       "T1657",
       "S1178",
-      "T1486"
+      "T1486",
+      "S0556",
+      "S1137",
+      "T1684.001",
+      "S1070",
+      "S0570",
+      "S0640",
+      "S0583"
      ],
      "+pin": 3,
-     "+pin_top3": [
+     "+pin_strict": 3,
+     "+pin_top10": [
       "T1657",
       "S1178",
-      "T1486"
+      "T1486",
+      "S0556",
+      "S1137",
+      "T1684.001",
+      "S1070",
+      "S0570",
+      "S0640",
+      "S0583"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1486",
       "T1657",
-      "S1178"
+      "S0570",
+      "S0640",
+      "S0449",
+      "S0446",
+      "DET0215",
+      "S1178",
+      "S0556",
+      "S1137"
      ],
-     "translation": "Ransomware encrypts the victim's files and demands a payment."
+     "translation": "Ransomware encrypts the victim's files and demands a payment"
     },
     {
      "id": "ar05",
      "lang": "ar",
      "dense": null,
-     "dense_top3": [
+     "dense_strict": null,
+     "dense_top10": [
       "T1547.007",
       "T1543.002",
-      "T1653"
+      "T1653",
+      "T1543",
+      "T1547.014",
+      "T1053",
+      "T1037.003",
+      "T1543.003",
+      "T1037",
+      "T1505.005"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": null,
-     "hybrid_top3": [
+     "hybrid_strict": null,
+     "hybrid_top10": [
       "T1547.007",
       "T1543.002",
-      "T1653"
+      "T1653",
+      "T1543",
+      "T1547.014",
+      "T1053",
+      "T1037.003",
+      "T1543.003",
+      "T1037",
+      "T1505.005"
      ],
      "+translate": 4,
-     "+translate_top3": [
+     "+translate_strict": 4,
+     "+translate_top10": [
       "T1653",
+      "T1053",
       "T1547.014",
-      "T1053"
+      "T1053.005",
+      "T1053.006",
+      "T1037.004",
+      "T1037.003",
+      "T1546.002",
+      "T1529",
+      "T1197"
      ],
      "+pin": 4,
-     "+pin_top3": [
+     "+pin_strict": 4,
+     "+pin_top10": [
       "T1653",
+      "T1053",
       "T1547.014",
-      "T1053"
+      "T1053.005",
+      "T1053.006",
+      "T1037.004",
+      "T1037.003",
+      "T1546.002",
+      "T1529",
+      "T1197"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1053.005",
       "T1053",
-      "T1053.006"
+      "T1053.007",
+      "T1053.006",
+      "T1053.002",
+      "T1543.002",
+      "T1546.017",
+      "T1543",
+      "T1543.003",
+      "T1547.014"
      ],
-     "translation": "Using scheduled tasks to maintain persistence on a system after reboot"
+     "translation": "Using scheduled tasks to maintain persistence on a system after a reboot"
     },
     {
      "id": "ar06",
      "lang": "ar",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1550.002",
       "T1048.002",
-      "T1550.003"
+      "T1550.003",
+      "T1563.001",
+      "T1048.001",
+      "T1599.001",
+      "T1550",
+      "T1048",
+      "T1599",
+      "T1550.004"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1550.002",
       "T1048.002",
-      "T1550.003"
+      "T1550.003",
+      "T1563.001",
+      "T1048.001",
+      "T1599.001",
+      "T1550",
+      "T1048",
+      "T1599",
+      "T1550.004"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1550.002",
       "T1550.003",
-      "T1563.001"
+      "T1550",
+      "T1570",
+      "T1563.001",
+      "T1563",
+      "T1021.002",
+      "T1110.002",
+      "T1556.005",
+      "T1649"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1550.002",
       "T1550.003",
-      "T1563.001"
+      "T1550",
+      "T1570",
+      "T1563.001",
+      "T1563",
+      "T1021.002",
+      "T1110.002",
+      "T1556.005",
+      "T1649"
      ],
-     "+rerank": 2,
-     "+rerank_top3": [
-      "DET0409",
+     "+rerank": 1,
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1550.002",
-      "T1550"
+      "T1550.003",
+      "T1550",
+      "T1021.002",
+      "DET0409",
+      "S0122",
+      "T1557.003",
+      "T1003",
+      "T1110.002",
+      "T1563"
      ],
-     "translation": "Lateral movement across the network using password hash (pass-the-hash) instead of the password itself"
+     "translation": "Lateral movement across a network using password hash instead of the plaintext password"
     },
     {
      "id": "ar07",
      "lang": "ar",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1685.005",
       "T1070.004",
-      "T1490"
+      "T1490",
+      "T1561",
+      "S1178",
+      "T1685.001",
+      "T1561.001",
+      "DET0085",
+      "T1485",
+      "DET0577"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1685.005",
       "T1070.004",
-      "T1490"
+      "T1490",
+      "T1561",
+      "S1178",
+      "T1685.001",
+      "T1561.001",
+      "DET0085",
+      "T1485",
+      "DET0577"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1685.005",
       "T1685.001",
-      "DET0187"
+      "DET0187",
+      "T1070.007",
+      "T1070.004",
+      "T1070.003",
+      "T1490",
+      "S1178",
+      "T1561",
+      "S0645"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1685.005",
       "T1685.001",
-      "DET0187"
+      "DET0187",
+      "T1070.007",
+      "T1070.004",
+      "T1070.003",
+      "T1490",
+      "S1178",
+      "T1561",
+      "S0645"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1685.005",
+      "T1685.001",
+      "DET0532",
+      "T1685.006",
+      "T1070.003",
+      "T1690",
       "DET0187",
-      "DET0532"
+      "DET0016",
+      "DET0085",
+      "T1070.004"
      ],
      "translation": "How does an attacker clear Windows event logs to hide their tracks?"
     },
@@ -1879,36 +3660,77 @@
      "id": "ar08",
      "lang": "ar",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "G0016",
       "G0007",
-      "G0034"
+      "G0034",
+      "G0102",
+      "C0063",
+      "G1031",
+      "G0091",
+      "G0047",
+      "G1002",
+      "G0062"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "G0016",
       "G0007",
-      "G0034"
+      "G0034",
+      "G0102",
+      "C0063",
+      "G1031",
+      "G0091",
+      "G0047",
+      "G1002",
+      "G0062"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "G0016",
       "G1031",
-      "G1003"
+      "G1003",
+      "G0007",
+      "G0034",
+      "G0010",
+      "G0047",
+      "G0133",
+      "G0091",
+      "G0022"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "G0016",
       "G1031",
-      "G1003"
-     ],
-     "+rerank": 1,
-     "+rerank_top3": [
-      "G0016",
       "G1003",
-      "G1031"
+      "G0007",
+      "G0034",
+      "G0010",
+      "G0047",
+      "G0133",
+      "G0091",
+      "G0022"
+     ],
+     "+rerank": 2,
+     "+rerank_strict": 2,
+     "+rerank_top10": [
+      "G1033",
+      "G0016",
+      "S0046",
+      "G1031",
+      "G1003",
+      "G0007",
+      "G0034",
+      "G0010",
+      "G0047",
+      "G0133"
      ],
      "translation": "What is the Russian threat group known as Cozy Bear?"
     },
@@ -1916,36 +3738,77 @@
      "id": "ar09",
      "lang": "ar",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "S0002",
       "M1028",
-      "S0332"
+      "S0332",
+      "T1218.014",
+      "M1018",
+      "S9052",
+      "S0624",
+      "M1024",
+      "M1022",
+      "T1036"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "S0002",
       "M1028",
-      "S0332"
+      "S0332",
+      "T1218.014",
+      "M1018",
+      "S9052",
+      "S0624",
+      "M1024",
+      "M1022",
+      "T1036"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "S0002",
       "C0032",
-      "G0108"
+      "G0108",
+      "M1028",
+      "M1018",
+      "S0332",
+      "S0530",
+      "S1182",
+      "S0179",
+      "S0007"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "S0002",
       "C0032",
-      "G0108"
+      "G0108",
+      "M1028",
+      "M1018",
+      "S0332",
+      "S0530",
+      "S1182",
+      "S0179",
+      "S0007"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "S0002",
       "C0032",
-      "G0108"
+      "G0108",
+      "S0179",
+      "S0007",
+      "G0107",
+      "G0135",
+      "G0004",
+      "S0624",
+      "S0409"
      ],
      "translation": "What is the Mimikatz tool and what does it do?"
     },
@@ -1953,36 +3816,77 @@
      "id": "ar10",
      "lang": "ar",
      "dense": null,
-     "dense_top3": [
+     "dense_strict": null,
+     "dense_top10": [
       "T1556.006",
       "M1036",
-      "T1098"
+      "T1098",
+      "T1078.004",
+      "T1078",
+      "T1484.002",
+      "T1078.002",
+      "T1556.009",
+      "T1098.005",
+      "T1098.003"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": null,
-     "hybrid_top3": [
+     "hybrid_strict": null,
+     "hybrid_top10": [
       "T1556.006",
       "M1036",
-      "T1098"
+      "T1098",
+      "T1078.004",
+      "T1078",
+      "T1484.002",
+      "T1078.002",
+      "T1556.009",
+      "T1098.005",
+      "T1098.003"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "T1556.006",
       "M1032",
-      "M1036"
+      "M1036",
+      "T1078.002",
+      "T1078.004",
+      "T1111",
+      "T1621",
+      "T1556",
+      "T1078",
+      "T1098"
      ],
      "+pin": 2,
-     "+pin_top3": [
+     "+pin_strict": 2,
+     "+pin_top10": [
       "T1556.006",
       "M1032",
-      "M1036"
+      "M1036",
+      "T1078.002",
+      "T1078.004",
+      "T1111",
+      "T1621",
+      "T1556",
+      "T1078",
+      "T1098"
      ],
-     "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank": 3,
+     "+rerank_strict": 3,
+     "+rerank_top10": [
+      "T1098.003",
+      "T1556.007",
       "M1032",
-      "T1556.006",
-      "M1036"
+      "T1111",
+      "T1621",
+      "T1556",
+      "T1556.009",
+      "T1110",
+      "T1136",
+      "T1136.002"
      ],
      "translation": "Multi-factor authentication as a defense against account takeover"
     },
@@ -1990,114 +3894,244 @@
      "id": "ar11",
      "lang": "ar",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1110.003",
       "DET0460",
-      "T1110.004"
+      "T1110.004",
+      "T1110.001",
+      "DET0487",
+      "T1078",
+      "DET0551",
+      "T1134.001",
+      "DET0463",
+      "T1534"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1110.003",
       "DET0460",
-      "T1110.004"
-     ],
-     "+translate": 1,
-     "+translate_top3": [
-      "T1110.003",
+      "T1110.004",
       "T1110.001",
-      "DET0487"
+      "DET0487",
+      "T1078",
+      "DET0551",
+      "T1134.001",
+      "DET0463",
+      "T1534"
      ],
-     "+pin": 1,
-     "+pin_top3": [
-      "T1110.003",
+     "+translate": 4,
+     "+translate_strict": 4,
+     "+translate_top10": [
+      "DET0487",
       "T1110.001",
-      "DET0487"
+      "T1110.004",
+      "T1110.003",
+      "DET0460",
+      "T1201",
+      "T1078",
+      "DET0551",
+      "T1586",
+      "T1586.001"
      ],
-     "+rerank": 1,
-     "+rerank_top3": [
+     "+pin": 4,
+     "+pin_strict": 4,
+     "+pin_top10": [
+      "DET0487",
+      "T1110.001",
+      "T1110.004",
+      "T1110.003",
+      "DET0460",
+      "T1201",
+      "T1078",
+      "DET0551",
+      "T1586",
+      "T1586.001"
+     ],
+     "+rerank": 2,
+     "+rerank_strict": 2,
+     "+rerank_top10": [
+      "T1110.001",
       "T1110.003",
       "DET0487",
-      "DET0460"
+      "T1110.004",
+      "DET0460",
+      "DET0551",
+      "DET0463",
+      "T1110",
+      "T1201",
+      "T1078.002"
      ],
-     "translation": "An attack that tries one common password against a large number of accounts"
+     "translation": "An attack that tries one common password across a large number of accounts"
     },
     {
      "id": "ar12",
      "lang": "ar",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1071.004",
       "T1071",
-      "T1557.001"
+      "T1557.001",
+      "T1095",
+      "T1021.002",
+      "T1559",
+      "T1071.001",
+      "T1071.005",
+      "T1090",
+      "T1071.003"
      ],
      "keyword": null,
-     "keyword_top3": [],
+     "keyword_strict": null,
+     "keyword_top10": [],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1071.004",
       "T1071",
-      "T1557.001"
+      "T1557.001",
+      "T1095",
+      "T1021.002",
+      "T1559",
+      "T1071.001",
+      "T1071.005",
+      "T1090",
+      "T1071.003"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1071.004",
       "T1071",
-      "T1071.001"
+      "T1071.001",
+      "T1071.003",
+      "T1095",
+      "T1583.002",
+      "T1584.002",
+      "T1071.002",
+      "T1572",
+      "T1090.002"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1071.004",
       "T1071",
-      "T1071.001"
+      "T1071.001",
+      "T1071.003",
+      "T1095",
+      "T1583.002",
+      "T1584.002",
+      "T1071.002",
+      "T1572",
+      "T1090.002"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1071.004",
       "T1583.002",
-      "T1584.002"
+      "T1584.002",
+      "T1095",
+      "T1071",
+      "T1071.001",
+      "T1071.003",
+      "T1071.002",
+      "T1572",
+      "T1090.002"
      ],
-     "translation": "Using the DNS protocol to communicate with a command-and-control server"
+     "translation": "Using the DNS protocol to communicate with a command and control server"
     },
     {
      "id": "mx01",
      "lang": "mixed",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "T1059.001",
       "S0441",
-      "S0145"
-     ],
-     "keyword": 2,
-     "keyword_top3": [
-      "T1546.013",
-      "T1059.001",
-      "DET0455"
-     ],
-     "hybrid": 1,
-     "hybrid_top3": [
-      "T1059.001",
+      "S0145",
+      "S0457",
+      "S0572",
+      "S0363",
       "DET0455",
+      "S0194",
+      "DET0440",
       "T1546.013"
      ],
+     "keyword": 2,
+     "keyword_strict": 2,
+     "keyword_top10": [
+      "T1546.013",
+      "T1059.001",
+      "DET0455",
+      "DET0451",
+      "DET0440",
+      "T1216.002",
+      "T1070.003",
+      "DET0589",
+      "S0393",
+      "S0231"
+     ],
+     "hybrid": 1,
+     "hybrid_strict": 1,
+     "hybrid_top10": [
+      "T1059.001",
+      "DET0455",
+      "T1546.013",
+      "DET0440",
+      "T1070.003",
+      "S0393",
+      "S0441",
+      "DET0451",
+      "S1024",
+      "S1173"
+     ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "DET0451",
       "T1059.001",
-      "DET0455"
+      "DET0455",
+      "DET0440",
+      "T1546.013",
+      "T1070.003",
+      "S0457",
+      "S0145",
+      "T1216.002",
+      "S0441"
      ],
      "+pin": 2,
-     "+pin_top3": [
+     "+pin_strict": 2,
+     "+pin_top10": [
       "DET0451",
       "T1059.001",
-      "DET0455"
+      "DET0455",
+      "DET0440",
+      "T1546.013",
+      "T1070.003",
+      "S0457",
+      "S0145",
+      "T1216.002",
+      "S0441"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "DET0455",
+      "DET0451",
       "T1059.001",
-      "DET0451"
+      "T1546.013",
+      "DET0440",
+      "S0194",
+      "S0363",
+      "DET0516",
+      "T1070.003",
+      "DET0521"
      ],
      "translation": "How do I detect malicious PowerShell usage?"
     },
@@ -2105,40 +4139,88 @@
      "id": "mx02",
      "lang": "mixed",
      "dense": null,
-     "dense_top3": [
+     "dense_strict": null,
+     "dense_top10": [
       "G1053",
       "G0139",
-      "DET0181"
+      "DET0181",
+      "DET0302",
+      "DET0482",
+      "DET0053",
+      "S1100",
+      "T1001.001",
+      "DET0403",
+      "G1006"
      ],
      "keyword": 5,
-     "keyword_top3": [
+     "keyword_strict": 5,
+     "keyword_top10": [
       "S0121",
       "S0005",
-      "S0349"
+      "S0349",
+      "S0002",
+      "T1003.001",
+      "G0077",
+      "C0029",
+      "M1027",
+      "G0093",
+      "M1025"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1003.001",
       "C0029",
-      "G1003"
+      "G1003",
+      "G0125",
+      "G0027",
+      "G1053",
+      "S0121",
+      "G0139",
+      "S0005",
+      "DET0181"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1003.001",
       "C0029",
-      "G0027"
+      "G0027",
+      "G0125",
+      "G1003",
+      "G1053",
+      "S0121",
+      "G0139",
+      "S0005",
+      "DET0181"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1003.001",
       "C0029",
-      "G0027"
+      "G0027",
+      "G0125",
+      "G1003",
+      "G1053",
+      "S0121",
+      "G0139",
+      "S0005",
+      "DET0181"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1003.001",
       "S0002",
-      "S0121"
+      "S0121",
+      "S0005",
+      "S0349",
+      "C0029",
+      "G0125",
+      "G0027",
+      "G1003",
+      "G1053"
      ],
      "translation": "What is technique T1003.001?"
     },
@@ -2146,40 +4228,88 @@
      "id": "mx03",
      "lang": "mixed",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "DET0363",
       "T1003.001",
-      "DET0234"
+      "DET0234",
+      "DET0460",
+      "DET0542",
+      "DET0174",
+      "S0121",
+      "DET0430",
+      "T1003.004",
+      "DET0513"
      ],
      "keyword": 2,
-     "keyword_top3": [
+     "keyword_strict": 2,
+     "keyword_top10": [
       "DET0542",
       "T1003.001",
-      "T1547.008"
+      "T1547.008",
+      "S0121",
+      "DET0207",
+      "DET0225",
+      "DET0271",
+      "DET0472",
+      "DET0363",
+      "M1025"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1003.001",
       "DET0542",
-      "DET0363"
+      "DET0363",
+      "S0121",
+      "DET0207",
+      "T1547.008",
+      "DET0271",
+      "DET0430",
+      "DET0472",
+      "DET0225"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "T1003.001",
       "DET0363",
-      "S0121"
+      "S0121",
+      "DET0430",
+      "DET0513",
+      "DET0174",
+      "T1547.008",
+      "DET0234",
+      "M1043",
+      "DET0271"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1003.001",
       "DET0363",
-      "S0121"
+      "S0121",
+      "DET0430",
+      "DET0513",
+      "DET0174",
+      "T1547.008",
+      "DET0234",
+      "M1043",
+      "DET0271"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "DET0363",
       "DET0234",
-      "T1003.001"
+      "T1003.001",
+      "T1547.008",
+      "DET0430",
+      "DET0225",
+      "DET0271",
+      "DET0437",
+      "DET0513",
+      "DET0593"
      ],
      "translation": "How do I detect credential theft from LSASS memory?"
     },
@@ -2187,81 +4317,177 @@
      "id": "mx04",
      "lang": "mixed",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "G0016",
       "G0087",
-      "G0073"
+      "G0073",
+      "C0023",
+      "S0636",
+      "S0037",
+      "G0026",
+      "C0024",
+      "G0007",
+      "G0096"
      ],
-     "keyword": 4,
-     "keyword_top3": [
+     "keyword": 1,
+     "keyword_strict": 4,
+     "keyword_top10": [
       "S0054",
       "S1084",
-      "S0636"
+      "S0636",
+      "G0016",
+      "S0052",
+      "S0049",
+      "C0024",
+      "S0637",
+      "S0682",
+      "S0037"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "G0016",
       "S0636",
-      "S1084"
+      "S1084",
+      "C0023",
+      "C0024",
+      "S0037",
+      "S0637",
+      "S0052",
+      "S0049",
+      "S0513"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "G0016",
       "S1084",
-      "S0636"
-     ],
-     "+pin": 1,
-     "+pin_top3": [
-      "G0016",
-      "S1084",
-      "S0636"
-     ],
-     "+rerank": 1,
-     "+rerank_top3": [
-      "G0016",
-      "S0559",
+      "C0023",
+      "C0024",
+      "S0637",
+      "S0051",
+      "S0636",
+      "S0661",
+      "S0037",
       "S0139"
      ],
-     "translation": "What are the tools and techniques used by the APT29 group?"
+     "+pin": 1,
+     "+pin_strict": 1,
+     "+pin_top10": [
+      "G0016",
+      "S1084",
+      "C0023",
+      "C0024",
+      "S0637",
+      "S0051",
+      "S0636",
+      "S0661",
+      "S0037",
+      "S0139"
+     ],
+     "+rerank": 1,
+     "+rerank_strict": 1,
+     "+rerank_top10": [
+      "G0016",
+      "S1084",
+      "C0023",
+      "C0024",
+      "S0051",
+      "S0661",
+      "S0139",
+      "S0154",
+      "S0512",
+      "S0635"
+     ],
+     "translation": "What tools and techniques does the APT29 group use?"
     },
     {
      "id": "mx05",
      "lang": "mixed",
      "dense": 1,
-     "dense_top3": [
+     "dense_strict": 1,
+     "dense_top10": [
       "S0002",
       "S0179",
-      "G0108"
+      "G0108",
+      "S0007",
+      "T1560.001",
+      "DET0298",
+      "T1036",
+      "S1182",
+      "S0154",
+      "G1016"
      ],
      "keyword": 2,
-     "keyword_top3": [
+     "keyword_strict": 2,
+     "keyword_top10": [
       "DET0437",
-      "S0002",
-      "S0179"
-     ],
-     "hybrid": 1,
-     "hybrid_top3": [
       "S0002",
       "S0179",
-      "S0007"
+      "G0011",
+      "G0088",
+      "S0007",
+      "DET0594",
+      "G0076",
+      "G0003",
+      "G0079"
+     ],
+     "hybrid": 1,
+     "hybrid_strict": 1,
+     "hybrid_top10": [
+      "S0002",
+      "S0179",
+      "S0007",
+      "DET0437",
+      "G0108",
+      "G0008",
+      "C0032",
+      "G0003",
+      "G0007",
+      "G0060"
      ],
      "+translate": 1,
-     "+translate_top3": [
+     "+translate_strict": 1,
+     "+translate_top10": [
       "S0002",
       "DET0437",
-      "C0032"
+      "C0032",
+      "G0008",
+      "S0179",
+      "S0007",
+      "G1016",
+      "G0108",
+      "S0154",
+      "G0003"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "S0002",
       "DET0437",
-      "C0032"
+      "C0032",
+      "G0008",
+      "S0179",
+      "S0007",
+      "G1016",
+      "G0108",
+      "S0154",
+      "G0003"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "S0002",
+      "S0007",
+      "S0179",
       "DET0437",
-      "S0007"
+      "C0032",
+      "G0008",
+      "G0011",
+      "G0060",
+      "G0076",
+      "G1016"
      ],
      "translation": "Explain the Mimikatz tool and its uses"
     },
@@ -2269,38 +4495,86 @@
      "id": "mx06",
      "lang": "mixed",
      "dense": null,
-     "dense_top3": [
+     "dense_strict": null,
+     "dense_top10": [
       "M1047",
       "M1026",
-      "M1045"
+      "M1045",
+      "S0098",
+      "M1040",
+      "G1018",
+      "G0027",
+      "DET0482",
+      "G1053",
+      "M1051"
      ],
      "keyword": 1,
-     "keyword_top3": [
+     "keyword_strict": 1,
+     "keyword_top10": [
       "T1685.005",
       "M1029",
-      "S0164"
+      "S0164",
+      "S1135",
+      "S0083",
+      "S0559",
+      "S1132",
+      "S1161",
+      "S0527",
+      "T1070.007"
      ],
      "hybrid": 3,
-     "hybrid_top3": [
+     "hybrid_strict": 3,
+     "hybrid_top10": [
       "S0164",
       "M1047",
-      "T1685.005"
+      "T1685.005",
+      "M1026",
+      "M1029",
+      "M1045",
+      "S0098",
+      "S1135",
+      "M1040",
+      "S0083"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "M1047",
       "T1685.005",
-      "M1026"
+      "M1026",
+      "M1045",
+      "M1040",
+      "S0098",
+      "M1031",
+      "M1051",
+      "G1053",
+      "G1018"
      ],
      "+pin": 1,
-     "+pin_top3": [
+     "+pin_strict": 1,
+     "+pin_top10": [
       "T1685.005",
       "M1047",
-      "M1026"
+      "M1026",
+      "M1045",
+      "M1040",
+      "S0098",
+      "M1031",
+      "M1051",
+      "G1053",
+      "G1018"
      ],
      "+rerank": 1,
-     "+rerank_top3": [
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1685.005",
+      "T1027.015",
+      "M1029",
+      "T1574.011",
+      "T1059.001",
+      "T1543.003",
+      "DET0280",
+      "M1019",
       "T1557.001",
       "M1047"
      ],
@@ -2310,40 +4584,88 @@
      "id": "mx07",
      "lang": "mixed",
      "dense": 2,
-     "dense_top3": [
+     "dense_strict": 2,
+     "dense_top10": [
       "T1558.004",
       "T1558.003",
-      "T1558"
+      "T1558",
+      "DET0157",
+      "T1550.003",
+      "T1212",
+      "T1558.001",
+      "DET0113",
+      "T1558.002",
+      "T1574.013"
      ],
      "keyword": 3,
-     "keyword_top3": [
+     "keyword_strict": 3,
+     "keyword_top10": [
       "DET0157",
       "S1071",
-      "T1558.003"
+      "T1558.003",
+      "T1482",
+      "S0363",
+      "M1027",
+      "T1558.002",
+      "G0102",
+      "S0194",
+      "S0357"
      ],
      "hybrid": 2,
-     "hybrid_top3": [
+     "hybrid_strict": 2,
+     "hybrid_top10": [
       "DET0157",
       "T1558.003",
-      "S1071"
+      "S1071",
+      "T1558.004",
+      "T1558.002",
+      "C0024",
+      "T1558",
+      "T1482",
+      "T1550.003",
+      "S0363"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "DET0157",
       "T1558.003",
-      "S1071"
+      "S1071",
+      "T1558.002",
+      "T1558.004",
+      "T1566.003",
+      "C0024",
+      "T1558",
+      "T1498",
+      "T1550.003"
      ],
      "+pin": 2,
-     "+pin_top3": [
+     "+pin_strict": 2,
+     "+pin_top10": [
       "DET0157",
       "T1558.003",
-      "S1071"
-     ],
-     "+rerank": 2,
-     "+rerank_top3": [
       "S1071",
+      "T1558.002",
+      "T1558.004",
+      "T1566.003",
+      "C0024",
+      "T1558",
+      "T1498",
+      "T1550.003"
+     ],
+     "+rerank": 1,
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1558.003",
-      "DET0157"
+      "DET0157",
+      "T1558.004",
+      "S1071",
+      "T1558.001",
+      "T1558.002",
+      "T1558",
+      "T1550.003",
+      "DET0352",
+      "T1482"
      ],
      "translation": "How does a Kerberoasting attack work?"
     },
@@ -2351,39 +4673,87 @@
      "id": "mx08",
      "lang": "mixed",
      "dense": 2,
-     "dense_top3": [
+     "dense_strict": 2,
+     "dense_top10": [
       "T1563.002",
       "T1021.001",
-      "S1144"
+      "S1144",
+      "T1557",
+      "T1557.003",
+      "T1090.003",
+      "T1071",
+      "T1018",
+      "T1572",
+      "T1557.002"
      ],
      "keyword": 1,
-     "keyword_top3": [
+     "keyword_strict": 1,
+     "keyword_top10": [
       "T1021.001",
       "DET0588",
-      "T1563.002"
+      "T1563.002",
+      "DET0327",
+      "T1070.007",
+      "M1015",
+      "DET0538",
+      "M1035",
+      "T1505.005",
+      "DET0079"
      ],
      "hybrid": 1,
-     "hybrid_top3": [
+     "hybrid_strict": 1,
+     "hybrid_top10": [
       "T1021.001",
       "T1563.002",
-      "DET0588"
+      "DET0588",
+      "DET0327",
+      "T1071",
+      "T1563",
+      "T1210",
+      "T1505.005",
+      "DET0538",
+      "DET0354"
      ],
      "+translate": 2,
-     "+translate_top3": [
+     "+translate_strict": 2,
+     "+translate_top10": [
       "T1563.002",
       "T1021.001",
-      "DET0327"
+      "DET0327",
+      "T1210",
+      "T1563",
+      "T1071",
+      "T1021",
+      "DET0354",
+      "DET0588",
+      "T1572"
      ],
      "+pin": 2,
-     "+pin_top3": [
+     "+pin_strict": 2,
+     "+pin_top10": [
       "T1563.002",
       "T1021.001",
-      "DET0327"
+      "DET0327",
+      "T1210",
+      "T1563",
+      "T1071",
+      "T1021",
+      "DET0354",
+      "DET0588",
+      "T1572"
      ],
-     "+rerank": 2,
-     "+rerank_top3": [
-      "T1563.002",
+     "+rerank": 1,
+     "+rerank_strict": 1,
+     "+rerank_top10": [
       "T1021.001",
+      "T1563.002",
+      "DET0588",
+      "T1563",
+      "M1015",
+      "M1035",
+      "DET0079",
+      "T1210",
+      "DET0118",
       "T1021"
      ],
      "translation": "How do attackers use RDP for lateral movement within a network?"
@@ -2392,12 +4762,12 @@
   }
  },
  "ms_per_query_excl_translation": {
-  "dense": 2080,
-  "keyword": 3,
-  "hybrid": 2082,
-  "+translate": 3286,
-  "+pin": 3277,
-  "+rerank": 4998
+  "dense": 2091,
+  "keyword": 5,
+  "hybrid": 2094,
+  "+translate": 3297,
+  "+pin": 3302,
+  "+rerank": 5092
  },
  "translated_questions": 30
 }

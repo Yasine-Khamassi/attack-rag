@@ -25,7 +25,7 @@
 {"id": "mx01", "lang": "mixed", "query": "كيف أكتشف استخدام PowerShell بشكل خبيث؟", "relevant": ["T1059.001", "DET0455"]}
 {"id": "mx02", "lang": "mixed", "query": "ما هي التقنية T1003.001؟", "relevant": ["T1003.001"]}
 {"id": "mx03", "lang": "mixed", "query": "كيف أكتشف سرقة بيانات الاعتماد من ذاكرة LSASS؟", "relevant": ["T1003.001", "DET0363"]}
-{"id": "mx04", "lang": "mixed", "query": "ما هي الأدوات والتقنيات التي تستخدمها مجموعة APT29؟", "relevant": ["G0016"]}
+{"id": "mx04", "lang": "mixed", "query": "ما هي الأدوات والتقنيات التي تستخدمها مجموعة APT29؟", "relevant": ["G0016"], "relevant_via": [{"source": "G0016", "relation": "uses", "type": "software"}, {"source": "G0016", "relation": "uses", "type": "technique"}]}
 {"id": "mx05", "lang": "mixed", "query": "شرح أداة Mimikatz واستخداماتها", "relevant": ["S0002"]}
 {"id": "mx06", "lang": "mixed", "query": "ما معنى T1070.001؟", "relevant": ["T1685.005"]}
 {"id": "mx07", "lang": "mixed", "query": "كيف يعمل هجوم Kerberoasting؟", "relevant": ["T1558.003"]}

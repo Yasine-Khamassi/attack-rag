@@ -17,4 +17,4 @@
 {"id": "s17", "lang": "mixed", "query": "كيف أكتشف T1055؟", "relevant": ["T1055", "DET0508"]}
 {"id": "s18", "lang": "mixed", "query": "ما معنى T1562.001؟", "relevant": ["T1685"]}
 {"id": "s19", "lang": "mixed", "query": "S0154 Cobalt Strike", "relevant": ["S0154"]}
-{"id": "s20", "lang": "mixed", "query": "ما هي البرمجيات التي تستخدمها مجموعة Lazarus؟", "relevant": ["G0032"]}
+{"id": "s20", "lang": "mixed", "query": "ما هي البرمجيات التي تستخدمها مجموعة Lazarus؟", "relevant": ["G0032"], "relevant_via": [{"source": "G0032", "relation": "uses", "type": "software"}]}

@@ -98,3 +98,14 @@ Never edit an old entry; add a new one that supersedes it.
 - **Chose:** `HybridSearcher(pin_ids=True)`: identifier tokens in the question that match a doc ID (or a revoked ID via `aliases`) put that doc at the top, in the order typed.
 - **Why:** "What is T1486?" ranked detection strategies that list T1486 above T1486 itself. Someone who types an ID means that object. Spot-check mixed hit@1 0.667 -> 1.0.
 - **Cost:** a question that mentions an ID only in passing ("unlike T1059, how does ...") still gets that doc first; acceptable since it is relevant context.
+
+## D18: Relationship questions are judged against ATT&CK's own links ("relevant_via")
+- **Chose:** a question may list `relevant_via` specs, e.g. `{"source": "G0032", "relation": "uses", "type": "software"}`; every document ATT&CK links that way counts as a correct answer, in addition to the listed IDs. The check also reports the strict score (listed IDs only).
+- **Rejected:** keeping only the group doc as the answer (the reranker returned three Lazarus malware docs, each saying "Used by groups: Lazarus Group (G0032)", and the eval scored that as a miss); hand-picking extra IDs (subjective, incomplete).
+- **Why:** relevance judgments must accept every correct answer, and for "which software does X use" ATT&CK's relationship data defines exactly what is correct. Applied to s20 (Lazarus software, 27 docs) and mx04 (APT29 tools and techniques).
+- **Cost:** broad questions become easier to "hit" (mx04 now accepts ~115 docs). The phase 2 golden set should use graded relevance (the group page that lists everything > one linked doc).
+
+## D19: LLM-reranked results are judged over several runs
+- **Finding:** two runs of the identical Haiku pipeline gave spot-check hit@1 0.75 and 0.65 (English 0.75 vs 0.50), probe MRR 0.922 vs 0.945. Sampling cannot be pinned (`temperature` is rejected by the API since 2026-10-21).
+- **Chose:** treat a single run's hit@1 differences of this size as noise; the phase 2 harness runs the reranked pipeline at least 3 times and reports mean and spread. Recall-style metrics (hit@5) were stable across runs and carry more weight in gates.
+- **Cost:** ~3x API spend per eval run (still ~$0.6 for the current sets).

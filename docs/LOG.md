@@ -135,3 +135,26 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 **Next**
 - Two Haiku runs with full chunks to measure variance; then decide on D16 placement, write the step 4 explainer, close the phase 1 gate.
+
+## 2026-10-29 · Step 4b result: phase 1 gate passed
+
+**Done**
+- Reranker sees full chunks (1,500 chars, was 800). Two identical Haiku runs to measure variance (D19).
+- `relevant_via` labels for relationship questions (D18); `retrieval_check` keeps each mode's top 10 and reports strict scores too.
+- `docs/steps/04-hybrid-search.md`.
+
+**Numbers** (Haiku stack, full pipeline; hit@1 / hit@5 / MRR@10)
+- Spot checks: dense 0.45 / 0.85 / 0.622 -> hybrid 0.50 / 0.85 / 0.654 -> +translate 0.50 / 0.85 / 0.682 -> +pin 0.65 / 0.95 / 0.807 -> +rerank **0.80 / 1.0 / 0.892**.
+- Probe: dense 0.625 / 0.781 / 0.698 -> full pipeline **0.812 / 1.0 / 0.896**.
+- **Phase 1 gate: 20/20 spot checks with a correct doc in the top 5 (strict labels also 20/20 this run). PASS.**
+- Variance (identical config): spot hit@1 0.75 vs 0.65, probe MRR 0.922 vs 0.945; hit@5 stable (0.95-1.0).
+- Rerank with full chunks: ~20.1k input tokens, $0.00205 and 1.77 s per question. One 52-question run ~$0.11.
+- Latency (CPU, warm, translation cached): dense ~2.1 s (bge-m3 query embedding on CPU), keyword 5 ms, full pipeline ~5.1 s.
+- Claude spend to date: $0.49 (453 calls). Budget cap in `.env`: $5.
+
+**Problems found**
+- D15's cost estimate ($0.001/question) was for 800-char excerpts; full chunks double it ($0.002).
+- Query embedding on CPU (~2 s) is now the slowest local step, not the reranker.
+
+**Next**
+- Phase 2: golden set of 100+ questions (EN/AR/mixed, graded relevance, Arabic reviewed by a native speaker), eval harness (recall@k, MRR, nDCG, faithfulness), several runs per reranked config, CI regression gate.

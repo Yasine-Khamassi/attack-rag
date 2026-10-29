@@ -1,7 +1,9 @@
 """
 Step 4: does retrieval find the right documents? Each pipeline stage measured on its own (an ablation).
 
-Question sets (each line: query + doc IDs that count as correct):
+Question sets (each line: query + doc IDs that count as correct; optional "relevant_via" adds every doc ATT&CK
+links to a subject, e.g. {"source": "G0032", "relation": "uses", "type": "software"} = all software Lazarus uses,
+for questions whose correct answers are exactly those linked documents):
   eval/spot_checks.jsonl      20 new questions; the phase 1 gate is: the full pipeline (GATE_MODE) has a
                               correct doc in the top 5 for every one of them
   eval/embedding_probe.jsonl  the 32 step 3b probe questions, to compare with the dense-only numbers there
@@ -35,7 +37,7 @@ from core.rerank import ClaudeReranker, CrossEncoderReranker
 from core.schema import Document
 from core.search import HybridSearcher
 from products.attack.embedding_probe import first_relevant_rank, load_jsonl
-from products.attack.ingest import DOCS_PATH, ROOT, TENANT_ID
+from products.attack.ingest import DOCS_PATH, REL_PATH, ROOT, TENANT_ID
 
 SETS = {"spot_checks": ROOT / "eval" / "spot_checks.jsonl", "probe": ROOT / "eval" / "embedding_probe.jsonl"}
 RESULTS_DIR = ROOT / "eval" / "results"
@@ -46,6 +48,14 @@ STACKS = {
     "local": {"translator": "qwen2.5:3b",
               "rerankers": {"+rerank": "bge-reranker-v2-m3", "+rerank_small": "mmarco-minilm"}},
 }
+
+
+def expand_relevant(q: dict, rels: list[dict], doc_type: dict[str, str]) -> set[str]:
+    relevant = set(q["relevant"])
+    for spec in q.get("relevant_via", []):
+        relevant |= {r["target"] for r in rels if r["source"] == spec["source"] and r["relation"] == spec["relation"]
+                     and doc_type.get(r["target"]) == spec["type"]}
+    return relevant
 
 
 def summarize(ranks: list[int | None]) -> dict:
@@ -65,8 +75,11 @@ def main() -> None:
     results: dict = {"stack": stack_name, "model": DEFAULT_MODEL, "translator": stack["translator"],
                      "rerankers": stack["rerankers"], "sets": {}}
     with DOCS_PATH.open(encoding="utf-8") as f:
-        aliases = {old: d.doc_id for d in map(Document.model_validate_json, f)
-                   for old in d.metadata.get("previous_ids", [])}
+        all_docs = [Document.model_validate_json(line) for line in f]
+    aliases = {old: d.doc_id for d in all_docs for old in d.metadata.get("previous_ids", [])}
+    doc_type = {d.doc_id: d.type for d in all_docs}
+    with REL_PATH.open(encoding="utf-8") as f:
+        rels = [json.loads(line) for line in f]
     with db.connect() as conn:
         searcher = HybridSearcher(conn, TENANT_ID, OllamaEmbedder(DEFAULT_MODEL), aliases=aliases)
         if stack_name == "haiku":
@@ -102,8 +115,9 @@ def main() -> None:
                     hits = search[mode](q["query"], k=10)
                     timings[mode].append(time.perf_counter() - start)
                     ranked = [h.doc_id for h in hits]
-                    row[mode] = first_relevant_rank(ranked, set(q["relevant"]))
-                    row[f"{mode}_top3"] = ranked[:3]
+                    row[mode] = first_relevant_rank(ranked, expand_relevant(q, rels, doc_type))
+                    row[f"{mode}_strict"] = first_relevant_rank(ranked, set(q["relevant"]))  # listed IDs only
+                    row[f"{mode}_top10"] = ranked  # kept so labels can be re-scored without re-running
                 row["translation"] = translator.translate(q["query"])
                 rows.append(row)
             langs = sorted({r["lang"] for r in rows}) + ["all"]
@@ -132,8 +146,9 @@ def main() -> None:
 
     spot = results["sets"]["spot_checks"]["per_query"]
     passed = sum(1 for r in spot if r[GATE_MODE] and r[GATE_MODE] <= GATE_K)
+    strict = sum(1 for r in spot if r[f"{GATE_MODE}_strict"] and r[f"{GATE_MODE}_strict"] <= GATE_K)
     print(f"\nPhase 1 gate: {passed}/{len(spot)} spot checks have a correct doc in {GATE_MODE} top {GATE_K} "
-          f"-> {'PASS' if passed == len(spot) else 'FAIL'}")
+          f"-> {'PASS' if passed == len(spot) else 'FAIL'}  (listed IDs only, without relevant_via: {strict}/{len(spot)})")
     print("\nms per query (CPU; translation excluded, cached): " +
           ", ".join(f"{m} {ms}" for m, ms in results["ms_per_query_excl_translation"].items()))
     print(f"Wrote {results_path.relative_to(ROOT)}")

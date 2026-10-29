@@ -37,31 +37,29 @@ plug into. Corpus-specific code lives in `products/<name>/`.
 Do not start a phase until the previous gate passes.
 
 ## Current state (2026-10-29)
-- **Phase 0 done** (gate passed: all 2,530 docs validate against `core.schema.Document`).
-- Steps 1-2: ingestion (2,530 docs, 21,660 relationships) and the `core/` + `products/attack/` split (D5-D7).
-- **Phase 1 in progress.**
-  - Step 3a: Postgres + pgvector (`docker-compose.yml`; local fallback `pgserver`, D9), CI green on GitHub
-    Actions, revoked-ID redirects (157 IDs, D8).
-  - Step 3b: embedding probe -> **bge-m3** (D10). Dense misses bare IDs for every model -> hybrid (D11).
-  - Step 4a (committed): chunking (2,977 chunks), BM25 (D12), pgvector index + embedding cache, tenant-scoped
-    hybrid search (RRF), Arabic->English query translation with qwen2.5:3b (D14). Spot-check gate 17-18/20.
-    HNSW + filter risk recorded (D13).
-  - Step 4b (in progress, not committed): exact-ID pinning (`HybridSearcher.pinned`, aliases = revoked IDs)
-    and cross-encoder reranking (`core/rerank.py`: bge-reranker-v2-m3 vs mmarco-mMiniLMv2). Ablation run:
-    `python -m products.attack.retrieval_check` -> `eval/results/retrieval_check.json`.
+- **Phase 0 done.** Steps 1-2: ingestion (2,530 docs, 21,660 relationships), `core/` + `products/attack/` split.
+- **Phase 1 done** (gate: 20/20 spot checks in the top 5). Steps 3-4, details in `docs/steps/03-*`, `04-*`:
+  - Postgres + pgvector (`docker-compose.yml`; local fallback `pgserver`, D9); CI green on GitHub Actions.
+  - Embeddings: **bge-m3** via Ollama (D10). Keyword: BM25 in `core/bm25.py` (D12). Fusion: RRF.
+  - Claude **Haiku 5.5** (`core/llm.py`) translates Arabic questions and reranks the top 30 listwise (D15).
+    Every call is logged to `data/llm_usage.jsonl`; calls are refused above `LLM_BUDGET_USD` (.env, $5).
+  - Exact-ID pinning incl. revoked IDs (D8, D17); relationships written into document text (D16).
+  - Probe (32 q): dense hit@5 0.781 / MRR 0.698 -> full pipeline 1.0 / 0.896. Claude spend to date $0.49.
+  - Known risks: HNSW + filters (D13); LLM reranker variance, judge over several runs (D19).
 - Corpus is ATT&CK **v20**: detection lives in DETxxxx/ANxxxx objects (D3).
-- Dev machine (Windows, CPU only): no `make`, no Docker/WSL. Ollama 0.40.6 (`ollama serve`) with bge-m3,
-  snowflake-arctic-embed2, embeddinggemma, qwen2.5:3b, llama3.2:3b. venv has torch 2.15 CPU +
-  sentence-transformers 6.2 (extra `rerank`). Reranker weights in the Hugging Face cache.
+- Dev machine (Windows, CPU only): no `make`, no Docker/WSL. Ollama 0.40.6 (`ollama serve`). venv has torch CPU +
+  sentence-transformers (local `--stack local` only) and anthropic 2.3. API key in gitignored `.env`.
+- Model rule from the owner: use Claude Haiku 5.5 by default; Sonnet/Opus 5.5 only for one-off quality checks;
+  stop all Claude use and tell the owner if remaining credit would fall to $50.
 
 ## Next step
-Finish step 4b: read the ablation numbers, write `docs/steps/04-hybrid-search.md`, LOG, DECISIONS (reranker,
-pinning), commit + push. If the phase 1 gate (20/20 spot checks in top 5) passes, phase 2: the 100-question
-golden set (graded relevance: parent vs sub-technique), eval harness (recall@k, MRR, nDCG, faithfulness) and a
-CI regression gate.
+Phase 2: golden set of 100+ questions (EN/AR/mixed, graded relevance: parent vs sub-technique, group page vs one
+linked doc; Arabic reviewed by a native speaker), eval harness in `core/eval/` (recall@k, MRR, nDCG, faithfulness),
+reranked configs run 3x (mean + spread), CI gate that fails on regression.
 
 ## Stack
-Python 3.11+, Postgres + pgvector (Docker), rank_bm25 or Postgres full-text, Claude API, FastAPI, pytest,
+Python 3.11+, Postgres + pgvector (Docker or pgserver), BM25 (core/bm25.py), bge-m3 embeddings (Ollama),
+Claude API (Haiku 5.5), FastAPI, pytest,
 GitHub Actions.
 
 ## Commands
@@ -70,5 +68,5 @@ GitHub Actions.
 - `make test` — run pytest (real-data tests skip until `make ingest` has run; DB tests use DATABASE_URL or pgserver)
 - `make db` — Postgres + pgvector in Docker (optional; without it `core/db.py` starts pgserver)
 - `python -m products.attack.index` — chunk + embed + write the pgvector index (needs `ollama serve`)
-- `python -m products.attack.retrieval_check` — dense/keyword/hybrid/+translate/+pin/+rerank ablation + phase 1 gate
+- `python -m products.attack.retrieval_check [--stack haiku|local]` — stage-by-stage ablation + phase 1 gate (~$0.11 per Haiku run)
 - `python -m products.attack.embedding_probe [model ...]` — embedding-model probe (needs `ollama serve`; ~7 min/model first run, cached after)
