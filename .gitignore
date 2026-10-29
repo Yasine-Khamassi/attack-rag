@@ -1,0 +1,8 @@
+# data is reproducible from the ingest script; don't commit 50 MB of JSON
+data/raw/
+data/processed/
+.env
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
