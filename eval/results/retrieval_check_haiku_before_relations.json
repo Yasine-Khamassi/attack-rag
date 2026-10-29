@@ -1,6 +1,10 @@
 {
+ "stack": "haiku",
  "model": "bge-m3",
- "translator": "qwen2.5:3b",
+ "translator": "claude-haiku-5-5",
+ "rerankers": {
+  "+rerank": "claude-haiku-5-5"
+ },
  "sets": {
   "spot_checks": {
    "summary": {
@@ -82,12 +86,12 @@
       "mrr@10": 0.706
      }
     },
-    "hybrid_tx": {
+    "+translate": {
      "ar": {
       "n": 6,
-      "hit@1": 0.167,
-      "hit@5": 0.667,
-      "mrr@10": 0.428
+      "hit@1": 0.333,
+      "hit@5": 0.833,
+      "mrr@10": 0.604
      },
      "en": {
       "n": 8,
@@ -103,9 +107,61 @@
      },
      "all": {
       "n": 20,
-      "hit@1": 0.55,
-      "hit@5": 0.85,
-      "mrr@10": 0.712
+      "hit@1": 0.6,
+      "hit@5": 0.9,
+      "mrr@10": 0.765
+     }
+    },
+    "+pin": {
+     "ar": {
+      "n": 6,
+      "hit@1": 0.333,
+      "hit@5": 0.833,
+      "mrr@10": 0.604
+     },
+     "en": {
+      "n": 8,
+      "hit@1": 0.75,
+      "hit@5": 1.0,
+      "mrr@10": 0.875
+     },
+     "mixed": {
+      "n": 6,
+      "hit@1": 1.0,
+      "hit@5": 1.0,
+      "mrr@10": 1.0
+     },
+     "all": {
+      "n": 20,
+      "hit@1": 0.7,
+      "hit@5": 0.95,
+      "mrr@10": 0.831
+     }
+    },
+    "+rerank": {
+     "ar": {
+      "n": 6,
+      "hit@1": 0.5,
+      "hit@5": 1.0,
+      "mrr@10": 0.75
+     },
+     "en": {
+      "n": 8,
+      "hit@1": 0.875,
+      "hit@5": 1.0,
+      "mrr@10": 0.938
+     },
+     "mixed": {
+      "n": 6,
+      "hit@1": 0.833,
+      "hit@5": 0.833,
+      "mrr@10": 0.833
+     },
+     "all": {
+      "n": 20,
+      "hit@1": 0.75,
+      "hit@5": 0.95,
+      "mrr@10": 0.85
      }
     }
    },
@@ -131,11 +187,23 @@
       "T1546.003",
       "DET0364"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1047",
       "T1546.003",
       "DET0364"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1047",
+      "T1546.003",
+      "DET0364"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1047",
+      "DET0364",
+      "DET0477"
      ],
      "translation": null
     },
@@ -160,11 +228,23 @@
       "T1055.008",
       "T1055.009"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1055",
       "T1055.008",
       "T1055.009"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1055",
+      "T1055.008",
+      "T1055.009"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "DET0508",
+      "DET0203",
+      "DET0100"
      ],
      "translation": null
     },
@@ -189,11 +269,23 @@
       "G0007",
       "G1003"
      ],
-     "hybrid_tx": 2,
-     "hybrid_tx_top3": [
+     "+translate": 2,
+     "+translate_top3": [
       "G1031",
       "G0007",
       "G1003"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "G1031",
+      "G0007",
+      "G1003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "G0007",
+      "G0044",
+      "G0034"
      ],
      "translation": null
     },
@@ -218,11 +310,23 @@
       "S0637",
       "S1156"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "S0154",
       "S0637",
       "S1156"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "S0154",
+      "S0637",
+      "S1156"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "S0154",
+      "S1155",
+      "S1138"
      ],
      "translation": null
     },
@@ -247,8 +351,20 @@
       "DET0016",
       "DET0497"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
+      "T1685",
+      "DET0016",
+      "DET0497"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1685",
+      "DET0016",
+      "DET0497"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
       "T1685",
       "DET0016",
       "DET0497"
@@ -276,11 +392,23 @@
       "T1041",
       "T1586.003"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1567.002",
       "T1041",
       "T1586.003"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1567.002",
+      "T1041",
+      "T1586.003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1567.002",
+      "T1567",
+      "T1537"
      ],
      "translation": null
     },
@@ -305,11 +433,23 @@
       "DET0551",
       "T1110.003"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1110.001",
       "DET0551",
       "T1110.003"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1110.001",
+      "DET0551",
+      "T1110.003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1110.001",
+      "T1110.003",
+      "T1110"
      ],
      "translation": null
     },
@@ -334,8 +474,20 @@
       "M1026",
       "M1036"
      ],
-     "hybrid_tx": 2,
-     "hybrid_tx_top3": [
+     "+translate": 2,
+     "+translate_top3": [
+      "M1018",
+      "M1026",
+      "M1036"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "M1018",
+      "M1026",
+      "M1036"
+     ],
+     "+rerank": 2,
+     "+rerank_top3": [
       "M1018",
       "M1026",
       "M1036"
@@ -359,13 +511,25 @@
       "T1219.003",
       "T1653"
      ],
-     "hybrid_tx": 2,
-     "hybrid_tx_top3": [
+     "+translate": 2,
+     "+translate_top3": [
       "T1219.003",
       "T1219",
       "T1584.008"
      ],
-     "translation": "How do attackers use legitimate remote control software to control devices?"
+     "+pin": 2,
+     "+pin_top3": [
+      "T1219.003",
+      "T1219",
+      "T1584.008"
+     ],
+     "+rerank": 2,
+     "+rerank_top3": [
+      "T1563.002",
+      "T1219",
+      "T1219.003"
+     ],
+     "translation": "How do attackers use legitimate remote control software to take over devices?"
     },
     {
      "id": "s10",
@@ -384,13 +548,25 @@
       "T1486",
       "T1684.001"
      ],
-     "hybrid_tx": 2,
-     "hybrid_tx_top3": [
-      "S1178",
+     "+translate": 1,
+     "+translate_top3": [
       "T1486",
+      "S1178",
       "T1187"
      ],
-     "translation": "Encrypting the victim's data to disable the systems and demanding a ransom"
+     "+pin": 1,
+     "+pin_top3": [
+      "T1486",
+      "S1178",
+      "T1187"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1486",
+      "S1178",
+      "S1247"
+     ],
+     "translation": "Encrypting victim data to disable systems and demand a ransom"
     },
     {
      "id": "s11",
@@ -409,13 +585,25 @@
       "T1539",
       "DET0507"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1539",
       "T1185",
       "T1550.004"
      ],
-     "translation": "Stealing the user session's cookies from the browser"
+     "+pin": 1,
+     "+pin_top3": [
+      "T1539",
+      "T1185",
+      "T1550.004"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1539",
+      "T1550.004",
+      "DET0509"
+     ],
+     "translation": "Stealing a user's session cookies from the browser"
     },
     {
      "id": "s12",
@@ -434,13 +622,25 @@
       "T1055.003",
       "T1055.005"
      ],
-     "hybrid_tx": 9,
-     "hybrid_tx_top3": [
+     "+translate": 8,
+     "+translate_top3": [
       "T1055.009",
-      "T1055.005",
-      "T1055.011"
+      "T1055.012",
+      "T1055.003"
      ],
-     "translation": "Malicious code injection into other operations in memory"
+     "+pin": 8,
+     "+pin_top3": [
+      "T1055.009",
+      "T1055.012",
+      "T1055.003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1055",
+      "T1055.001",
+      "T1055.004"
+     ],
+     "translation": "Injecting malicious code into other processes in memory"
     },
     {
      "id": "s13",
@@ -459,13 +659,25 @@
       "T1016.001",
       "DET0357"
      ],
-     "hybrid_tx": 8,
-     "hybrid_tx_top3": [
+     "+translate": 2,
+     "+translate_top3": [
       "DET0376",
-      "DET0817",
-      "DET0538"
+      "T1046",
+      "DET0817"
      ],
-     "translation": "Network Port Scanning and Identification of Running Services"
+     "+pin": 2,
+     "+pin_top3": [
+      "DET0376",
+      "T1046",
+      "DET0817"
+     ],
+     "+rerank": 2,
+     "+rerank_top3": [
+      "DET0376",
+      "T1046",
+      "S0097"
+     ],
+     "translation": "Port scanning and discovery of services running on the network"
     },
     {
      "id": "s14",
@@ -484,13 +696,25 @@
       "T1136.001",
       "T1136.002"
      ],
-     "hybrid_tx": 3,
-     "hybrid_tx_top3": [
+     "+translate": 2,
+     "+translate_top3": [
       "T1136.001",
-      "T1136.002",
-      "T1136"
+      "T1136",
+      "T1136.002"
      ],
-     "translation": "Create a new user account to stay in the system"
+     "+pin": 2,
+     "+pin_top3": [
+      "T1136.001",
+      "T1136",
+      "T1136.002"
+     ],
+     "+rerank": 2,
+     "+rerank_top3": [
+      "T1136.001",
+      "T1136",
+      "T1136.002"
+     ],
+     "translation": "Create a new user account to maintain persistence on the system"
     },
     {
      "id": "s15",
@@ -512,11 +736,23 @@
       "T1047",
       "DET0054"
      ],
-     "hybrid_tx": 2,
-     "hybrid_tx_top3": [
+     "+translate": 2,
+     "+translate_top3": [
       "DET0364",
       "T1047",
       "DET0054"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1047",
+      "DET0364",
+      "DET0054"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1047",
+      "DET0364",
+      "DET0498"
      ],
      "translation": null
     },
@@ -541,11 +777,23 @@
       "DET0215",
       "DET0283"
      ],
-     "hybrid_tx": 6,
-     "hybrid_tx_top3": [
+     "+translate": 6,
+     "+translate_top3": [
       "DET0021",
       "DET0215",
       "T1690"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1486",
+      "DET0021",
+      "DET0215"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1486",
+      "DET0215",
+      "DET0021"
      ],
      "translation": "What is T1486?"
     },
@@ -570,13 +818,25 @@
       "DET0296",
       "T1055.009"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "DET0508",
-      "DET0525",
+      "DET0296",
+      "DET0102"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1055",
+      "DET0508",
       "DET0296"
      ],
-     "translation": "How do I discover T1055?"
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1055",
+      "DET0389",
+      "DET0217"
+     ],
+     "translation": "How do I detect T1055?"
     },
     {
      "id": "s18",
@@ -599,8 +859,20 @@
       "T1690",
       "T1686"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
+      "T1685",
+      "T1690",
+      "T1689"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1685",
+      "T1690",
+      "T1689"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
       "T1685",
       "T1690",
       "T1689"
@@ -628,11 +900,23 @@
       "S0637",
       "DET0852"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "S0154",
       "S0637",
       "DET0852"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "S0154",
+      "S0637",
+      "DET0852"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "S0154",
+      "S0637",
+      "S1138"
      ],
      "translation": null
     },
@@ -648,8 +932,8 @@
      "keyword": 1,
      "keyword_top3": [
       "G0032",
-      "S0665",
-      "S0181"
+      "S0181",
+      "S0665"
      ],
      "hybrid": 1,
      "hybrid_top3": [
@@ -657,13 +941,25 @@
       "S0694",
       "S0181"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "G0032",
+      "S0694",
+      "S0245"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "G0032",
+      "S0694",
+      "S0245"
+     ],
+     "+rerank": null,
+     "+rerank_top3": [
+      "S0694",
       "S0245",
       "S0181"
      ],
-     "translation": "What malware does the Lazarus group use?"
+     "translation": "What software does the Lazarus group use?"
     }
    ]
   },
@@ -747,12 +1043,12 @@
       "mrr@10": 0.742
      }
     },
-    "hybrid_tx": {
+    "+translate": {
      "ar": {
       "n": 12,
-      "hit@1": 0.5,
+      "hit@1": 0.667,
       "hit@5": 1.0,
-      "mrr@10": 0.676
+      "mrr@10": 0.799
      },
      "en": {
       "n": 12,
@@ -764,13 +1060,65 @@
       "n": 8,
       "hit@1": 0.5,
       "hit@5": 1.0,
-      "mrr@10": 0.656
+      "mrr@10": 0.677
      },
      "all": {
       "n": 32,
-      "hit@1": 0.562,
+      "hit@1": 0.625,
       "hit@5": 1.0,
-      "mrr@10": 0.721
+      "mrr@10": 0.772
+     }
+    },
+    "+pin": {
+     "ar": {
+      "n": 12,
+      "hit@1": 0.667,
+      "hit@5": 1.0,
+      "mrr@10": 0.799
+     },
+     "en": {
+      "n": 12,
+      "hit@1": 0.667,
+      "hit@5": 1.0,
+      "mrr@10": 0.808
+     },
+     "mixed": {
+      "n": 8,
+      "hit@1": 0.75,
+      "hit@5": 1.0,
+      "mrr@10": 0.854
+     },
+     "all": {
+      "n": 32,
+      "hit@1": 0.688,
+      "hit@5": 1.0,
+      "mrr@10": 0.816
+     }
+    },
+    "+rerank": {
+     "ar": {
+      "n": 12,
+      "hit@1": 0.833,
+      "hit@5": 1.0,
+      "mrr@10": 0.903
+     },
+     "en": {
+      "n": 12,
+      "hit@1": 1.0,
+      "hit@5": 1.0,
+      "mrr@10": 1.0
+     },
+     "mixed": {
+      "n": 8,
+      "hit@1": 0.875,
+      "hit@5": 0.875,
+      "mrr@10": 0.875
+     },
+     "all": {
+      "n": 32,
+      "hit@1": 0.906,
+      "hit@5": 0.969,
+      "mrr@10": 0.932
      }
     }
    },
@@ -796,11 +1144,23 @@
       "T1202",
       "T1059.003"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1059.001",
       "T1202",
       "T1059.003"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1059.001",
+      "T1202",
+      "T1059.003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1059.001",
+      "T1059.003",
+      "T1569"
      ],
      "translation": null
     },
@@ -825,11 +1185,23 @@
       "T1003.001",
       "T1556.002"
      ],
-     "hybrid_tx": 2,
-     "hybrid_tx_top3": [
+     "+translate": 2,
+     "+translate_top3": [
       "T1003.004",
       "T1003.001",
       "T1556.002"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "T1003.004",
+      "T1003.001",
+      "T1556.002"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1003.001",
+      "T1003.004",
+      "M1043"
      ],
      "translation": null
     },
@@ -854,11 +1226,23 @@
       "DET0070",
       "DET0236"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1566.001",
       "DET0070",
       "DET0236"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1566.001",
+      "DET0070",
+      "DET0236"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1566.001",
+      "DET0236",
+      "DET0070"
      ],
      "translation": null
     },
@@ -883,11 +1267,23 @@
       "S1070",
       "S0449"
      ],
-     "hybrid_tx": 5,
-     "hybrid_tx_top3": [
+     "+translate": 5,
+     "+translate_top3": [
       "S1178",
       "S1070",
       "S0449"
+     ],
+     "+pin": 5,
+     "+pin_top3": [
+      "S1178",
+      "S1070",
+      "S0449"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1486",
+      "S1178",
+      "S1070"
      ],
      "translation": null
     },
@@ -912,11 +1308,23 @@
       "T1053",
       "T1529"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1053.005",
       "T1053",
       "T1529"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1053.005",
+      "T1053",
+      "T1529"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1053.005",
+      "T1053",
+      "T1053.002"
      ],
      "translation": null
     },
@@ -941,11 +1349,23 @@
       "T1563.001",
       "T1550.003"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1550.002",
       "T1563.001",
       "T1550.003"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1550.002",
+      "T1563.001",
+      "T1550.003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1550.002",
+      "S0122",
+      "T1563.001"
      ],
      "translation": null
     },
@@ -970,11 +1390,23 @@
       "T1685.001",
       "T1561"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1685.005",
       "T1685.001",
       "T1561"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1685.005",
+      "T1685.001",
+      "T1561"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1685.005",
+      "T1685.001",
+      "DET0187"
      ],
      "translation": null
     },
@@ -999,10 +1431,22 @@
       "G0016",
       "G1003"
      ],
-     "hybrid_tx": 2,
-     "hybrid_tx_top3": [
+     "+translate": 2,
+     "+translate_top3": [
       "G1031",
       "G0016",
+      "G1003"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "G1031",
+      "G0016",
+      "G1003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "G0016",
+      "G1031",
       "G1003"
      ],
      "translation": null
@@ -1028,11 +1472,23 @@
       "S0154",
       "S0179"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "S0002",
       "S0154",
       "S0179"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "S0002",
+      "S0154",
+      "S0179"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "S0002",
+      "S0179",
+      "S0007"
      ],
      "translation": null
     },
@@ -1057,11 +1513,23 @@
       "M1032",
       "T1111"
      ],
-     "hybrid_tx": 2,
-     "hybrid_tx_top3": [
+     "+translate": 2,
+     "+translate_top3": [
       "T1556.006",
       "M1032",
       "T1111"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "T1556.006",
+      "M1032",
+      "T1111"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "M1032",
+      "M1018",
+      "M1036"
      ],
      "translation": null
     },
@@ -1086,8 +1554,20 @@
       "DET0487",
       "DET0551"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
+      "T1110.003",
+      "DET0487",
+      "DET0551"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1110.003",
+      "DET0487",
+      "DET0551"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
       "T1110.003",
       "DET0487",
       "DET0551"
@@ -1115,10 +1595,22 @@
       "T1583.002",
       "T1071"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1071.004",
       "T1583.002",
+      "T1071"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1071.004",
+      "T1583.002",
+      "T1071"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1071.004",
+      "T1568",
       "T1071"
      ],
      "translation": null
@@ -1140,13 +1632,25 @@
       "T1204.002",
       "T1105"
      ],
-     "hybrid_tx": 3,
-     "hybrid_tx_top3": [
-      "T1204.002",
-      "T1203",
-      "T1059.001"
+     "+translate": 2,
+     "+translate_top3": [
+      "T1202",
+      "T1059.001",
+      "T1204.002"
      ],
-     "translation": "How do attackers exploit Powershell to execute malicious commands on Windows devices?"
+     "+pin": 2,
+     "+pin_top3": [
+      "T1202",
+      "T1059.001",
+      "T1204.002"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1059.001",
+      "T1059",
+      "T1202"
+     ],
+     "translation": "How do attackers abuse PowerShell to execute malicious commands on Windows machines?"
     },
     {
      "id": "ar02",
@@ -1165,13 +1669,25 @@
       "T1003.004",
       "T1555.005"
      ],
-     "hybrid_tx": 2,
-     "hybrid_tx_top3": [
-      "T1003.004",
+     "+translate": 1,
+     "+translate_top3": [
       "T1003.001",
+      "T1003.004",
+      "T1555.005"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1003.001",
+      "T1003.004",
+      "T1555.005"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1003.001",
+      "T1003.004",
       "T1003.002"
      ],
-     "translation": "How do attackers extract passwords and authentication data from the local Security Service's memory in Windows?"
+     "translation": "How do attackers extract passwords and credentials from the memory of the Local Security Authority Subsystem Service (LSASS) in Windows?"
     },
     {
      "id": "ar03",
@@ -1190,13 +1706,25 @@
       "T1566.002",
       "T1598.002"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
+      "T1566.001",
+      "T1598.002",
+      "DET0236"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1566.001",
+      "T1598.002",
+      "DET0236"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
       "T1566.001",
       "DET0236",
-      "T1598.002"
+      "DET0070"
      ],
-     "translation": "Phishing email message contains a malicious attachment"
+     "translation": "Phishing email containing a malicious attachment"
     },
     {
      "id": "ar04",
@@ -1215,13 +1743,25 @@
       "S1178",
       "T1684.001"
      ],
-     "hybrid_tx": 5,
-     "hybrid_tx_top3": [
-      "T1657",
+     "+translate": 4,
+     "+translate_top3": [
       "S1178",
+      "T1657",
       "S0449"
      ],
-     "translation": "Cyber ransomware encrypts the victim's files and demands payment."
+     "+pin": 4,
+     "+pin_top3": [
+      "S1178",
+      "T1657",
+      "S0449"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1486",
+      "S1178",
+      "S1070"
+     ],
+     "translation": "Ransomware encrypts the victim's files and demands a payment"
     },
     {
      "id": "ar05",
@@ -1240,13 +1780,25 @@
       "T1543",
       "T1653"
      ],
-     "hybrid_tx": 4,
-     "hybrid_tx_top3": [
-      "T1053",
+     "+translate": 3,
+     "+translate_top3": [
       "T1653",
-      "T1529"
+      "T1053",
+      "T1053.005"
      ],
-     "translation": "Use scheduled tasks to remain in the system after a reboot."
+     "+pin": 3,
+     "+pin_top3": [
+      "T1653",
+      "T1053",
+      "T1053.005"
+     ],
+     "+rerank": 3,
+     "+rerank_top3": [
+      "T1053",
+      "T1053.006",
+      "T1053.005"
+     ],
+     "translation": "Using scheduled tasks to maintain persistence on a system after a reboot"
     },
     {
      "id": "ar06",
@@ -1265,13 +1817,25 @@
       "T1048.002",
       "T1563.001"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1550.002",
-      "T1563.001",
-      "T1550.003"
+      "T1550.003",
+      "T1550"
      ],
-     "translation": "Side-jump network traversal using a password split instead of the password itself"
+     "+pin": 1,
+     "+pin_top3": [
+      "T1550.002",
+      "T1550.003",
+      "T1550"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1550.002",
+      "T1550.003",
+      "T1550"
+     ],
+     "translation": "Lateral movement across a network using password hash instead of the plaintext password"
     },
     {
      "id": "ar07",
@@ -1290,13 +1854,25 @@
       "T1070.004",
       "T1561"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1685.005",
-      "T1561",
-      "T1070.004"
+      "T1070.004",
+      "T1685.001"
      ],
-     "translation": "How does the attacker wipe Windows event logs to hide its traces?"
+     "+pin": 1,
+     "+pin_top3": [
+      "T1685.005",
+      "T1070.004",
+      "T1685.001"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1685.005",
+      "T1685.001",
+      "DET0187"
+     ],
+     "translation": "How does an attacker clear Windows event logs to hide their traces?"
     },
     {
      "id": "ar08",
@@ -1315,10 +1891,22 @@
       "G0102",
       "G0007"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "G0016",
       "G1031",
+      "G1003"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "G0016",
+      "G1031",
+      "G1003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "G0016",
+      "G0049",
       "G1003"
      ],
      "translation": "What is the Russian threat group known as Cozy Bear?"
@@ -1340,13 +1928,25 @@
       "M1028",
       "T1218.014"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "S0002",
       "S0179",
       "S0154"
      ],
-     "translation": "What is a Mimikatz tool and what does it do?"
+     "+pin": 1,
+     "+pin_top3": [
+      "S0002",
+      "S0179",
+      "S0154"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "S0002",
+      "S0179",
+      "S0007"
+     ],
+     "translation": "What is the Mimikatz tool and what does it do?"
     },
     {
      "id": "ar10",
@@ -1365,13 +1965,25 @@
       "T1098",
       "T1484.002"
      ],
-     "hybrid_tx": 2,
-     "hybrid_tx_top3": [
+     "+translate": 2,
+     "+translate_top3": [
       "T1556.006",
       "M1032",
       "T1111"
      ],
-     "translation": "Multi-Factor Authentication as a Defense Against Account Hijacking"
+     "+pin": 2,
+     "+pin_top3": [
+      "T1556.006",
+      "M1032",
+      "T1111"
+     ],
+     "+rerank": 2,
+     "+rerank_top3": [
+      "T1556.006",
+      "M1032",
+      "T1111"
+     ],
+     "translation": "Multi-factor authentication as a defense against account takeover"
     },
     {
      "id": "ar11",
@@ -1390,13 +2002,25 @@
       "DET0460",
       "T1110.004"
      ],
-     "hybrid_tx": 3,
-     "hybrid_tx_top3": [
-      "T1110.004",
-      "DET0487",
-      "T1110.003"
+     "+translate": 1,
+     "+translate_top3": [
+      "T1110.003",
+      "T1110.001",
+      "DET0487"
      ],
-     "translation": "A brute force attack is attempting to use a common password on a large number of accounts."
+     "+pin": 1,
+     "+pin_top3": [
+      "T1110.003",
+      "T1110.001",
+      "DET0487"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1110.003",
+      "T1110",
+      "T1684.001"
+     ],
+     "translation": "An attack that tries one common password against a large number of accounts"
     },
     {
      "id": "ar12",
@@ -1415,13 +2039,25 @@
       "T1071",
       "T1557.001"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1071.004",
-      "T1071.001",
-      "T1071"
+      "T1071",
+      "T1071.001"
      ],
-     "translation": "Use Domain Name System protocol to communicate with the Control and Command server."
+     "+pin": 1,
+     "+pin_top3": [
+      "T1071.004",
+      "T1071",
+      "T1071.001"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1071.004",
+      "T1584.002",
+      "T1583.002"
+     ],
+     "translation": "Using the DNS protocol to communicate with a command and control server"
     },
     {
      "id": "mx01",
@@ -1444,11 +2080,23 @@
       "T1546.013",
       "DET0455"
      ],
-     "hybrid_tx": 3,
-     "hybrid_tx_top3": [
+     "+translate": 3,
+     "+translate_top3": [
       "DET0451",
       "DET0589",
       "T1059.001"
+     ],
+     "+pin": 3,
+     "+pin_top3": [
+      "DET0451",
+      "DET0589",
+      "T1059.001"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "DET0455",
+      "DET0451",
+      "DET0516"
      ],
      "translation": "How do I detect malicious use of PowerShell?"
     },
@@ -1473,13 +2121,25 @@
       "DET0363",
       "DET0302"
      ],
-     "hybrid_tx": 3,
-     "hybrid_tx_top3": [
+     "+translate": 3,
+     "+translate_top3": [
       "DET0181",
       "DET0363",
       "T1003.001"
      ],
-     "translation": "What is the technology T1003.001?"
+     "+pin": 1,
+     "+pin_top3": [
+      "T1003.001",
+      "DET0181",
+      "DET0363"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1003.001",
+      "DET0363",
+      "T1003"
+     ],
+     "translation": "What is technique T1003.001?"
     },
     {
      "id": "mx03",
@@ -1502,13 +2162,25 @@
       "DET0542",
       "DET0363"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1003.001",
       "DET0363",
-      "DET0430"
+      "DET0234"
      ],
-     "translation": "How do I detect data credential theft from the LSASS memory?"
+     "+pin": 1,
+     "+pin_top3": [
+      "T1003.001",
+      "DET0363",
+      "DET0234"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "DET0363",
+      "DET0234",
+      "T1003.001"
+     ],
+     "translation": "How do I detect credential theft from LSASS memory?"
     },
     {
      "id": "mx04",
@@ -1531,13 +2203,25 @@
       "C0023",
       "S1084"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "G0016",
       "S1084",
       "C0023"
      ],
-     "translation": "What tools and techniques does Group APT29 use?"
+     "+pin": 1,
+     "+pin_top3": [
+      "G0016",
+      "S1084",
+      "C0023"
+     ],
+     "+rerank": null,
+     "+rerank_top3": [
+      "S1084",
+      "S0037",
+      "S0139"
+     ],
+     "translation": "What tools and techniques does the APT29 group use?"
     },
     {
      "id": "mx05",
@@ -1560,13 +2244,25 @@
       "S0179",
       "S0007"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "S0002",
       "S0179",
       "S0154"
      ],
-     "translation": "Explanation of Mimikatz tool and its uses"
+     "+pin": 1,
+     "+pin_top3": [
+      "S0002",
+      "S0179",
+      "S0154"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "S0002",
+      "T1003.004",
+      "T1003.006"
+     ],
+     "translation": "Explanation of the Mimikatz tool and its uses"
     },
     {
      "id": "mx06",
@@ -1589,11 +2285,23 @@
       "DET0184",
       "S0098"
      ],
-     "hybrid_tx": 4,
-     "hybrid_tx_top3": [
+     "+translate": 4,
+     "+translate_top3": [
       "DET0049",
       "DET0184",
       "S0098"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1685.005",
+      "DET0049",
+      "DET0184"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1685.005",
+      "DET0049",
+      "DET0184"
      ],
      "translation": "What does T1070.001 mean?"
     },
@@ -1618,13 +2326,25 @@
       "DET0157",
       "T1558.003"
      ],
-     "hybrid_tx": 3,
-     "hybrid_tx_top3": [
+     "+translate": 2,
+     "+translate_top3": [
       "DET0157",
-      "T1558.004",
-      "T1558.003"
+      "T1558.003",
+      "T1558.004"
      ],
-     "translation": "How does the Kerberoasting attack work?"
+     "+pin": 2,
+     "+pin_top3": [
+      "DET0157",
+      "T1558.003",
+      "T1558.004"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1558.003",
+      "DET0157",
+      "T1558"
+     ],
+     "translation": "How does a Kerberoasting attack work?"
     },
     {
      "id": "mx08",
@@ -1647,15 +2367,36 @@
       "T1563.002",
       "DET0588"
      ],
-     "hybrid_tx": 1,
-     "hybrid_tx_top3": [
+     "+translate": 1,
+     "+translate_top3": [
       "T1021.001",
       "T1563.002",
       "T1210"
      ],
-     "translation": "How do attackers use RDP for lateral movement within the network?"
+     "+pin": 1,
+     "+pin_top3": [
+      "T1021.001",
+      "T1563.002",
+      "T1210"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1021.001",
+      "T1563.002",
+      "T1563"
+     ],
+     "translation": "How do attackers use RDP for lateral movement within a network?"
     }
    ]
   }
- }
+ },
+ "ms_per_query_excl_translation": {
+  "dense": 2115,
+  "keyword": 4,
+  "hybrid": 2135,
+  "+translate": 3340,
+  "+pin": 3338,
+  "+rerank": 5009
+ },
+ "translated_questions": 30
 }

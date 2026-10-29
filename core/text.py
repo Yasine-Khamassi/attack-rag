@@ -37,6 +37,11 @@ def _is_arabic(token: str) -> bool:
     return "؀" <= token[0] <= "ۿ"
 
 
+def identifiers(text: str) -> list[str]:
+    """Identifier-like tokens exactly as typed (normalised), without the base-ID expansion of `tokenize`."""
+    return [t for t in _TOKEN.findall(normalize(text)) if t[0].isalpha() and any(ch.isdigit() for ch in t)]
+
+
 def tokenize(text: str) -> list[str]:
     """Normalised tokens. Identifiers stay whole and also add their base ("t1003.001" -> + "t1003"),
     so a question about the parent ID still matches its sub-IDs. Arabic words lose the article "ال"."""

@@ -49,3 +49,21 @@ class OllamaTranslator:
             with urllib.request.urlopen(req, timeout=self.timeout) as resp:
                 self._cache[text] = json.load(resp)["response"].strip().strip('"')
         return self._cache[text]
+
+
+class ClaudeTranslator(OllamaTranslator):
+    """Same contract as OllamaTranslator, translated by the Claude API (core.llm, budget-limited)."""
+
+    def __init__(self, model: str = "claude-haiku-5-5", target: str = "English", domain: str = "",
+                 threshold: float = 0.3):
+        super().__init__(model=model, target=target, domain=domain, threshold=threshold)
+        from core.llm import Claude
+
+        self.llm = Claude(model, purpose="query translation")
+
+    def translate(self, text: str) -> str | None:
+        if not self.needs_translation(text):
+            return None
+        if text not in self._cache:
+            self._cache[text] = self.llm.complete(self.prompt + text, max_tokens=200).strip().strip('"')
+        return self._cache[text]

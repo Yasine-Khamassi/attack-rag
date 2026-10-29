@@ -1,0 +1,2767 @@
+{
+ "model": "bge-m3",
+ "translator": "qwen2.5:3b",
+ "rerankers": [
+  "bge-reranker-v2-m3",
+  "mmarco-minilm"
+ ],
+ "sets": {
+  "spot_checks": {
+   "summary": {
+    "dense": {
+     "ar": {
+      "n": 6,
+      "hit@1": 0.167,
+      "hit@5": 0.667,
+      "mrr@10": 0.403
+     },
+     "en": {
+      "n": 8,
+      "hit@1": 0.625,
+      "hit@5": 1.0,
+      "mrr@10": 0.812
+     },
+     "mixed": {
+      "n": 6,
+      "hit@1": 0.5,
+      "hit@5": 0.5,
+      "mrr@10": 0.519
+     },
+     "all": {
+      "n": 20,
+      "hit@1": 0.45,
+      "hit@5": 0.75,
+      "mrr@10": 0.601
+     }
+    },
+    "keyword": {
+     "ar": {
+      "n": 6,
+      "hit@1": 0.0,
+      "hit@5": 0.0,
+      "mrr@10": 0.0
+     },
+     "en": {
+      "n": 8,
+      "hit@1": 0.375,
+      "hit@5": 1.0,
+      "mrr@10": 0.688
+     },
+     "mixed": {
+      "n": 6,
+      "hit@1": 0.5,
+      "hit@5": 0.833,
+      "mrr@10": 0.667
+     },
+     "all": {
+      "n": 20,
+      "hit@1": 0.3,
+      "hit@5": 0.65,
+      "mrr@10": 0.475
+     }
+    },
+    "hybrid": {
+     "ar": {
+      "n": 6,
+      "hit@1": 0.167,
+      "hit@5": 0.667,
+      "mrr@10": 0.403
+     },
+     "en": {
+      "n": 8,
+      "hit@1": 0.75,
+      "hit@5": 1.0,
+      "mrr@10": 0.875
+     },
+     "mixed": {
+      "n": 6,
+      "hit@1": 0.667,
+      "hit@5": 1.0,
+      "mrr@10": 0.783
+     },
+     "all": {
+      "n": 20,
+      "hit@1": 0.55,
+      "hit@5": 0.9,
+      "mrr@10": 0.706
+     }
+    },
+    "+translate": {
+     "ar": {
+      "n": 6,
+      "hit@1": 0.167,
+      "hit@5": 0.667,
+      "mrr@10": 0.428
+     },
+     "en": {
+      "n": 8,
+      "hit@1": 0.75,
+      "hit@5": 1.0,
+      "mrr@10": 0.875
+     },
+     "mixed": {
+      "n": 6,
+      "hit@1": 0.667,
+      "hit@5": 0.833,
+      "mrr@10": 0.778
+     },
+     "all": {
+      "n": 20,
+      "hit@1": 0.55,
+      "hit@5": 0.85,
+      "mrr@10": 0.712
+     }
+    },
+    "+pin": {
+     "ar": {
+      "n": 6,
+      "hit@1": 0.167,
+      "hit@5": 0.667,
+      "mrr@10": 0.428
+     },
+     "en": {
+      "n": 8,
+      "hit@1": 0.75,
+      "hit@5": 1.0,
+      "mrr@10": 0.875
+     },
+     "mixed": {
+      "n": 6,
+      "hit@1": 1.0,
+      "hit@5": 1.0,
+      "mrr@10": 1.0
+     },
+     "all": {
+      "n": 20,
+      "hit@1": 0.65,
+      "hit@5": 0.9,
+      "mrr@10": 0.778
+     }
+    },
+    "+rerank": {
+     "ar": {
+      "n": 6,
+      "hit@1": 0.5,
+      "hit@5": 0.833,
+      "mrr@10": 0.656
+     },
+     "en": {
+      "n": 8,
+      "hit@1": 1.0,
+      "hit@5": 1.0,
+      "mrr@10": 1.0
+     },
+     "mixed": {
+      "n": 6,
+      "hit@1": 0.833,
+      "hit@5": 1.0,
+      "mrr@10": 0.875
+     },
+     "all": {
+      "n": 20,
+      "hit@1": 0.8,
+      "hit@5": 0.95,
+      "mrr@10": 0.859
+     }
+    },
+    "+rerank_small": {
+     "ar": {
+      "n": 6,
+      "hit@1": 0.333,
+      "hit@5": 0.833,
+      "mrr@10": 0.528
+     },
+     "en": {
+      "n": 8,
+      "hit@1": 1.0,
+      "hit@5": 1.0,
+      "mrr@10": 1.0
+     },
+     "mixed": {
+      "n": 6,
+      "hit@1": 1.0,
+      "hit@5": 1.0,
+      "mrr@10": 1.0
+     },
+     "all": {
+      "n": 20,
+      "hit@1": 0.8,
+      "hit@5": 0.95,
+      "mrr@10": 0.858
+     }
+    }
+   },
+   "per_query": [
+    {
+     "id": "s01",
+     "lang": "en",
+     "dense": 1,
+     "dense_top3": [
+      "T1047",
+      "T1546.003",
+      "DET0364"
+     ],
+     "keyword": 2,
+     "keyword_top3": [
+      "T1546.003",
+      "T1047",
+      "T1216.001"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1047",
+      "T1546.003",
+      "DET0364"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1047",
+      "T1546.003",
+      "DET0364"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1047",
+      "T1546.003",
+      "DET0364"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1047",
+      "T1546.003",
+      "T1053.005"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1047",
+      "T1053.005",
+      "T1546.003"
+     ],
+     "translation": null
+    },
+    {
+     "id": "s02",
+     "lang": "en",
+     "dense": 1,
+     "dense_top3": [
+      "DET0508",
+      "T1055",
+      "DET0203"
+     ],
+     "keyword": 2,
+     "keyword_top3": [
+      "T1218.013",
+      "T1055",
+      "T1055.002"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1055",
+      "T1055.008",
+      "T1055.009"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1055",
+      "T1055.008",
+      "T1055.009"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1055",
+      "T1055.008",
+      "T1055.009"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1055",
+      "DET0508",
+      "T1055.005"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1055",
+      "T1055.002",
+      "DET0508"
+     ],
+     "translation": null
+    },
+    {
+     "id": "s03",
+     "lang": "en",
+     "dense": 2,
+     "dense_top3": [
+      "G1031",
+      "G0007",
+      "G0035"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "G0007",
+      "G1031",
+      "G1003"
+     ],
+     "hybrid": 2,
+     "hybrid_top3": [
+      "G1031",
+      "G0007",
+      "G1003"
+     ],
+     "+translate": 2,
+     "+translate_top3": [
+      "G1031",
+      "G0007",
+      "G1003"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "G1031",
+      "G0007",
+      "G1003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "G0007",
+      "G0016",
+      "G0034"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "G0007",
+      "G0016",
+      "G0137"
+     ],
+     "translation": null
+    },
+    {
+     "id": "s04",
+     "lang": "en",
+     "dense": 1,
+     "dense_top3": [
+      "S0154",
+      "DET0852",
+      "T1546.005"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "S0154",
+      "S1156",
+      "S0637"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "S0154",
+      "S0637",
+      "S1156"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "S0154",
+      "S0637",
+      "S1156"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "S0154",
+      "S0637",
+      "S1156"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "S0154",
+      "S1156",
+      "S0637"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "S0154",
+      "DET0850",
+      "S1156"
+     ],
+     "translation": null
+    },
+    {
+     "id": "s05",
+     "lang": "en",
+     "dense": 2,
+     "dense_top3": [
+      "DET0016",
+      "T1685",
+      "S1234"
+     ],
+     "keyword": 2,
+     "keyword_top3": [
+      "DET0497",
+      "T1685",
+      "S1063"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1685",
+      "DET0016",
+      "DET0497"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1685",
+      "DET0016",
+      "DET0497"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1685",
+      "DET0016",
+      "DET0497"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1685",
+      "DET0497",
+      "T1687"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1685",
+      "DET0497",
+      "T1685.003"
+     ],
+     "translation": null
+    },
+    {
+     "id": "s06",
+     "lang": "en",
+     "dense": 1,
+     "dense_top3": [
+      "T1567.002",
+      "T1537",
+      "DET0484"
+     ],
+     "keyword": 2,
+     "keyword_top3": [
+      "T1041",
+      "T1567.002",
+      "M1041"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1567.002",
+      "T1041",
+      "T1586.003"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1567.002",
+      "T1041",
+      "T1586.003"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1567.002",
+      "T1041",
+      "T1586.003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1567.002",
+      "T1586.003",
+      "T1537"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1567.002",
+      "DET0570",
+      "T1537"
+     ],
+     "translation": null
+    },
+    {
+     "id": "s07",
+     "lang": "en",
+     "dense": 1,
+     "dense_top3": [
+      "T1110.001",
+      "DET0551",
+      "T1110.003"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "T1110.001",
+      "DET0551",
+      "DET0460"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1110.001",
+      "DET0551",
+      "T1110.003"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1110.001",
+      "DET0551",
+      "T1110.003"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1110.001",
+      "DET0551",
+      "T1110.003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1110.001",
+      "DET0551",
+      "DET0460"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1110.001",
+      "DET0460",
+      "T1110.003"
+     ],
+     "translation": null
+    },
+    {
+     "id": "s08",
+     "lang": "en",
+     "dense": 2,
+     "dense_top3": [
+      "M1018",
+      "M1026",
+      "M1036"
+     ],
+     "keyword": 2,
+     "keyword_top3": [
+      "M1018",
+      "M1026",
+      "M1015"
+     ],
+     "hybrid": 2,
+     "hybrid_top3": [
+      "M1018",
+      "M1026",
+      "M1036"
+     ],
+     "+translate": 2,
+     "+translate_top3": [
+      "M1018",
+      "M1026",
+      "M1036"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "M1018",
+      "M1026",
+      "M1036"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "M1026",
+      "M1018",
+      "M1015"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "M1026",
+      "M1018",
+      "M1033"
+     ],
+     "translation": null
+    },
+    {
+     "id": "s09",
+     "lang": "ar",
+     "dense": 4,
+     "dense_top3": [
+      "S0336",
+      "T1219.003",
+      "T1653"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 4,
+     "hybrid_top3": [
+      "S0336",
+      "T1219.003",
+      "T1653"
+     ],
+     "+translate": 2,
+     "+translate_top3": [
+      "T1219.003",
+      "T1219",
+      "T1584.008"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "T1219.003",
+      "T1219",
+      "T1584.008"
+     ],
+     "+rerank": 3,
+     "+rerank_top3": [
+      "T1219.003",
+      "T1219.002",
+      "T1219"
+     ],
+     "+rerank_small": 3,
+     "+rerank_small_top3": [
+      "T1219.002",
+      "T1219.003",
+      "T1219"
+     ],
+     "translation": "How do attackers use legitimate remote control software to control devices?"
+    },
+    {
+     "id": "s10",
+     "lang": "ar",
+     "dense": 2,
+     "dense_top3": [
+      "S1178",
+      "T1486",
+      "T1684.001"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 2,
+     "hybrid_top3": [
+      "S1178",
+      "T1486",
+      "T1684.001"
+     ],
+     "+translate": 2,
+     "+translate_top3": [
+      "S1178",
+      "T1486",
+      "T1187"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "S1178",
+      "T1486",
+      "T1187"
+     ],
+     "+rerank": 2,
+     "+rerank_top3": [
+      "S1178",
+      "T1486",
+      "S0449"
+     ],
+     "+rerank_small": 2,
+     "+rerank_small_top3": [
+      "S1178",
+      "T1486",
+      "T1659"
+     ],
+     "translation": "Encrypting the victim's data to disable the systems and demanding a ransom"
+    },
+    {
+     "id": "s11",
+     "lang": "ar",
+     "dense": 2,
+     "dense_top3": [
+      "T1185",
+      "T1539",
+      "DET0507"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 2,
+     "hybrid_top3": [
+      "T1185",
+      "T1539",
+      "DET0507"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1539",
+      "T1185",
+      "T1550.004"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1539",
+      "T1185",
+      "T1550.004"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1539",
+      "T1550.004",
+      "T1185"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1539",
+      "T1550.004",
+      "DET0509"
+     ],
+     "translation": "Stealing the user session's cookies from the browser"
+    },
+    {
+     "id": "s12",
+     "lang": "ar",
+     "dense": null,
+     "dense_top3": [
+      "T1055.009",
+      "T1055.003",
+      "T1055.005"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": null,
+     "hybrid_top3": [
+      "T1055.009",
+      "T1055.003",
+      "T1055.005"
+     ],
+     "+translate": 9,
+     "+translate_top3": [
+      "T1055.009",
+      "T1055.005",
+      "T1055.011"
+     ],
+     "+pin": 9,
+     "+pin_top3": [
+      "T1055.009",
+      "T1055.005",
+      "T1055.011"
+     ],
+     "+rerank": 10,
+     "+rerank_top3": [
+      "T1055.009",
+      "T1055.014",
+      "T1055.011"
+     ],
+     "+rerank_small": null,
+     "+rerank_small_top3": [
+      "T1055.009",
+      "T1055.005",
+      "T1055.011"
+     ],
+     "translation": "Malicious code injection into other operations in memory"
+    },
+    {
+     "id": "s13",
+     "lang": "ar",
+     "dense": 6,
+     "dense_top3": [
+      "DET0376",
+      "T1016.001",
+      "DET0357"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 6,
+     "hybrid_top3": [
+      "DET0376",
+      "T1016.001",
+      "DET0357"
+     ],
+     "+translate": 8,
+     "+translate_top3": [
+      "DET0376",
+      "DET0817",
+      "DET0538"
+     ],
+     "+pin": 8,
+     "+pin_top3": [
+      "DET0376",
+      "DET0817",
+      "DET0538"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1046",
+      "DET0376",
+      "DET0885"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1046",
+      "DET0376",
+      "DET0357"
+     ],
+     "translation": "Network Port Scanning and Identification of Running Services"
+    },
+    {
+     "id": "s14",
+     "lang": "ar",
+     "dense": 1,
+     "dense_top3": [
+      "T1136",
+      "T1136.001",
+      "T1136.002"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1136",
+      "T1136.001",
+      "T1136.002"
+     ],
+     "+translate": 3,
+     "+translate_top3": [
+      "T1136.001",
+      "T1136.002",
+      "T1136"
+     ],
+     "+pin": 3,
+     "+pin_top3": [
+      "T1136.001",
+      "T1136.002",
+      "T1136"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1136",
+      "T1136.001",
+      "T1098.007"
+     ],
+     "+rerank_small": 3,
+     "+rerank_small_top3": [
+      "T1134.003",
+      "T1564.002",
+      "T1136"
+     ],
+     "translation": "Create a new user account to stay in the system"
+    },
+    {
+     "id": "s15",
+     "lang": "mixed",
+     "dense": 9,
+     "dense_top3": [
+      "DET0364",
+      "DET0054",
+      "DET0090"
+     ],
+     "keyword": 2,
+     "keyword_top3": [
+      "DET0364",
+      "T1047"
+     ],
+     "hybrid": 2,
+     "hybrid_top3": [
+      "DET0364",
+      "T1047",
+      "DET0054"
+     ],
+     "+translate": 2,
+     "+translate_top3": [
+      "DET0364",
+      "T1047",
+      "DET0054"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1047",
+      "DET0364",
+      "DET0054"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1047",
+      "DET0364",
+      "DET0090"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1047",
+      "DET0364",
+      "DET0371"
+     ],
+     "translation": null
+    },
+    {
+     "id": "s16",
+     "lang": "mixed",
+     "dense": null,
+     "dense_top3": [
+      "DET0283",
+      "DET0176",
+      "DET0538"
+     ],
+     "keyword": 2,
+     "keyword_top3": [
+      "DET0215",
+      "T1486",
+      "DET0021"
+     ],
+     "hybrid": 5,
+     "hybrid_top3": [
+      "DET0021",
+      "DET0215",
+      "DET0283"
+     ],
+     "+translate": 6,
+     "+translate_top3": [
+      "DET0021",
+      "DET0215",
+      "T1690"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1486",
+      "DET0021",
+      "DET0215"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1486",
+      "DET0215",
+      "DET0021"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1486",
+      "DET0215",
+      "DET0538"
+     ],
+     "translation": "What is T1486?"
+    },
+    {
+     "id": "s17",
+     "lang": "mixed",
+     "dense": null,
+     "dense_top3": [
+      "DET0296",
+      "DET0525",
+      "DET0195"
+     ],
+     "keyword": null,
+     "keyword_top3": [
+      "T1055.009",
+      "T1055.008",
+      "DET0100"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "DET0508",
+      "DET0296",
+      "T1055.009"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "DET0508",
+      "DET0525",
+      "DET0296"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1055",
+      "DET0508",
+      "DET0525"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1055",
+      "DET0508",
+      "T1057"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1055",
+      "T1057",
+      "T1049"
+     ],
+     "translation": "How do I discover T1055?"
+    },
+    {
+     "id": "s18",
+     "lang": "mixed",
+     "dense": 1,
+     "dense_top3": [
+      "T1685",
+      "T1543.003",
+      "DET0099"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "T1685",
+      "T1690",
+      "T1685.001"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1685",
+      "T1690",
+      "T1686"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1685",
+      "T1690",
+      "T1689"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1685",
+      "T1690",
+      "T1689"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1685",
+      "DET0298",
+      "T1686.001"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1685",
+      "DET0298",
+      "T1565.003"
+     ],
+     "translation": "What does T1562.001 mean?"
+    },
+    {
+     "id": "s19",
+     "lang": "mixed",
+     "dense": 1,
+     "dense_top3": [
+      "S0154",
+      "DET0852",
+      "DET0453"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "S0154",
+      "S0637",
+      "S1030"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "S0154",
+      "S0637",
+      "DET0852"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "S0154",
+      "S0637",
+      "DET0852"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "S0154",
+      "S0637",
+      "DET0852"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "S0154",
+      "T1588.002",
+      "S1066"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "S0154",
+      "S0637",
+      "G0080"
+     ],
+     "translation": null
+    },
+    {
+     "id": "s20",
+     "lang": "mixed",
+     "dense": 1,
+     "dense_top3": [
+      "G0032",
+      "S0497",
+      "S0241"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "G0032",
+      "S0181",
+      "S0665"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "G0032",
+      "S0694",
+      "S0181"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "G0032",
+      "S0245",
+      "S0181"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "G0032",
+      "S0245",
+      "S0181"
+     ],
+     "+rerank": 4,
+     "+rerank_top3": [
+      "S0245",
+      "S0181",
+      "S0665"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "G0032",
+      "S0181",
+      "S0694"
+     ],
+     "translation": "What malware does the Lazarus group use?"
+    }
+   ]
+  },
+  "probe": {
+   "summary": {
+    "dense": {
+     "ar": {
+      "n": 12,
+      "hit@1": 0.667,
+      "hit@5": 0.75,
+      "mrr@10": 0.683
+     },
+     "en": {
+      "n": 12,
+      "hit@1": 0.583,
+      "hit@5": 0.833,
+      "mrr@10": 0.72
+     },
+     "mixed": {
+      "n": 8,
+      "hit@1": 0.5,
+      "hit@5": 0.75,
+      "mrr@10": 0.625
+     },
+     "all": {
+      "n": 32,
+      "hit@1": 0.594,
+      "hit@5": 0.781,
+      "mrr@10": 0.683
+     }
+    },
+    "keyword": {
+     "ar": {
+      "n": 12,
+      "hit@1": 0.0,
+      "hit@5": 0.0,
+      "mrr@10": 0.0
+     },
+     "en": {
+      "n": 12,
+      "hit@1": 0.583,
+      "hit@5": 0.833,
+      "mrr@10": 0.681
+     },
+     "mixed": {
+      "n": 8,
+      "hit@1": 0.5,
+      "hit@5": 1.0,
+      "mrr@10": 0.713
+     },
+     "all": {
+      "n": 32,
+      "hit@1": 0.344,
+      "hit@5": 0.562,
+      "mrr@10": 0.434
+     }
+    },
+    "hybrid": {
+     "ar": {
+      "n": 12,
+      "hit@1": 0.667,
+      "hit@5": 0.75,
+      "mrr@10": 0.683
+     },
+     "en": {
+      "n": 12,
+      "hit@1": 0.667,
+      "hit@5": 1.0,
+      "mrr@10": 0.808
+     },
+     "mixed": {
+      "n": 8,
+      "hit@1": 0.625,
+      "hit@5": 1.0,
+      "mrr@10": 0.729
+     },
+     "all": {
+      "n": 32,
+      "hit@1": 0.656,
+      "hit@5": 0.906,
+      "mrr@10": 0.742
+     }
+    },
+    "+translate": {
+     "ar": {
+      "n": 12,
+      "hit@1": 0.5,
+      "hit@5": 1.0,
+      "mrr@10": 0.676
+     },
+     "en": {
+      "n": 12,
+      "hit@1": 0.667,
+      "hit@5": 1.0,
+      "mrr@10": 0.808
+     },
+     "mixed": {
+      "n": 8,
+      "hit@1": 0.5,
+      "hit@5": 1.0,
+      "mrr@10": 0.656
+     },
+     "all": {
+      "n": 32,
+      "hit@1": 0.562,
+      "hit@5": 1.0,
+      "mrr@10": 0.721
+     }
+    },
+    "+pin": {
+     "ar": {
+      "n": 12,
+      "hit@1": 0.5,
+      "hit@5": 1.0,
+      "mrr@10": 0.676
+     },
+     "en": {
+      "n": 12,
+      "hit@1": 0.667,
+      "hit@5": 1.0,
+      "mrr@10": 0.808
+     },
+     "mixed": {
+      "n": 8,
+      "hit@1": 0.75,
+      "hit@5": 1.0,
+      "mrr@10": 0.833
+     },
+     "all": {
+      "n": 32,
+      "hit@1": 0.625,
+      "hit@5": 1.0,
+      "mrr@10": 0.765
+     }
+    },
+    "+rerank": {
+     "ar": {
+      "n": 12,
+      "hit@1": 0.667,
+      "hit@5": 1.0,
+      "mrr@10": 0.812
+     },
+     "en": {
+      "n": 12,
+      "hit@1": 0.667,
+      "hit@5": 0.917,
+      "mrr@10": 0.787
+     },
+     "mixed": {
+      "n": 8,
+      "hit@1": 0.625,
+      "hit@5": 1.0,
+      "mrr@10": 0.74
+     },
+     "all": {
+      "n": 32,
+      "hit@1": 0.656,
+      "hit@5": 0.969,
+      "mrr@10": 0.785
+     }
+    },
+    "+rerank_small": {
+     "ar": {
+      "n": 12,
+      "hit@1": 0.667,
+      "hit@5": 1.0,
+      "mrr@10": 0.806
+     },
+     "en": {
+      "n": 12,
+      "hit@1": 0.75,
+      "hit@5": 1.0,
+      "mrr@10": 0.854
+     },
+     "mixed": {
+      "n": 8,
+      "hit@1": 0.625,
+      "hit@5": 0.75,
+      "mrr@10": 0.688
+     },
+     "all": {
+      "n": 32,
+      "hit@1": 0.688,
+      "hit@5": 0.938,
+      "mrr@10": 0.794
+     }
+    }
+   },
+   "per_query": [
+    {
+     "id": "en01",
+     "lang": "en",
+     "dense": 1,
+     "dense_top3": [
+      "T1059.001",
+      "T1202",
+      "S0457"
+     ],
+     "keyword": 5,
+     "keyword_top3": [
+      "T1216.002",
+      "T1651",
+      "T1564.003"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1059.001",
+      "T1202",
+      "T1059.003"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1059.001",
+      "T1202",
+      "T1059.003"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1059.001",
+      "T1202",
+      "T1059.003"
+     ],
+     "+rerank": 3,
+     "+rerank_top3": [
+      "T1689",
+      "T1216.002",
+      "T1059.001"
+     ],
+     "+rerank_small": 2,
+     "+rerank_small_top3": [
+      "T1216.002",
+      "T1059.001",
+      "T1689"
+     ],
+     "translation": null
+    },
+    {
+     "id": "en02",
+     "lang": "en",
+     "dense": 2,
+     "dense_top3": [
+      "T1003.004",
+      "T1003.001",
+      "T1547.008"
+     ],
+     "keyword": 7,
+     "keyword_top3": [
+      "T1003.004",
+      "T1556.002",
+      "T1552.001"
+     ],
+     "hybrid": 2,
+     "hybrid_top3": [
+      "T1003.004",
+      "T1003.001",
+      "T1556.002"
+     ],
+     "+translate": 2,
+     "+translate_top3": [
+      "T1003.004",
+      "T1003.001",
+      "T1556.002"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "T1003.004",
+      "T1003.001",
+      "T1556.002"
+     ],
+     "+rerank": 2,
+     "+rerank_top3": [
+      "T1003.004",
+      "T1003.001",
+      "T1556.002"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1003.001",
+      "T1003.004",
+      "T1003.002"
+     ],
+     "translation": null
+    },
+    {
+     "id": "en03",
+     "lang": "en",
+     "dense": 1,
+     "dense_top3": [
+      "T1566.001",
+      "T1566.002",
+      "DET0070"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "T1566.001",
+      "DET0070",
+      "DET0236"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1566.001",
+      "DET0070",
+      "DET0236"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1566.001",
+      "DET0070",
+      "DET0236"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1566.001",
+      "DET0070",
+      "DET0236"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1566.001",
+      "T1598.002",
+      "T1566"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1566.001",
+      "T1598.002",
+      "T1566.002"
+     ],
+     "translation": null
+    },
+    {
+     "id": "en04",
+     "lang": "en",
+     "dense": 7,
+     "dense_top3": [
+      "S1178",
+      "S0659",
+      "S0449"
+     ],
+     "keyword": null,
+     "keyword_top3": [
+      "T1657",
+      "S1178",
+      "S1070"
+     ],
+     "hybrid": 5,
+     "hybrid_top3": [
+      "S1178",
+      "S1070",
+      "S0449"
+     ],
+     "+translate": 5,
+     "+translate_top3": [
+      "S1178",
+      "S1070",
+      "S0449"
+     ],
+     "+pin": 5,
+     "+pin_top3": [
+      "S1178",
+      "S1070",
+      "S0449"
+     ],
+     "+rerank": 9,
+     "+rerank_top3": [
+      "S0449",
+      "S1178",
+      "S1070"
+     ],
+     "+rerank_small": 4,
+     "+rerank_small_top3": [
+      "S1178",
+      "S0449",
+      "T1657"
+     ],
+     "translation": null
+    },
+    {
+     "id": "en05",
+     "lang": "en",
+     "dense": 6,
+     "dense_top3": [
+      "T1053",
+      "T1653",
+      "T1543.002"
+     ],
+     "keyword": 2,
+     "keyword_top3": [
+      "DET0559",
+      "T1053.005",
+      "DET0441"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1053.005",
+      "T1053",
+      "T1529"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1053.005",
+      "T1053",
+      "T1529"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1053.005",
+      "T1053",
+      "T1529"
+     ],
+     "+rerank": 2,
+     "+rerank_top3": [
+      "T1053",
+      "T1053.005",
+      "T1053.002"
+     ],
+     "+rerank_small": 2,
+     "+rerank_small_top3": [
+      "T1053",
+      "T1053.005",
+      "DET0559"
+     ],
+     "translation": null
+    },
+    {
+     "id": "en06",
+     "lang": "en",
+     "dense": 1,
+     "dense_top3": [
+      "T1550.002",
+      "T1563.001",
+      "T1563"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "T1550.002",
+      "S0039",
+      "T1003.005"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1550.002",
+      "T1563.001",
+      "T1550.003"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1550.002",
+      "T1563.001",
+      "T1550.003"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1550.002",
+      "T1563.001",
+      "T1550.003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1550.002",
+      "T1550",
+      "T1563.001"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1550.002",
+      "T1550",
+      "T1021.002"
+     ],
+     "translation": null
+    },
+    {
+     "id": "en07",
+     "lang": "en",
+     "dense": 1,
+     "dense_top3": [
+      "T1685.005",
+      "T1685.001",
+      "DET0187"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "T1685.005",
+      "M1052",
+      "T1027.003"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1685.005",
+      "T1685.001",
+      "T1561"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1685.005",
+      "T1685.001",
+      "T1561"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1685.005",
+      "T1685.001",
+      "T1561"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1685.005",
+      "T1685.001",
+      "DET0146"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1685.005",
+      "T1685.001",
+      "T1654"
+     ],
+     "translation": null
+    },
+    {
+     "id": "en08",
+     "lang": "en",
+     "dense": 3,
+     "dense_top3": [
+      "G1031",
+      "G1003",
+      "G0016"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "G0016",
+      "G1031",
+      "G1003"
+     ],
+     "hybrid": 2,
+     "hybrid_top3": [
+      "G1031",
+      "G0016",
+      "G1003"
+     ],
+     "+translate": 2,
+     "+translate_top3": [
+      "G1031",
+      "G0016",
+      "G1003"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "G1031",
+      "G0016",
+      "G1003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "G0016",
+      "G0007",
+      "G0034"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "G0016",
+      "G0007",
+      "G0010"
+     ],
+     "translation": null
+    },
+    {
+     "id": "en09",
+     "lang": "en",
+     "dense": 1,
+     "dense_top3": [
+      "S0002",
+      "S0179",
+      "S0007"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "S0002",
+      "T1036.002",
+      "S0378"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "S0002",
+      "S0154",
+      "S0179"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "S0002",
+      "S0154",
+      "S0179"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "S0002",
+      "S0154",
+      "S0179"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "S0002",
+      "S0154",
+      "DET0437"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "S0002",
+      "S0179",
+      "S0154"
+     ],
+     "translation": null
+    },
+    {
+     "id": "en10",
+     "lang": "en",
+     "dense": 2,
+     "dense_top3": [
+      "T1556.006",
+      "M1032",
+      "T1111"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "M1032",
+      "T1556.006",
+      "T1550.004"
+     ],
+     "hybrid": 2,
+     "hybrid_top3": [
+      "T1556.006",
+      "M1032",
+      "T1111"
+     ],
+     "+translate": 2,
+     "+translate_top3": [
+      "T1556.006",
+      "M1032",
+      "T1111"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "T1556.006",
+      "M1032",
+      "T1111"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "M1032",
+      "T1556.006",
+      "T1621"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "M1032",
+      "T1556.006",
+      "T1621"
+     ],
+     "translation": null
+    },
+    {
+     "id": "en11",
+     "lang": "en",
+     "dense": 1,
+     "dense_top3": [
+      "T1110.003",
+      "DET0487",
+      "DET0460"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "T1110.003",
+      "DET0487",
+      "T1566.001"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1110.003",
+      "DET0487",
+      "DET0551"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1110.003",
+      "DET0487",
+      "DET0551"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1110.003",
+      "DET0487",
+      "DET0551"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1110.003",
+      "DET0487",
+      "DET0551"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1110.003",
+      "DET0487",
+      "T1201"
+     ],
+     "translation": null
+    },
+    {
+     "id": "en12",
+     "lang": "en",
+     "dense": 1,
+     "dense_top3": [
+      "T1071.004",
+      "T1568.002",
+      "T1071"
+     ],
+     "keyword": 3,
+     "keyword_top3": [
+      "T1583.002",
+      "DET0891",
+      "T1071.004"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1071.004",
+      "T1583.002",
+      "T1071"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1071.004",
+      "T1583.002",
+      "T1071"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1071.004",
+      "T1583.002",
+      "T1071"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1071.004",
+      "T1583.002",
+      "T1584.002"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1071.004",
+      "T1568.002",
+      "T1583.002"
+     ],
+     "translation": null
+    },
+    {
+     "id": "ar01",
+     "lang": "ar",
+     "dense": 5,
+     "dense_top3": [
+      "T1674",
+      "T1204.002",
+      "T1105"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 5,
+     "hybrid_top3": [
+      "T1674",
+      "T1204.002",
+      "T1105"
+     ],
+     "+translate": 3,
+     "+translate_top3": [
+      "T1204.002",
+      "T1203",
+      "T1059.001"
+     ],
+     "+pin": 3,
+     "+pin_top3": [
+      "T1204.002",
+      "T1203",
+      "T1059.001"
+     ],
+     "+rerank": 2,
+     "+rerank_top3": [
+      "T1674",
+      "T1059.001",
+      "T1105"
+     ],
+     "+rerank_small": 2,
+     "+rerank_small_top3": [
+      "T1674",
+      "T1059.001",
+      "T1053.005"
+     ],
+     "translation": "How do attackers exploit Powershell to execute malicious commands on Windows devices?"
+    },
+    {
+     "id": "ar02",
+     "lang": "ar",
+     "dense": 1,
+     "dense_top3": [
+      "T1003.001",
+      "T1003.004",
+      "T1555.005"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1003.001",
+      "T1003.004",
+      "T1555.005"
+     ],
+     "+translate": 2,
+     "+translate_top3": [
+      "T1003.004",
+      "T1003.001",
+      "T1003.002"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "T1003.004",
+      "T1003.001",
+      "T1003.002"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1003.001",
+      "T1003.004",
+      "T1003.002"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1003.001",
+      "T1547.005",
+      "T1547.002"
+     ],
+     "translation": "How do attackers extract passwords and authentication data from the local Security Service's memory in Windows?"
+    },
+    {
+     "id": "ar03",
+     "lang": "ar",
+     "dense": 1,
+     "dense_top3": [
+      "T1566.001",
+      "T1566.002",
+      "T1598.002"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1566.001",
+      "T1566.002",
+      "T1598.002"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1566.001",
+      "DET0236",
+      "T1598.002"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1566.001",
+      "DET0236",
+      "T1598.002"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1566.001",
+      "T1598.002",
+      "T1566"
+     ],
+     "+rerank_small": 2,
+     "+rerank_small_top3": [
+      "T1598.002",
+      "T1566.001",
+      "T1566"
+     ],
+     "translation": "Phishing email message contains a malicious attachment"
+    },
+    {
+     "id": "ar04",
+     "lang": "ar",
+     "dense": null,
+     "dense_top3": [
+      "T1657",
+      "S1178",
+      "T1684.001"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": null,
+     "hybrid_top3": [
+      "T1657",
+      "S1178",
+      "T1684.001"
+     ],
+     "+translate": 5,
+     "+translate_top3": [
+      "T1657",
+      "S1178",
+      "S0449"
+     ],
+     "+pin": 5,
+     "+pin_top3": [
+      "T1657",
+      "S1178",
+      "S0449"
+     ],
+     "+rerank": 4,
+     "+rerank_top3": [
+      "S0449",
+      "S1070",
+      "S1178"
+     ],
+     "+rerank_small": 3,
+     "+rerank_small_top3": [
+      "S1178",
+      "S1070",
+      "T1486"
+     ],
+     "translation": "Cyber ransomware encrypts the victim's files and demands payment."
+    },
+    {
+     "id": "ar05",
+     "lang": "ar",
+     "dense": null,
+     "dense_top3": [
+      "T1547.007",
+      "T1543",
+      "T1653"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": null,
+     "hybrid_top3": [
+      "T1547.007",
+      "T1543",
+      "T1653"
+     ],
+     "+translate": 4,
+     "+translate_top3": [
+      "T1053",
+      "T1653",
+      "T1529"
+     ],
+     "+pin": 4,
+     "+pin_top3": [
+      "T1053",
+      "T1653",
+      "T1529"
+     ],
+     "+rerank": 2,
+     "+rerank_top3": [
+      "T1053",
+      "T1053.005",
+      "T1197"
+     ],
+     "+rerank_small": 3,
+     "+rerank_small_top3": [
+      "T1053",
+      "T1197",
+      "T1053.005"
+     ],
+     "translation": "Use scheduled tasks to remain in the system after a reboot."
+    },
+    {
+     "id": "ar06",
+     "lang": "ar",
+     "dense": 1,
+     "dense_top3": [
+      "T1550.002",
+      "T1048.002",
+      "T1563.001"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1550.002",
+      "T1048.002",
+      "T1563.001"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1550.002",
+      "T1563.001",
+      "T1550.003"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1550.002",
+      "T1563.001",
+      "T1550.003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1550.002",
+      "T1563.001",
+      "T1550"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1550.002",
+      "T1599.001",
+      "T1563.001"
+     ],
+     "translation": "Side-jump network traversal using a password split instead of the password itself"
+    },
+    {
+     "id": "ar07",
+     "lang": "ar",
+     "dense": 1,
+     "dense_top3": [
+      "T1685.005",
+      "T1070.004",
+      "T1561"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1685.005",
+      "T1070.004",
+      "T1561"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1685.005",
+      "T1561",
+      "T1070.004"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1685.005",
+      "T1561",
+      "T1070.004"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1685.005",
+      "T1685.001",
+      "DET0146"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1685.005",
+      "T1654",
+      "T1070.003"
+     ],
+     "translation": "How does the attacker wipe Windows event logs to hide its traces?"
+    },
+    {
+     "id": "ar08",
+     "lang": "ar",
+     "dense": 1,
+     "dense_top3": [
+      "G0016",
+      "G0102",
+      "G0007"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "G0016",
+      "G0102",
+      "G0007"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "G0016",
+      "G1031",
+      "G1003"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "G0016",
+      "G1031",
+      "G1003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "G0016",
+      "G0007",
+      "G0010"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "G0016",
+      "G1003",
+      "G0009"
+     ],
+     "translation": "What is the Russian threat group known as Cozy Bear?"
+    },
+    {
+     "id": "ar09",
+     "lang": "ar",
+     "dense": 1,
+     "dense_top3": [
+      "S0002",
+      "M1028",
+      "T1218.014"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "S0002",
+      "M1028",
+      "T1218.014"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "S0002",
+      "S0179",
+      "S0154"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "S0002",
+      "S0179",
+      "S0154"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "S0002",
+      "S0154",
+      "DET0437"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "S0002",
+      "S0530",
+      "S0280"
+     ],
+     "translation": "What is a Mimikatz tool and what does it do?"
+    },
+    {
+     "id": "ar10",
+     "lang": "ar",
+     "dense": null,
+     "dense_top3": [
+      "T1556.006",
+      "T1098",
+      "T1484.002"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": null,
+     "hybrid_top3": [
+      "T1556.006",
+      "T1098",
+      "T1484.002"
+     ],
+     "+translate": 2,
+     "+translate_top3": [
+      "T1556.006",
+      "M1032",
+      "T1111"
+     ],
+     "+pin": 2,
+     "+pin_top3": [
+      "T1556.006",
+      "M1032",
+      "T1111"
+     ],
+     "+rerank": 2,
+     "+rerank_top3": [
+      "T1556.006",
+      "M1032",
+      "T1621"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "M1032",
+      "T1556.006",
+      "T1621"
+     ],
+     "translation": "Multi-Factor Authentication as a Defense Against Account Hijacking"
+    },
+    {
+     "id": "ar11",
+     "lang": "ar",
+     "dense": 1,
+     "dense_top3": [
+      "T1110.003",
+      "DET0460",
+      "T1110.004"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1110.003",
+      "DET0460",
+      "T1110.004"
+     ],
+     "+translate": 3,
+     "+translate_top3": [
+      "T1110.004",
+      "DET0487",
+      "T1110.003"
+     ],
+     "+pin": 3,
+     "+pin_top3": [
+      "T1110.004",
+      "DET0487",
+      "T1110.003"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1110.003",
+      "DET0487",
+      "T1110"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1110.003",
+      "DET0487",
+      "T1110"
+     ],
+     "translation": "A brute force attack is attempting to use a common password on a large number of accounts."
+    },
+    {
+     "id": "ar12",
+     "lang": "ar",
+     "dense": 1,
+     "dense_top3": [
+      "T1071.004",
+      "T1071",
+      "T1557.001"
+     ],
+     "keyword": null,
+     "keyword_top3": [],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1071.004",
+      "T1071",
+      "T1557.001"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1071.004",
+      "T1071.001",
+      "T1071"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1071.004",
+      "T1071.001",
+      "T1071"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1071.004",
+      "T1583.002",
+      "T1584.002"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1071.004",
+      "T1583.002",
+      "T1568.002"
+     ],
+     "translation": "Use Domain Name System protocol to communicate with the Control and Command server."
+    },
+    {
+     "id": "mx01",
+     "lang": "mixed",
+     "dense": 1,
+     "dense_top3": [
+      "T1059.001",
+      "S0145",
+      "S0441"
+     ],
+     "keyword": 2,
+     "keyword_top3": [
+      "T1546.013",
+      "T1059.001",
+      "DET0455"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1059.001",
+      "T1546.013",
+      "DET0455"
+     ],
+     "+translate": 3,
+     "+translate_top3": [
+      "DET0451",
+      "DET0589",
+      "T1059.001"
+     ],
+     "+pin": 3,
+     "+pin_top3": [
+      "DET0451",
+      "DET0589",
+      "T1059.001"
+     ],
+     "+rerank": 3,
+     "+rerank_top3": [
+      "DET0521",
+      "DET0340",
+      "DET0455"
+     ],
+     "+rerank_small": 6,
+     "+rerank_small_top3": [
+      "DET0440",
+      "DET0521",
+      "DET0340"
+     ],
+     "translation": "How do I detect malicious use of PowerShell?"
+    },
+    {
+     "id": "mx02",
+     "lang": "mixed",
+     "dense": null,
+     "dense_top3": [
+      "DET0181",
+      "DET0302",
+      "DET0482"
+     ],
+     "keyword": 2,
+     "keyword_top3": [
+      "DET0363",
+      "T1003.001",
+      "DET0594"
+     ],
+     "hybrid": 4,
+     "hybrid_top3": [
+      "DET0181",
+      "DET0363",
+      "DET0302"
+     ],
+     "+translate": 3,
+     "+translate_top3": [
+      "DET0181",
+      "DET0363",
+      "T1003.001"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1003.001",
+      "DET0181",
+      "DET0363"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1003.001",
+      "DET0363",
+      "DET0053"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1003.001",
+      "DET0363",
+      "T1003.003"
+     ],
+     "translation": "What is the technology T1003.001?"
+    },
+    {
+     "id": "mx03",
+     "lang": "mixed",
+     "dense": 1,
+     "dense_top3": [
+      "DET0363",
+      "T1003.001",
+      "DET0234"
+     ],
+     "keyword": 2,
+     "keyword_top3": [
+      "DET0542",
+      "T1003.001",
+      "T1547.008"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1003.001",
+      "DET0542",
+      "DET0363"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1003.001",
+      "DET0363",
+      "DET0430"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1003.001",
+      "DET0363",
+      "DET0430"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "DET0363",
+      "T1003.001",
+      "DET0260"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "DET0363",
+      "T1003.001",
+      "DET0430"
+     ],
+     "translation": "How do I detect data credential theft from the LSASS memory?"
+    },
+    {
+     "id": "mx04",
+     "lang": "mixed",
+     "dense": 1,
+     "dense_top3": [
+      "G0016",
+      "C0024",
+      "G0087"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "G0016",
+      "S1084",
+      "C0023"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "G0016",
+      "C0023",
+      "S1084"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "G0016",
+      "S1084",
+      "C0023"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "G0016",
+      "S1084",
+      "C0023"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "G0016",
+      "C0023",
+      "S1084"
+     ],
+     "+rerank_small": null,
+     "+rerank_small_top3": [
+      "C0024",
+      "S0051",
+      "S1084"
+     ],
+     "translation": "What tools and techniques does Group APT29 use?"
+    },
+    {
+     "id": "mx05",
+     "lang": "mixed",
+     "dense": 1,
+     "dense_top3": [
+      "S0002",
+      "S0179",
+      "T1560.001"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "S0002",
+      "DET0437",
+      "S0179"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "S0002",
+      "S0179",
+      "S0007"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "S0002",
+      "S0179",
+      "S0154"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "S0002",
+      "S0179",
+      "S0154"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "S0002",
+      "T1003.004",
+      "S0007"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "S0002",
+      "S0231",
+      "T1003.006"
+     ],
+     "translation": "Explanation of Mimikatz tool and its uses"
+    },
+    {
+     "id": "mx06",
+     "lang": "mixed",
+     "dense": null,
+     "dense_top3": [
+      "S0098",
+      "DET0482",
+      "DET0489"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "T1685.005",
+      "DET0049",
+      "DET0184"
+     ],
+     "hybrid": 4,
+     "hybrid_top3": [
+      "DET0049",
+      "DET0184",
+      "S0098"
+     ],
+     "+translate": 4,
+     "+translate_top3": [
+      "DET0049",
+      "DET0184",
+      "S0098"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1685.005",
+      "DET0049",
+      "DET0184"
+     ],
+     "+rerank": 1,
+     "+rerank_top3": [
+      "T1685.005",
+      "T1070.006",
+      "T1685.006"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1685.005",
+      "T1070.005",
+      "T1070.003"
+     ],
+     "translation": "What does T1070.001 mean?"
+    },
+    {
+     "id": "mx07",
+     "lang": "mixed",
+     "dense": 2,
+     "dense_top3": [
+      "T1558.004",
+      "T1558.003",
+      "T1558"
+     ],
+     "keyword": 5,
+     "keyword_top3": [
+      "DET0157",
+      "T1482",
+      "T1558.002"
+     ],
+     "hybrid": 3,
+     "hybrid_top3": [
+      "T1558.004",
+      "DET0157",
+      "T1558.003"
+     ],
+     "+translate": 3,
+     "+translate_top3": [
+      "DET0157",
+      "T1558.004",
+      "T1558.003"
+     ],
+     "+pin": 3,
+     "+pin_top3": [
+      "DET0157",
+      "T1558.004",
+      "T1558.003"
+     ],
+     "+rerank": 3,
+     "+rerank_top3": [
+      "T1558.004",
+      "DET0157",
+      "T1558.003"
+     ],
+     "+rerank_small": 1,
+     "+rerank_small_top3": [
+      "T1558.003",
+      "T1550.003",
+      "DET0157"
+     ],
+     "translation": "How does the Kerberoasting attack work?"
+    },
+    {
+     "id": "mx08",
+     "lang": "mixed",
+     "dense": 2,
+     "dense_top3": [
+      "T1563.002",
+      "T1021.001",
+      "T1557"
+     ],
+     "keyword": 1,
+     "keyword_top3": [
+      "T1021.001",
+      "DET0588",
+      "DET0327"
+     ],
+     "hybrid": 1,
+     "hybrid_top3": [
+      "T1021.001",
+      "T1563.002",
+      "DET0588"
+     ],
+     "+translate": 1,
+     "+translate_top3": [
+      "T1021.001",
+      "T1563.002",
+      "T1210"
+     ],
+     "+pin": 1,
+     "+pin_top3": [
+      "T1021.001",
+      "T1563.002",
+      "T1210"
+     ],
+     "+rerank": 4,
+     "+rerank_top3": [
+      "T1563.002",
+      "M1015",
+      "T1210"
+     ],
+     "+rerank_small": 3,
+     "+rerank_small_top3": [
+      "T1563.002",
+      "M1015",
+      "T1021.001"
+     ],
+     "translation": "How do attackers use RDP for lateral movement within the network?"
+    }
+   ]
+  }
+ },
+ "ms_per_query_excl_translation": {
+  "dense": 2127,
+  "keyword": 3,
+  "hybrid": 2104,
+  "+translate": 3323,
+  "+pin": 3320,
+  "+rerank": 42045,
+  "+rerank_small": 7033
+ },
+ "translated_questions": 30
+}

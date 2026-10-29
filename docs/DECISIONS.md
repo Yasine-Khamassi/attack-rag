@@ -81,3 +81,20 @@ Never edit an old entry; add a new one that supersedes it.
 - **Rejected:** llama3.2:3b (same speed, mistranslated terms such as "PowerShell" -> "PoshShell"); hosted LLM (no API key on the dev machine; cost); no translation (keyword search is blind to Arabic questions).
 - **Why:** probe Arabic hit@5 0.75 -> 1.0; rescues questions dense alone missed entirely (ransomware, scheduled tasks, MFA).
 - **Cost:** ~2.3 s per Arabic question on CPU; hit@1 can drop (siblings crowd in), which the reranker (step 4b) must fix. Translation quality depends on a 3B model.
+
+## D15: Claude Haiku 5.5 for translation and reranking; bge-m3 stays for embeddings (supersedes D14's model)
+- **Chose:** `claude-haiku-5-5` via the Anthropic SDK (`core/llm.py`) translates Arabic questions (`ClaudeTranslator`) and reranks the fused top 30 listwise (`ClaudeReranker`). Embeddings stay bge-m3 (local, Ollama).
+- **Rejected:** local qwen2.5:3b translation + bge-reranker-v2-m3 cross-encoder (probe hit@1 0.656 / MRR 0.785 vs Haiku 0.906 / 0.932; rerank 42 s per question on CPU vs ~1.7 s); mmarco-mMiniLMv2 (fast, 7 s, but MRR 0.794 and it misranked a simple Arabic case); Claude for embeddings (the Anthropic API has no embeddings endpoint).
+- **Why:** best ranking quality measured, no CPU load, and reads Arabic directly, so the reranker needs only the original question.
+- **Cost:** ~$0.001 per question (rerank ~10.3k input tokens, ~78 output); translation ~$0.00001. Needs network + API key; calls are logged in `data/llm_usage.jsonl` and refused above `LLM_BUDGET_USD`. The local stack stays available (`--stack local`) as an offline fallback and baseline.
+
+## D16: Documents include their relationships as text
+- **Chose:** at ingest, append lists like "Software used: Mimikatz (S0002); ..." to groups, campaigns, software, mitigations and techniques (mitigations, detections, parent), 10 items per line. Techniques' "used by" lists are left out (hundreds of entries).
+- **Rejected:** keeping relationships only in `attack_relations.jsonl` (search never sees them); graph traversal at query time (more moving parts; planned as a stretch goal, not needed for this).
+- **Why:** "Which software does APT29 use?" had no document containing the answer: the group doc held only MITRE's description, so the reranker (correctly) preferred individual malware docs and dropped the group doc. attack.mitre.org pages show these lists; the documents now do too.
+- **Cost:** median document 671 -> 1,036 chars, chunks 2,977 -> 3,294; most documents had to be re-embedded.
+
+## D17: Documents named by ID in the question are pinned first
+- **Chose:** `HybridSearcher(pin_ids=True)`: identifier tokens in the question that match a doc ID (or a revoked ID via `aliases`) put that doc at the top, in the order typed.
+- **Why:** "What is T1486?" ranked detection strategies that list T1486 above T1486 itself. Someone who types an ID means that object. Spot-check mixed hit@1 0.667 -> 1.0.
+- **Cost:** a question that mentions an ID only in passing ("unlike T1059, how does ...") still gets that doc first; acceptable since it is relevant context.

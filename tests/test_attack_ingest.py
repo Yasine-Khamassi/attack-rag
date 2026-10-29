@@ -75,6 +75,13 @@ def test_detection_document_joins_analytics(built):
     assert "Detects techniques: T1059.001" in doc.text and "EventCode=4104" in doc.text
 
 
+def test_relationship_sections_in_text(built):
+    docs, _ = built
+    assert "Techniques used: PowerShell (T1059.001)" in docs["G0016"].text
+    assert "Detected by: Detect PowerShell (DET0001)" in docs["T1059.001"].text
+    assert "Old technique" not in docs["G0016"].text  # links to revoked objects are not listed
+
+
 def test_relationships_skip_dropped_objects(built):
     assert built[1] == [
         {"source": "G0016", "relation": "uses", "target": "T1059.001"},

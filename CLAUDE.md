@@ -38,21 +38,27 @@ Do not start a phase until the previous gate passes.
 
 ## Current state (2026-10-29)
 - **Phase 0 done** (gate passed: all 2,530 docs validate against `core.schema.Document`).
-- Step 1: ingestion -> `data/processed/attack_docs.jsonl` (2,530 docs: 706 techniques, 703 detection strategies,
-  842 software, 178 groups, 57 campaigns, 44 mitigations) and `attack_relations.jsonl` (21,660 relationships).
-- Step 2: split into `core/` (shared `Document` schema) and `products/attack/ingest.py`. `tenant_id = "attack"` (D5).
+- Steps 1-2: ingestion (2,530 docs, 21,660 relationships) and the `core/` + `products/attack/` split (D5-D7).
 - **Phase 1 in progress.**
-  - Step 3a: Postgres + pgvector (`docker-compose.yml`; local fallback `pgserver` via `core/db.py`, D9), CI on
-    GitHub Actions with a pgvector service (green), revoked-ID redirects (157 IDs, D8).
-  - Step 3b: embedding probe (32 questions EN/AR/mixed). **Chosen model: bge-m3** (D10), overall MRR 0.684,
-    Arabic MRR 0.688. Dense search misses bare IDs for every model -> hybrid is required (D11). 28 tests pass.
+  - Step 3a: Postgres + pgvector (`docker-compose.yml`; local fallback `pgserver`, D9), CI green on GitHub
+    Actions, revoked-ID redirects (157 IDs, D8).
+  - Step 3b: embedding probe -> **bge-m3** (D10). Dense misses bare IDs for every model -> hybrid (D11).
+  - Step 4a (committed): chunking (2,977 chunks), BM25 (D12), pgvector index + embedding cache, tenant-scoped
+    hybrid search (RRF), Arabic->English query translation with qwen2.5:3b (D14). Spot-check gate 17-18/20.
+    HNSW + filter risk recorded (D13).
+  - Step 4b (in progress, not committed): exact-ID pinning (`HybridSearcher.pinned`, aliases = revoked IDs)
+    and cross-encoder reranking (`core/rerank.py`: bge-reranker-v2-m3 vs mmarco-mMiniLMv2). Ablation run:
+    `python -m products.attack.retrieval_check` -> `eval/results/retrieval_check.json`.
 - Corpus is ATT&CK **v20**: detection lives in DETxxxx/ANxxxx objects (D3).
-- Dev machine (Windows): no `make`, no Docker/WSL. Ollama 0.40.6 installed (`ollama serve`), models pulled:
-  bge-m3, snowflake-arctic-embed2, embeddinggemma. CPU only: ~6 docs/s embedding.
+- Dev machine (Windows, CPU only): no `make`, no Docker/WSL. Ollama 0.40.6 (`ollama serve`) with bge-m3,
+  snowflake-arctic-embed2, embeddinggemma, qwen2.5:3b, llama3.2:3b. venv has torch 2.15 CPU +
+  sentence-transformers 6.2 (extra `rerank`). Reranker weights in the Hugging Face cache.
 
 ## Next step
-Step 4: chunking + dense index (bge-m3 vectors in pgvector, HNSW) + keyword index (Postgres full-text or BM25,
-with Arabic normalisation), then RRF fusion. Phase 1 gate: 20 spot-check questions return the right docs.
+Finish step 4b: read the ablation numbers, write `docs/steps/04-hybrid-search.md`, LOG, DECISIONS (reranker,
+pinning), commit + push. If the phase 1 gate (20/20 spot checks in top 5) passes, phase 2: the 100-question
+golden set (graded relevance: parent vs sub-technique), eval harness (recall@k, MRR, nDCG, faithfulness) and a
+CI regression gate.
 
 ## Stack
 Python 3.11+, Postgres + pgvector (Docker), rank_bm25 or Postgres full-text, Claude API, FastAPI, pytest,
@@ -63,4 +69,6 @@ GitHub Actions.
 - `make ingest` — download ATT&CK (cached in `data/raw/`) and build `data/processed/*.jsonl`
 - `make test` — run pytest (real-data tests skip until `make ingest` has run; DB tests use DATABASE_URL or pgserver)
 - `make db` — Postgres + pgvector in Docker (optional; without it `core/db.py` starts pgserver)
+- `python -m products.attack.index` — chunk + embed + write the pgvector index (needs `ollama serve`)
+- `python -m products.attack.retrieval_check` — dense/keyword/hybrid/+translate/+pin/+rerank ablation + phase 1 gate
 - `python -m products.attack.embedding_probe [model ...]` — embedding-model probe (needs `ollama serve`; ~7 min/model first run, cached after)

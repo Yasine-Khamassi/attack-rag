@@ -17,6 +17,11 @@ dependencies = [
 dev = ["pytest>=8"]
 # Local Postgres + pgvector without Docker (development only; see core/db.py)
 local-db = ["pgserver>=0.1.4"]
+# Cross-encoder reranking (core/rerank.py). On CPU-only machines install torch first from
+# https://download.pytorch.org/whl/cpu to avoid the large CUDA build.
+rerank = ["sentence-transformers>=3"]
+# Claude API (query translation, reranking, answers) - core/llm.py
+llm = ["anthropic>=1"]
 
 [tool.setuptools.packages.find]
 include = ["core*", "products*"]

@@ -220,7 +220,50 @@ def build_all(objects: list[dict]) -> tuple[list[Document], list[dict]]:
         src, tgt = stix_to_ext.get(obj["source_ref"]), stix_to_ext.get(obj["target_ref"])
         if src and tgt:
             rels.append({"source": src, "relation": obj["relationship_type"], "target": tgt})
-    return docs, rels
+    return add_relationship_sections(docs, rels), rels
+
+
+# Which relationships to write into which document, as (relation, direction, other doc type, label).
+# "out" = this doc is the source ("G0016 uses S0002"); "in" = this doc is the target ("S0002 used by G0016").
+# Left out on purpose: techniques' "used by" lists (hundreds of groups and software per technique).
+SECTIONS = {
+    "group": [("uses", "out", "software", "Software used"), ("uses", "out", "technique", "Techniques used"),
+              ("attributed-to", "in", "campaign", "Campaigns")],
+    "campaign": [("attributed-to", "out", "group", "Attributed to"), ("uses", "out", "software", "Software used"),
+                 ("uses", "out", "technique", "Techniques used")],
+    "software": [("uses", "in", "group", "Used by groups"), ("uses", "in", "campaign", "Used in campaigns"),
+                 ("uses", "out", "technique", "Techniques used")],
+    "mitigation": [("mitigates", "out", "technique", "Mitigates")],
+    "technique": [("subtechnique-of", "out", "technique", "Sub-technique of"),
+                  ("mitigates", "in", "mitigation", "Mitigations"), ("detects", "in", "detection", "Detected by")],
+}
+ITEMS_PER_LINE = 10  # short lines, so the chunker can split long lists cleanly
+
+
+def add_relationship_sections(docs: list[Document], rels: list[dict]) -> list[Document]:
+    """Append 'Software used: Mimikatz (S0002); ...' style sections, like the lists on attack.mitre.org pages.
+    Without them a question like 'which software does APT29 use?' has no document that contains the answer:
+    the relationships only exist in attack_relations.jsonl, which search never sees."""
+    by_id = {d.doc_id: d for d in docs}
+    out: dict[tuple[str, str], list[str]] = {}
+    for r in rels:
+        out.setdefault((r["source"], r["relation"]), []).append(r["target"])
+    into: dict[tuple[str, str], list[str]] = {}
+    for r in rels:
+        into.setdefault((r["target"], r["relation"]), []).append(r["source"])
+
+    result = []
+    for d in docs:
+        lines = []
+        for relation, direction, other_type, label in SECTIONS.get(d.type, []):
+            linked = (out if direction == "out" else into).get((d.doc_id, relation), [])
+            items = sorted({f"{by_id[o].title} ({o})" for o in linked if by_id[o].type == other_type})
+            for i in range(0, len(items), ITEMS_PER_LINE):
+                lines.append(f"{label}: " + "; ".join(items[i:i + ITEMS_PER_LINE]))
+        if lines:
+            d = Document.build(**{**d.model_dump(exclude={"content_hash"}), "text": d.text + "\n\n" + "\n".join(lines)})
+        result.append(d)
+    return result
 
 
 def main() -> None:

@@ -109,3 +109,29 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 **Next**
 - Step 4b: exact-ID pinning (question contains a doc ID or revoked ID -> that doc first) and a multilingual cross-encoder reranker (bge-reranker-v2-m3) over the fused top candidates. Re-run the gate.
+
+## 2026-10-29 · Step 4b: ID pinning, reranking, Claude Haiku 5.5, relationship text (phase 1, in progress)
+
+**Done**
+- `HybridSearcher(pin_ids=True)` + `aliases` (revoked IDs) (D17); reranking over the fused top 30 (`core/rerank.py`).
+- Local rerankers measured: bge-reranker-v2-m3 and mmarco-mMiniLMv2 (sentence-transformers 6.2, torch 2.15 CPU).
+- Claude API: `core/llm.py` (Anthropic SDK 2.3, `claude-haiku-5-5`, thinking off, effort low, every call logged to `data/llm_usage.jsonl`, hard stop at `LLM_BUDGET_USD`), `ClaudeTranslator`, `ClaudeReranker` (listwise). `retrieval_check --stack haiku|local` (D15).
+- Ingest now writes relationships into documents ("Software used: ...", "Detected by: ...") (D16).
+- Tests: 58 passed (budget enforcement, rerank parsing, pinning, stale-cache seeding regression).
+
+**Numbers** (probe 32 questions / spot checks 20; hit@1 / hit@5 / MRR@10, full pipeline)
+- Local stack (qwen2.5:3b + bge-reranker-v2-m3): probe 0.656 / 0.969 / 0.785 · spot 0.80 / 0.95 / 0.859 · rerank **42 s/question** on CPU. mmarco-MiniLM: probe MRR 0.794, 7 s/question.
+- Haiku stack, before relationship text: probe 0.906 / 0.969 / 0.932 · spot 0.75 / 0.95 / 0.85 · rerank ~1.7 s, ~$0.00107/question (10.3k input tokens).
+- Haiku stack, with relationship text (reranker saw 800 chars/chunk): probe 0.875 / **1.0** / 0.938 (Arabic MRR 0.958; APT29-tools question fixed) · spot 0.60 / 0.95 / 0.767.
+- Pinning: spot mixed hit@1 0.667 -> 1.0.
+- Relationship text: median doc 671 -> 1,036 chars; 3,294 chunks (max 6 per doc).
+- Claude spend so far: $0.17 (all runs above).
+
+**Problems found**
+- **Bug (fixed):** `seed_from_probe` matched probe vectors to documents by count only. After the relationship text changed 1,827 documents, it filed old-text vectors under new-text hashes. Caught from the log line "Seeded 1827 vectors". Fixed: the probe file must carry the current corpus key (`corpus_key()`, shared by probe and index); the 1,827 bad cache rows were deleted and re-embedded; regression test added (`tests/test_attack_index.py`).
+- The Haiku reranker dropped group docs for "what software does X use" questions because group docs held no software lists (fixed by D16) and because it only saw the first 800 chars of each chunk (lists were cut off; now 1,500).
+- After D16, spot-check hit@1 fell 0.75 -> 0.60: mostly rank 1 -> 2 swaps where a detection-strategy doc for the same technique moved above the technique. Measuring LLM run-to-run variance before drawing conclusions (sampling can't be pinned: `temperature` is rejected by the API since 2026-10-21).
+- s20 (Arabic "which software does Lazarus use") still misses.
+
+**Next**
+- Two Haiku runs with full chunks to measure variance; then decide on D16 placement, write the step 4 explainer, close the phase 1 gate.

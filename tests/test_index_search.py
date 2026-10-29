@@ -110,3 +110,40 @@ def test_unknown_tenant_is_an_error(conn, embedder, indexed):
 def test_rrf_rewards_agreement():
     fused = dict(rrf([["x", "y", "z"], ["y", "x", "w"]]))
     assert fused["x"] == fused["y"] > fused["z"] > 0 and fused["w"] == fused["z"]
+
+
+def test_identifiers_are_pinned_first(conn, embedder, indexed):
+    s = HybridSearcher(conn, "tenant-a", embedder, aliases={"OLD9": "A2", "X9": "B1"})
+    assert s.hybrid("phishing email, but tell me about A3", pin_ids=True)[0].doc_id == "A3"
+    assert s.hybrid("what was OLD9?", pin_ids=True)[0].doc_id == "A2"      # alias -> current doc
+    assert s.pinned("X9 B1") == []                                         # other tenant's docs never pinned
+    assert s.hybrid("phishing email", pin_ids=True)[0].doc_id == "A2"      # no ID: normal ranking
+
+
+class WordReranker:
+    """Fake cross-encoder: score = 1 if the passage contains the word, else 0."""
+
+    def __init__(self, word):
+        self.word, self.seen = word, []
+
+    def scores(self, query, passages):
+        self.seen.append(query)
+        return [float(self.word in p) for p in passages]
+
+
+def test_reranker_reorders_candidates(conn, embedder, indexed):
+    s = HybridSearcher(conn, "tenant-a", embedder)
+    assert s.hybrid("credential dumping memory")[0].doc_id == "A1"
+    reranker = WordReranker("persistence")
+    assert s.hybrid("credential dumping memory", reranker=reranker)[0].doc_id == "A3"
+    assert reranker.seen == ["credential dumping memory"]
+
+
+def test_reranker_scores_both_question_versions(conn, embedder, indexed):
+    class Translator:
+        def translate(self, q):
+            return "scheduled task persistence"
+
+    reranker = WordReranker("persistence")
+    hits = HybridSearcher(conn, "tenant-a", embedder).hybrid("سؤال", translator=Translator(), reranker=reranker)
+    assert hits[0].doc_id == "A3" and reranker.seen == ["سؤال", "scheduled task persistence"]

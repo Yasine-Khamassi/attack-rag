@@ -38,10 +38,14 @@ def load_jsonl(path: Path) -> list[dict]:
         return [json.loads(line) for line in f if line.strip()]
 
 
+def corpus_key(docs: list[Document]) -> str:
+    """Short hash of every document's content_hash: changes whenever any document's text changes."""
+    return hashlib.sha256("".join(d.content_hash for d in docs).encode()).hexdigest()[:12]
+
+
 def doc_vectors(embedder: OllamaEmbedder, docs: list[Document]) -> tuple[np.ndarray, float | None]:
     """Embed every doc once per model and corpus version. Returns (vectors, docs/sec or None if cached)."""
-    corpus_key = hashlib.sha256("".join(d.content_hash for d in docs).encode()).hexdigest()[:12]
-    cache = CACHE_DIR / f"{embedder.model.name}-{corpus_key}.npy"
+    cache = CACHE_DIR / f"{embedder.model.name}-{corpus_key(docs)}.npy"
     if cache.exists():
         return np.load(cache), None
     start = time.perf_counter()

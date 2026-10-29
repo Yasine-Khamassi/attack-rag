@@ -17,6 +17,7 @@ from core import db
 from core.embeddings import DEFAULT_MODEL, OllamaEmbedder
 from core.index import ensure_schema, index_documents, seed_cache
 from core.schema import Document
+from products.attack.embedding_probe import corpus_key
 from products.attack.ingest import DOCS_PATH, ROOT
 
 PROBE_CACHE = ROOT / "data" / "probe"
@@ -28,13 +29,16 @@ def load_docs() -> list[Document]:
 
 
 def seed_from_probe(conn, model: str, docs: list[Document]) -> int:
-    """Probe vectors line up with attack_docs.jsonl line by line; reuse them if the file is for this model."""
-    added = 0
-    for path in PROBE_CACHE.glob(f"{model}-*.npy"):
-        vectors = np.load(path)
-        if len(vectors) == len(docs):
-            added += seed_cache(conn, model, [d.content_hash for d in docs], vectors)
-    return added
+    """Reuse probe vectors, but only from the probe file built for exactly this corpus. The file name carries
+    a hash of every document's content_hash (see embedding_probe.doc_vectors); a file from an older corpus
+    has the same number of rows but vectors for different text, so matching on length alone is wrong."""
+    path = PROBE_CACHE / f"{model}-{corpus_key(docs)}.npy"
+    if not path.exists():
+        return 0
+    vectors = np.load(path)
+    if len(vectors) != len(docs):
+        raise ValueError(f"{path.name}: {len(vectors)} vectors for {len(docs)} docs")
+    return seed_cache(conn, model, [d.content_hash for d in docs], vectors)
 
 
 def main() -> None:
