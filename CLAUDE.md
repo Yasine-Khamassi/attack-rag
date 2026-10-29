@@ -41,15 +41,18 @@ Do not start a phase until the previous gate passes.
 - Step 1: ingestion -> `data/processed/attack_docs.jsonl` (2,530 docs: 706 techniques, 703 detection strategies,
   842 software, 178 groups, 57 campaigns, 44 mitigations) and `attack_relations.jsonl` (21,660 relationships).
 - Step 2: split into `core/` (shared `Document` schema) and `products/attack/ingest.py`. `tenant_id = "attack"` (D5).
-- **Phase 1 in progress.** Step 3a done: Postgres + pgvector (`docker-compose.yml`; local fallback `pgserver`
-  via `core/db.py`, D9), CI on GitHub Actions with a pgvector service, revoked-ID redirects (D8). 24 tests pass.
-- Corpus is ATT&CK **v20**: detection lives in DETxxxx/ANxxxx objects (D3); 157 revoked IDs redirect (T1070.001 -> T1685.005).
-- Dev machine (Windows): no `make`, no Docker/WSL. Ollama 0.40.6 is installed (start with `ollama serve`).
+- **Phase 1 in progress.**
+  - Step 3a: Postgres + pgvector (`docker-compose.yml`; local fallback `pgserver` via `core/db.py`, D9), CI on
+    GitHub Actions with a pgvector service (green), revoked-ID redirects (157 IDs, D8).
+  - Step 3b: embedding probe (32 questions EN/AR/mixed). **Chosen model: bge-m3** (D10), overall MRR 0.684,
+    Arabic MRR 0.688. Dense search misses bare IDs for every model -> hybrid is required (D11). 28 tests pass.
+- Corpus is ATT&CK **v20**: detection lives in DETxxxx/ANxxxx objects (D3).
+- Dev machine (Windows): no `make`, no Docker/WSL. Ollama 0.40.6 installed (`ollama serve`), models pulled:
+  bge-m3, snowflake-arctic-embed2, embeddinggemma. CPU only: ~6 docs/s embedding.
 
 ## Next step
-Step 3b: embedding-model probe. Compare bge-m3, snowflake-arctic-embed2 and embeddinggemma (Ollama, local)
-on English, Arabic and mixed questions with known target docs; log recall@5 / MRR / speed; choose the model (D10).
-Then step 4: chunking + dense index in pgvector + BM25.
+Step 4: chunking + dense index (bge-m3 vectors in pgvector, HNSW) + keyword index (Postgres full-text or BM25,
+with Arabic normalisation), then RRF fusion. Phase 1 gate: 20 spot-check questions return the right docs.
 
 ## Stack
 Python 3.11+, Postgres + pgvector (Docker), rank_bm25 or Postgres full-text, Claude API, FastAPI, pytest,
@@ -60,3 +63,4 @@ GitHub Actions.
 - `make ingest` — download ATT&CK (cached in `data/raw/`) and build `data/processed/*.jsonl`
 - `make test` — run pytest (real-data tests skip until `make ingest` has run; DB tests use DATABASE_URL or pgserver)
 - `make db` — Postgres + pgvector in Docker (optional; without it `core/db.py` starts pgserver)
+- `python -m products.attack.embedding_probe [model ...]` — embedding-model probe (needs `ollama serve`; ~7 min/model first run, cached after)

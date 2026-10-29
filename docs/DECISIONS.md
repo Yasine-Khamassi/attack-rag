@@ -52,3 +52,14 @@ Never edit an old entry; add a new one that supersedes it.
 - **Rejected:** a native Windows Postgres install (pgvector must be compiled with MSVC); SQLite + sqlite-vec (different SQL, would not match production); a hosted database (cost, data leaves the machine).
 - **Why:** the dev machine has no Docker/WSL yet; work should not wait on that. Same SQL and same extension either way.
 - **Cost:** pgserver ships pgvector 0.6.2, CI/Docker run 0.8.7. Stick to features both have (HNSW, cosine ops); iterative index scans (0.8+) only after local moves to Docker.
+
+## D10: Dense retrieval uses bge-m3 (local, via Ollama)
+- **Chose:** bge-m3 (568M params, 1024 dims, 8k context), run locally through Ollama.
+- **Rejected:** snowflake-arctic-embed2 (best English, MRR 0.819, but weakest Arabic, 0.465); embeddinggemma (best overall MRR 0.690 vs 0.684, smaller and 768 dims, but Arabic MRR 0.604 vs 0.688); hosted embedding APIs (cost per re-index, data leaves the machine).
+- **Why:** Arabic is the hardest case and bge-m3 leads there, with the closest English/Arabic agreement (0.826). Overall scores are within noise (12 questions per language), so the tiebreak is the weakest language. 8k context also leaves room for larger chunks.
+- **Cost:** 1024 dims = 33% more vector storage than embeddinggemma; ~6 docs/s on this CPU. Re-test against embeddinggemma on the phase 2 golden set; switch if it wins there.
+
+## D11: Hybrid search is required, not optional
+- **Chose:** keep the planned dense + keyword (BM25) + RRF design.
+- **Why (measured):** all three embedding models missed bare-ID questions (T1003.001, T1070.001) entirely in the step 3b probe. IDs are the most common thing analysts type; keyword search finds them exactly.
+- **Cost:** two indexes to build and keep in sync; fusion adds a step to tune.

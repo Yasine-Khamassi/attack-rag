@@ -1,0 +1,32 @@
+{"id": "en01", "lang": "en", "query": "How do attackers abuse PowerShell to run malicious commands on Windows machines?", "relevant": ["T1059.001"]}
+{"id": "en02", "lang": "en", "query": "How do attackers extract passwords and credentials from the memory of the Windows Local Security Authority service?", "relevant": ["T1003.001"]}
+{"id": "en03", "lang": "en", "query": "Phishing email that carries a malicious attachment", "relevant": ["T1566.001"]}
+{"id": "en04", "lang": "en", "query": "Ransomware that encrypts the victim's files and demands payment", "relevant": ["T1486"]}
+{"id": "en05", "lang": "en", "query": "Using scheduled tasks to stay on a system after reboot", "relevant": ["T1053.005"]}
+{"id": "en06", "lang": "en", "query": "Moving laterally through the network with a password hash instead of the password itself", "relevant": ["T1550.002"]}
+{"id": "en07", "lang": "en", "query": "How does an attacker wipe Windows event logs to hide their tracks?", "relevant": ["T1685.005"]}
+{"id": "en08", "lang": "en", "query": "Which Russian threat group is known as Cozy Bear?", "relevant": ["G0016"]}
+{"id": "en09", "lang": "en", "query": "What is the Mimikatz tool and what does it do?", "relevant": ["S0002"]}
+{"id": "en10", "lang": "en", "query": "Multi-factor authentication as a defence against account takeover", "relevant": ["M1032"]}
+{"id": "en11", "lang": "en", "query": "Attack that tries one common password against many accounts", "relevant": ["T1110.003"]}
+{"id": "en12", "lang": "en", "query": "Using the domain name system protocol to talk to a command and control server", "relevant": ["T1071.004"]}
+{"id": "ar01", "lang": "ar", "query": "كيف يستغل المهاجمون باورشيل لتنفيذ أوامر خبيثة على أجهزة ويندوز؟", "relevant": ["T1059.001"]}
+{"id": "ar02", "lang": "ar", "query": "كيف يستخرج المهاجمون كلمات المرور وبيانات الاعتماد من ذاكرة خدمة سلطة الأمان المحلية في ويندوز؟", "relevant": ["T1003.001"]}
+{"id": "ar03", "lang": "ar", "query": "رسالة تصيد احتيالي عبر البريد الإلكتروني تحتوي على مرفق خبيث", "relevant": ["T1566.001"]}
+{"id": "ar04", "lang": "ar", "query": "برنامج فدية يقوم بتشفير ملفات الضحية ويطلب دفع مبلغ", "relevant": ["T1486"]}
+{"id": "ar05", "lang": "ar", "query": "استخدام المهام المجدولة للبقاء في النظام بعد إعادة التشغيل", "relevant": ["T1053.005"]}
+{"id": "ar06", "lang": "ar", "query": "التنقل الجانبي في الشبكة باستخدام تجزئة كلمة المرور بدلاً من كلمة المرور نفسها", "relevant": ["T1550.002"]}
+{"id": "ar07", "lang": "ar", "query": "كيف يمسح المهاجم سجلات أحداث ويندوز لإخفاء آثاره؟", "relevant": ["T1685.005"]}
+{"id": "ar08", "lang": "ar", "query": "ما هي مجموعة التهديد الروسية المعروفة باسم كوزي بير؟", "relevant": ["G0016"]}
+{"id": "ar09", "lang": "ar", "query": "ما هي أداة ميميكاتز وماذا تفعل؟", "relevant": ["S0002"]}
+{"id": "ar10", "lang": "ar", "query": "المصادقة متعددة العوامل كوسيلة دفاع ضد الاستيلاء على الحسابات", "relevant": ["M1032"]}
+{"id": "ar11", "lang": "ar", "query": "هجوم يجرب كلمة مرور شائعة واحدة على عدد كبير من الحسابات", "relevant": ["T1110.003"]}
+{"id": "ar12", "lang": "ar", "query": "استخدام بروتوكول نظام أسماء النطاقات للتواصل مع خادم القيادة والتحكم", "relevant": ["T1071.004"]}
+{"id": "mx01", "lang": "mixed", "query": "كيف أكتشف استخدام PowerShell بشكل خبيث؟", "relevant": ["T1059.001", "DET0455"]}
+{"id": "mx02", "lang": "mixed", "query": "ما هي التقنية T1003.001؟", "relevant": ["T1003.001"]}
+{"id": "mx03", "lang": "mixed", "query": "كيف أكتشف سرقة بيانات الاعتماد من ذاكرة LSASS؟", "relevant": ["T1003.001", "DET0363"]}
+{"id": "mx04", "lang": "mixed", "query": "ما هي الأدوات والتقنيات التي تستخدمها مجموعة APT29؟", "relevant": ["G0016"]}
+{"id": "mx05", "lang": "mixed", "query": "شرح أداة Mimikatz واستخداماتها", "relevant": ["S0002"]}
+{"id": "mx06", "lang": "mixed", "query": "ما معنى T1070.001؟", "relevant": ["T1685.005"]}
+{"id": "mx07", "lang": "mixed", "query": "كيف يعمل هجوم Kerberoasting؟", "relevant": ["T1558.003"]}
+{"id": "mx08", "lang": "mixed", "query": "كيف يستخدم المهاجمون RDP للتنقل الجانبي داخل الشبكة؟", "relevant": ["T1021.001"]}

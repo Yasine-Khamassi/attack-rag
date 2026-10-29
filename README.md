@@ -32,7 +32,9 @@ See [docs/DECISIONS.md](docs/DECISIONS.md).
 
 ## What did not work
 
-_(filled in as the project goes)_
+- **Dense retrieval alone cannot find ATT&CK IDs.** In the step 3 probe, all three embedding models missed bare-ID questions ("ما هي التقنية T1003.001؟") entirely. That is why keyword search is part of the design ([step 3](docs/steps/03-database-and-embeddings.md)).
+
+_(more as the project goes)_
 
 ## Run it
 
