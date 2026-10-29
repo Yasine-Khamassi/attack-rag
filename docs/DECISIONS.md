@@ -63,3 +63,21 @@ Never edit an old entry; add a new one that supersedes it.
 - **Chose:** keep the planned dense + keyword (BM25) + RRF design.
 - **Why (measured):** all three embedding models missed bare-ID questions (T1003.001, T1070.001) entirely in the step 3b probe. IDs are the most common thing analysts type; keyword search finds them exactly.
 - **Cost:** two indexes to build and keep in sync; fusion adds a step to tune.
+
+## D12: Keyword search uses an in-process BM25 over chunks loaded per tenant
+- **Chose:** `core/bm25.py` built from the tenant's rows in `chunks` when a searcher is created.
+- **Rejected:** Postgres full-text (`ts_rank` has no IDF, and its parser splits IDs like "t1003.001"); ParadeDB `pg_search` (real BM25 in Postgres, but not available in the local pgserver build).
+- **Why:** exact control over tokenisation (identifiers, Arabic), real BM25 scoring, trivially fast at ~3k chunks.
+- **Cost:** memory and start-up time grow with tenant size; rebuild needed when the index changes. Revisit above ~100k chunks per tenant (move to pg_search or a persisted index).
+
+## D13: Risk: HNSW + filters can return too few rows (tenant filter, concurrent writes)
+- **Finding:** pgvector's HNSW scan takes `ef_search` nearest candidates and only then applies `WHERE` and row visibility. During a re-index (uncommitted rows in the graph) dense results dropped.
+- **Chose (for now):** `hnsw.ef_search = 200`; never evaluate while indexing.
+- **Risk:** with many tenants in one table, a small tenant's rows may not be among the candidates at all, so its search returns little or nothing.
+- **Plan:** before multi-tenant use (phase 4): pgvector >= 0.8 iterative scans (`hnsw.iterative_scan`), or per-tenant partial indexes / partitions, plus a test with one large and one tiny tenant.
+
+## D14: Arabic questions are also searched in an English translation (local LLM)
+- **Chose:** `core/query.py` translates Arabic-script questions with qwen2.5:3b (temperature 0, keep IDs/terms), and hybrid search fuses dense + keyword for both the original and the translation.
+- **Rejected:** llama3.2:3b (same speed, mistranslated terms such as "PowerShell" -> "PoshShell"); hosted LLM (no API key on the dev machine; cost); no translation (keyword search is blind to Arabic questions).
+- **Why:** probe Arabic hit@5 0.75 -> 1.0; rescues questions dense alone missed entirely (ransomware, scheduled tasks, MFA).
+- **Cost:** ~2.3 s per Arabic question on CPU; hit@1 can drop (siblings crowd in), which the reranker (step 4b) must fix. Translation quality depends on a 3B model.

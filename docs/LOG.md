@@ -84,3 +84,28 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 **Next**
 - Step 4: chunking + dense index (bge-m3 vectors in pgvector, HNSW) + keyword index (BM25 / Postgres full-text, Arabic normalisation), then RRF fusion. Phase 1 gate: 20 spot-check questions return the right docs.
+
+## 2026-10-29 · Step 4a: Chunking, hybrid index, query translation (phase 1, in progress)
+
+**Done**
+- `core/text.py` (normalisation + tokenizer: identifiers stay whole, Arabic letter/diacritic/digit normalisation, clitic + article stripping), `core/chunking.py` (max 1,500 chars, header repeated in every chunk), `core/bm25.py` (BM25, k1=1.2, b=0.75).
+- `core/index.py`: `chunks` table (pgvector, HNSW, cosine) + `embedding_cache` keyed by text hash; `core/search.py`: dense, keyword, hybrid (RRF k=60), tenant-scoped.
+- `core/query.py`: optional translation of Arabic-script questions to English with a local LLM (qwen2.5:3b via Ollama).
+- `products/attack/index.py`, `products/attack/retrieval_check.py`, `eval/spot_checks.jsonl` (20 new questions: 8 EN, 6 AR, 6 mixed/ID).
+- Tests: 48 passed (incl. tenant isolation for dense/keyword/hybrid, cache reuse, RRF).
+
+**Numbers**
+- 2,530 docs -> 2,977 chunks (median 673 chars, max 1,500, max 4 chunks per doc). 2,123 vectors reused from the probe cache, 854 embedded in 385 s.
+- Spot checks hit@5 (all 20): dense 0.75 · keyword 0.65 · hybrid 0.90 · hybrid+translation 0.85. MRR: 0.601 / 0.475 / 0.706 / 0.712.
+- Probe (32) hit@5: dense 0.781 · keyword 0.562 · hybrid 0.906 · hybrid+translation **1.0**. MRR: 0.683 / 0.434 / 0.742 / 0.721.
+- Keyword on Arabic questions: 0.0 (English docs share no Arabic words). Translation moves probe Arabic hit@5 0.75 -> 1.0 but hit@1 0.667 -> 0.5.
+- Translation: ~2.3 s per Arabic question on CPU (qwen2.5:3b; llama3.2:3b similar speed, worse terms: "PoshShell").
+
+**Gate: not passed yet** (17-18/20 in top 5). Misses: s12 (Arabic process injection; returns T1055.009/.005/.011 sub-techniques, label expects parent T1055), s13 (Arabic port scanning, rank 6-8), s16 "What is T1486?" (detection docs that list T1486 outrank T1486).
+
+**Problems found**
+- First retrieval run happened while the index was being rewritten: HNSW returned uncommitted/dead rows as candidates and filtered them out afterwards, so dense lost results. Re-run after: deterministic (query embeddings identical; HNSW == exact top-20 for 52/52 questions). Same mechanism applies to tenant filters (D13).
+- Translation helps recall but pushes already-correct answers from rank 1 to 2-3 (sibling sub-techniques and detection docs).
+
+**Next**
+- Step 4b: exact-ID pinning (question contains a doc ID or revoked ID -> that doc first) and a multilingual cross-encoder reranker (bge-reranker-v2-m3) over the fused top candidates. Re-run the gate.

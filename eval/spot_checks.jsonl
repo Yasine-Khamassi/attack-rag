@@ -1,0 +1,20 @@
+{"id": "s01", "lang": "en", "query": "How do adversaries use WMI to execute code on remote hosts?", "relevant": ["T1047"]}
+{"id": "s02", "lang": "en", "query": "How can I detect process injection into legitimate processes?", "relevant": ["T1055", "DET0508"]}
+{"id": "s03", "lang": "en", "query": "Which threat group is also called Fancy Bear?", "relevant": ["G0007"]}
+{"id": "s04", "lang": "en", "query": "Cobalt Strike beacon used for command and control", "relevant": ["S0154"]}
+{"id": "s05", "lang": "en", "query": "Attackers disabling or uninstalling antivirus and EDR agents", "relevant": ["T1685"]}
+{"id": "s06", "lang": "en", "query": "Exfiltrating stolen data by uploading it to a cloud storage service", "relevant": ["T1567.002"]}
+{"id": "s07", "lang": "en", "query": "Guessing passwords against SSH or RDP login services", "relevant": ["T1110.001", "T1110"]}
+{"id": "s08", "lang": "en", "query": "Limiting admin rights and managing privileged accounts as a mitigation", "relevant": ["M1026"]}
+{"id": "s09", "lang": "ar", "query": "كيف يستخدم المهاجمون برامج التحكم عن بعد المشروعة للسيطرة على الأجهزة؟", "relevant": ["T1219"]}
+{"id": "s10", "lang": "ar", "query": "تشفير بيانات الضحية لتعطيل الأنظمة وطلب فدية", "relevant": ["T1486"]}
+{"id": "s11", "lang": "ar", "query": "سرقة ملفات تعريف الارتباط الخاصة بجلسة المستخدم من المتصفح", "relevant": ["T1539"]}
+{"id": "s12", "lang": "ar", "query": "حقن شيفرة خبيثة داخل عمليات أخرى في الذاكرة", "relevant": ["T1055"]}
+{"id": "s13", "lang": "ar", "query": "فحص المنافذ واكتشاف الخدمات العاملة على الشبكة", "relevant": ["T1046"]}
+{"id": "s14", "lang": "ar", "query": "إنشاء حساب مستخدم جديد للبقاء في النظام", "relevant": ["T1136"]}
+{"id": "s15", "lang": "mixed", "query": "T1047", "relevant": ["T1047"]}
+{"id": "s16", "lang": "mixed", "query": "ما هي T1486؟", "relevant": ["T1486"]}
+{"id": "s17", "lang": "mixed", "query": "كيف أكتشف T1055؟", "relevant": ["T1055", "DET0508"]}
+{"id": "s18", "lang": "mixed", "query": "ما معنى T1562.001؟", "relevant": ["T1685"]}
+{"id": "s19", "lang": "mixed", "query": "S0154 Cobalt Strike", "relevant": ["S0154"]}
+{"id": "s20", "lang": "mixed", "query": "ما هي البرمجيات التي تستخدمها مجموعة Lazarus؟", "relevant": ["G0032"]}
