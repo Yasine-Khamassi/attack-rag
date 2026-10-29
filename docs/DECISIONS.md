@@ -109,3 +109,16 @@ Never edit an old entry; add a new one that supersedes it.
 - **Finding:** two runs of the identical Haiku pipeline gave spot-check hit@1 0.75 and 0.65 (English 0.75 vs 0.50), probe MRR 0.922 vs 0.945. Sampling cannot be pinned (`temperature` is rejected by the API since 2026-10-21).
 - **Chose:** treat a single run's hit@1 differences of this size as noise; the phase 2 harness runs the reranked pipeline at least 3 times and reports mean and spread. Recall-style metrics (hit@5) were stable across runs and carry more weight in gates.
 - **Cost:** ~3x API spend per eval run (still ~$0.6 for the current sets).
+
+## D20: Golden set generated from ATT&CK structure, rewritten by Haiku, checked for answer leaks
+- **Chose:** `products/attack/golden.py` builds 116 questions from templates over real objects (definition, detect, mitigate, group->software, software->groups, alias, campaign attribution, ID, revoked ID, bare ID) with graded relevance from the data (2 = primary page, 1 = also relevant). Haiku rewrites template questions as an analyst would type them (technique questions without the exact title) and translates them to Arabic. Fixed seed; LLM outputs cached in `eval/golden_llm_cache.json`.
+- **Rejected:** hand-writing 100+ questions (slow, labels drift, as phase 1 showed); asking an LLM to write questions *and* answers (answers would come from the model, not the data).
+- **Why:** labels come from ATT&CK, so they are complete and reproducible; rewriting removes the "question copies the title" bias that flatters keyword search.
+- **Found while building:** Haiku put answers into questions ("...attribution Mustang Panda G0129", "(T1677)", an ID added by the Arabic translation). Fixed by giving it only MITRE's description (no relationship lines), an explicit rule, and an automatic whole-word leak check on both the rewrite and the translation (retry once, else drop: 1 question dropped). `tests/test_eval_gate.py` re-checks every question for added answer IDs on every commit.
+- **Cost:** rewrites sometimes drift in intent ("Which groups use Reg?" -> "How does Reg.exe get used..."); the primary answer stays correct, but the set needs a human read, and the Arabic a native speaker's review. Generation cost $0.0058.
+
+## D21: CI enforces retrieval quality through committed eval results
+- **Chose:** the eval runs locally (`python -m products.attack.eval_golden`, ~$0.75 for 3 full runs) and its results are committed with `eval/baseline.json`; `tests/test_eval_gate.py` fails CI if the committed results are below baseline minus a tolerance sized to measured noise, or if they don't match the current golden set.
+- **Rejected:** running the full eval in CI (needs the embedding model, a populated pgvector index and Claude API spend on every push).
+- **Why:** catches regressions at review time without making CI slow, costly or secret-dependent.
+- **Cost:** a change that is never re-evaluated is not caught; the rule is "any change to retrieval code re-runs the eval and commits the results". Revisit with a self-hosted runner.
