@@ -26,7 +26,7 @@ MITRE publishes ATT&CK as one STIX 2.1 JSON file (~50 MB). STIX is a standard fo
 | `attack-pattern` | Technique / sub-technique | T1059.001 PowerShell |
 | `intrusion-set` | Threat group | G0016 APT29 |
 | `malware`, `tool` | Software | S0154 Cobalt Strike |
-| `course-of-action` | Mitigation | M1042 Disable or Remove Feature |
+| `course-of-action` | Mitigation | M1042 Disable or Remove Feature or Program |
 | `campaign` | A specific operation | C0024 SolarWinds Compromise |
 | `x-mitre-detection-strategy` | How to detect a technique | DET0455 |
 | `x-mitre-analytic` | One concrete detection rule inside a strategy | AN1252 |
