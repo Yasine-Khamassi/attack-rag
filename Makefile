@@ -7,14 +7,17 @@ else
 endif
 PY ?= $(if $(wildcard $(VENV_PY)),$(VENV_PY),python)
 
-.PHONY: install ingest test
+.PHONY: install ingest test db
 
-install:            ## create .venv and install the package + dev tools
+install:            ## create .venv; install package, dev tools and local Postgres (pgserver)
 	python -m venv .venv
-	$(VENV_PY) -m pip install -e ".[dev]"
+	$(VENV_PY) -m pip install -e ".[dev,local-db]"
 
 ingest:             ## download ATT&CK (cached) and build data/processed/*.jsonl
 	$(PY) -m products.attack.ingest
 
 test:               ## run the test suite
 	$(PY) -m pytest
+
+db:                 ## start Postgres + pgvector in Docker (alternative: local pgserver, automatic)
+	docker compose up -d db

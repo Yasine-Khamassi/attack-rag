@@ -9,10 +9,13 @@ description = "Hybrid-search RAG over MITRE ATT&CK with a reusable RAG core"
 requires-python = ">=3.11"
 dependencies = [
     "pydantic>=2.6",
+    "psycopg[binary]>=3.2",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+# Local Postgres + pgvector without Docker (development only; see core/db.py)
+local-db = ["pgserver>=0.1.4"]
 
 [tool.setuptools.packages.find]
 include = ["core*", "products*"]

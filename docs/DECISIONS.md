@@ -40,3 +40,15 @@ Never edit an old entry; add a new one that supersedes it.
 - **Chose:** tests that read `data/processed/` call `pytest.skip` if the file is missing; a small hand-made bundle covers the logic always.
 - **Why:** CI stays fast and doesn't download 50 MB per run, while local runs after `make ingest` check all 2,530 real docs.
 - **Cost:** CI does not check the real bundle. Revisit in phase 2 when the eval CI job needs the data anyway.
+
+## D8: Revoked IDs redirect to their replacement (supersedes the cost note in D2)
+- **Chose:** keep skipping revoked objects (D2), but follow `revoked-by` relationships (including chains) and put the old IDs on the replacement: a `Previously: T1070.001` header line and `metadata.previous_ids`.
+- **Rejected:** indexing revoked objects (outdated text in results); a separate lookup table only (dense and keyword search would still miss the old ID).
+- **Why:** ATT&CK v20 revoked IDs analysts still use daily (T1070.001 -> T1685.005). Old reports, SIEM rules and people keep the old IDs for years.
+- **Cost:** a few extra header tokens per affected doc (157 IDs). Must re-check after each ATT&CK release.
+
+## D9: Postgres + pgvector via Docker Compose, with a no-Docker local fallback
+- **Chose:** `docker-compose.yml` (pgvector/pgvector:0.8.7-pg16) as the standard setup and in CI; `core/db.py` falls back to `pgserver` (pip-installable Postgres 16 + pgvector) when `DATABASE_URL` is unset.
+- **Rejected:** a native Windows Postgres install (pgvector must be compiled with MSVC); SQLite + sqlite-vec (different SQL, would not match production); a hosted database (cost, data leaves the machine).
+- **Why:** the dev machine has no Docker/WSL yet; work should not wait on that. Same SQL and same extension either way.
+- **Cost:** pgserver ships pgvector 0.6.2, CI/Docker run 0.8.7. Stick to features both have (HNSW, cosine ops); iterative index scans (0.8+) only after local moves to Docker.

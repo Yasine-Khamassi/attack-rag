@@ -39,6 +39,8 @@ BUNDLE = [
      "source_ref": "x-mitre-detection-strategy--1", "target_ref": "attack-pattern--1"},
     {"type": "relationship", "id": "relationship--3", "relationship_type": "uses",
      "source_ref": "intrusion-set--1", "target_ref": "attack-pattern--old"},
+    {"type": "relationship", "id": "relationship--4", "relationship_type": "revoked-by",
+     "source_ref": "attack-pattern--old", "target_ref": "attack-pattern--1"},
 ]
 
 
@@ -59,6 +61,12 @@ def test_technique_document(built):
     assert doc.text.startswith("T1059.001: PowerShell\nType: technique")
     assert "(Citation" not in doc.text and "](https://" not in doc.text
     assert doc.metadata["tactics"] == ["execution"] and doc.metadata["is_subtechnique"] is True
+
+
+def test_revoked_id_redirects_to_replacement(built):
+    doc = built[0]["T1059.001"]
+    assert doc.metadata["previous_ids"] == ["T9999"]
+    assert "\nPreviously: T9999\n" in doc.text  # header line, so keyword search on the old ID finds it
 
 
 def test_detection_document_joins_analytics(built):
@@ -92,6 +100,12 @@ def test_every_real_document_validates(real_docs):
 def test_real_doc_ids_are_unique(real_docs):
     dupes = [k for k, n in Counter(d.doc_id for d in real_docs).items() if n > 1]
     assert not dupes
+
+
+def test_real_revoked_ids_resolve(real_docs):
+    by_old = {old: d.doc_id for d in real_docs for old in d.metadata.get("previous_ids", [])}
+    assert by_old.get("T1070.001") == "T1685.005"  # Clear Windows Event Logs, revoked in ATT&CK v20
+    assert not set(by_old) & {d.doc_id for d in real_docs}  # an old ID is never also a live doc
 
 
 def test_real_relationships_point_at_documents(real_docs):

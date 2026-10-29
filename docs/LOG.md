@@ -40,3 +40,24 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 **Next**
 - Phase 1 start: Docker Compose with Postgres + pgvector. Before choosing the embedding model, test 2-3 multilingual models (English technique IDs + Arabic sentences) and log the result.
+
+## 2026-10-29 · Step 3a: Postgres + pgvector, revoked-ID redirects (phase 1)
+
+**Done**
+- `docker-compose.yml` (pgvector/pgvector:0.8.7-pg16), `.env.example`, `make db`.
+- `core/db.py`: uses `DATABASE_URL` if set; otherwise starts a local Postgres + pgvector from the `pgserver` package in `data/pgdata/` (no Docker, no admin). `tests/test_db.py` checks the extension and an HNSW cosine search.
+- GitHub Actions CI (`.github/workflows/ci.yml`): pytest against a pgvector service container on every push.
+- Ingest: revoked ATT&CK IDs now redirect to their replacement ("Previously: T1070.001" header line + `metadata.previous_ids`).
+
+**Numbers**
+- Local DB: PostgreSQL 16.2 + pgvector 0.6.2 (pgserver); HNSW available.
+- 157 revoked IDs redirected (149 techniques, 6 groups, 2 software); 3 were chains (A -> B -> C), all end at an active object.
+- Documents unchanged in count: 2,530. Tests: 24 passed.
+
+**Problems found**
+- The downloaded bundle is ATT&CK **v20**. It revoked well-known IDs, e.g. T1070.001 "Clear Windows Event Logs" -> T1685.005 (2026-04-14). Without redirects, a question about T1070.001 found nothing. Fixed (D8, supersedes D2's cost note).
+- No Docker or WSL on the dev machine. Docker Desktop needs WSL2 (admin + reboot), so it was not installed automatically; pgserver used locally instead (D9).
+- pgserver's bundled `psql` helper breaks on paths with spaces; connect with psycopg instead.
+
+**Next**
+- Step 3b: embedding-model probe (bge-m3, snowflake-arctic-embed2, embeddinggemma via Ollama), English + Arabic + mixed questions.

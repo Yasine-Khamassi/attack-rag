@@ -79,7 +79,23 @@ def is_active(obj: dict) -> bool:
     return not obj.get("revoked", False) and not obj.get("x_mitre_deprecated", False)
 
 
-def build_doc(obj: dict) -> Document | None:
+def previous_ids(objects: list[dict]) -> dict[str, list[str]]:
+    """Active STIX id -> old ATT&CK IDs that were revoked in its favour (e.g. T1685.005 <- T1070.001).
+    Analysts and old reports keep using revoked IDs for years, so the replacement must still answer to them."""
+    by_stix = {o["id"]: o for o in objects}
+    revoked_by = {o["source_ref"]: o["target_ref"] for o in objects
+                  if o["type"] == "relationship" and o["relationship_type"] == "revoked-by"}
+    result: dict[str, list[str]] = {}
+    for old, new in revoked_by.items():
+        while new in revoked_by:  # follow chains: A revoked by B, B revoked by C -> C
+            new = revoked_by[new]
+        old_id, _ = attack_id_and_url(by_stix.get(old, {}))
+        if old_id:
+            result.setdefault(new, []).append(old_id)
+    return {k: sorted(v) for k, v in result.items()}
+
+
+def build_doc(obj: dict, old_ids: list[str] | None = None) -> Document | None:
     doc_type = TYPE_MAP.get(obj["type"])
     if doc_type is None or not is_active(obj):
         return None
@@ -92,6 +108,8 @@ def build_doc(obj: dict) -> Document | None:
 
     # The text we will chunk + embed. Header lines make IDs and names searchable by keyword.
     parts = [f"{ext_id}: {obj['name']}", f"Type: {doc_type}"]
+    if old_ids:
+        parts.append("Previously: " + ", ".join(old_ids))
     if obj.get("aliases") or obj.get("x_mitre_aliases"):
         parts.append("Aliases: " + ", ".join(obj.get("aliases") or obj.get("x_mitre_aliases")))
     if tactics:
@@ -114,6 +132,7 @@ def build_doc(obj: dict) -> Document | None:
         url=url,
         metadata={
             "stix_id": obj["id"],
+            "previous_ids": old_ids or [],
             "is_subtechnique": obj.get("x_mitre_is_subtechnique", False),
             "tactics": tactics,
             "platforms": obj.get("x_mitre_platforms", []),
@@ -170,8 +189,9 @@ def build_all(objects: list[dict]) -> tuple[list[Document], list[dict]]:
     """STIX objects -> (documents, relationships). Pure function, so tests can run it on a tiny bundle."""
     docs: list[Document] = []
     stix_to_ext: dict[str, str] = {}
+    old_ids = previous_ids(objects)
     for obj in objects:
-        doc = build_doc(obj)
+        doc = build_doc(obj, old_ids.get(obj["id"]))
         if doc:
             docs.append(doc)
             stix_to_ext[doc.metadata["stix_id"]] = doc.doc_id
@@ -221,6 +241,7 @@ def main() -> None:
     lengths = sorted(len(d.text) for d in docs)
     print(f"Documents: {len(docs)}  {counts}")
     print(f"Relationships: {len(rels)}")
+    print(f"Revoked IDs redirected: {sum(len(d.metadata.get('previous_ids', [])) for d in docs)}")
     print(f"Text length chars: min={lengths[0]} median={lengths[len(lengths)//2]} max={lengths[-1]}")
     print(f"Wrote {DOCS_PATH.relative_to(ROOT)} and {REL_PATH.relative_to(ROOT)}")
 
