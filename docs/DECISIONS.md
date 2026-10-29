@@ -122,3 +122,27 @@ Never edit an old entry; add a new one that supersedes it.
 - **Rejected:** running the full eval in CI (needs the embedding model, a populated pgvector index and Claude API spend on every push).
 - **Why:** catches regressions at review time without making CI slow, costly or secret-dependent.
 - **Cost:** a change that is never re-evaluated is not caught; the rule is "any change to retrieval code re-runs the eval and commits the results". Revisit with a self-hosted runner.
+
+## D22: Technique documents carry the technique-specific mitigation guidance
+- **Finding:** all 1,477 `mitigates` relationships have a description with advice for that technique ("When PowerShell is necessary, consider restricting PowerShell execution policy to administrators..."); ingestion dropped it. Mitigation documents themselves are generic ("Privileged Account Management").
+- **Chose:** technique docs list each mitigation on its own line with that guidance: `Mitigation Execution Prevention (M1038): <advice>`. `attack_relations.jsonl` keeps the description for `mitigates` edges.
+- **Rejected:** appending the advice to mitigation docs (M1026 mitigates 100+ techniques: huge, unfocused documents); the 18,970 `uses` procedure examples for now (would make group docs enormous; candidate for separate documents later).
+- **Why:** golden-set "how do I mitigate X?" scored nDCG 0.232; the answer text was simply not in any document.
+- **Cost:** median doc 1,036 -> 1,118 chars; technique docs re-embedded.
+
+## D23: One-hop linked-document expansion before reranking
+- **Chose:** `HybridSearcher(links=..., expand_top=5)`: the mitigations and detection strategies linked to the top 5 results join the rerank candidates (max 20 extra). Generic in core (the product supplies the links); tenant-safe (links to documents outside the tenant are ignored, tested).
+- **Rejected:** full graph traversal (more moving parts, unbounded); expansion without a reranker (would just append noise).
+- **Why:** "how do I stop X" questions describe a behaviour; the answer page (a mitigation) shares no words with the question. The question finds the technique, the link finds the answer, the reranker judges it.
+- **Cost:** up to 20 more passages per rerank call (~+60% rerank tokens, ~$0.003 per question).
+
+## D24: For "how do I mitigate X?", the technique page is a primary answer (labels revised after D22)
+- **Finding:** after D22 the reranker put the technique page first for 9 of 16 mitigate questions (top 5 for 14). That page now carries MITRE's technique-specific advice for every mitigation, exactly what attack.mitre.org shows. The labels still graded it 1 and the generic mitigation pages 2, so the metric read hit@5 0.104.
+- **Chose:** grade the technique page 2 alongside its mitigation pages. Re-scored from the saved top-10 rankings (`eval_golden --rescore`, no API calls); the result under the old labels is kept in `eval/results/golden_eval_old_labels.json`.
+- **Why:** labels must follow what answers the question; D22 changed which document does. Same principle as D18.
+- **Cost:** the mitigate template becomes easier; its nDCG (0.426) still shows the mitigation pages themselves rarely reach the top 10.
+
+## D25: Linked-document expansion stays on, but it is not a measured win
+- **Result:** with expansion (3 runs) hit@5 0.957, nDCG 0.786; without (1 run) 0.974 / 0.778: within run-to-run noise. Expansion adds ~50% rerank tokens (~$0.003 vs ~$0.002 per question).
+- **Chose:** keep it on for this product (it has the 3-run baseline; re-baselining the cheaper option would cost another ~$0.73 for no measured gain).
+- **Revisit:** for high-volume use of the core, default to `expand_top=0` unless an eval shows a gain.

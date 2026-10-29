@@ -219,7 +219,12 @@ def build_all(objects: list[dict]) -> tuple[list[Document], list[dict]]:
             continue
         src, tgt = stix_to_ext.get(obj["source_ref"]), stix_to_ext.get(obj["target_ref"])
         if src and tgt:
-            rels.append({"source": src, "relation": obj["relationship_type"], "target": tgt})
+            rel = {"source": src, "relation": obj["relationship_type"], "target": tgt}
+            if obj["relationship_type"] == "mitigates" and obj.get("description"):
+                # The technique-specific advice ("block execution of ... in Office macros"): on attack.mitre.org
+                # it is the text next to each mitigation on a technique page.
+                rel["description"] = clean(obj["description"])
+            rels.append(rel)
     return add_relationship_sections(docs, rels), rels
 
 
@@ -251,12 +256,19 @@ def add_relationship_sections(docs: list[Document], rels: list[dict]) -> list[Do
     into: dict[tuple[str, str], list[str]] = {}
     for r in rels:
         into.setdefault((r["target"], r["relation"]), []).append(r["source"])
+    advice = {(r["source"], r["target"]): r["description"] for r in rels if r.get("description")}
 
     result = []
     for d in docs:
         lines = []
         for relation, direction, other_type, label in SECTIONS.get(d.type, []):
             linked = (out if direction == "out" else into).get((d.doc_id, relation), [])
+            if d.type == "technique" and relation == "mitigates":
+                # One line per mitigation with its technique-specific guidance, not just the name.
+                for m in sorted(linked):
+                    guidance = advice.get((m, d.doc_id))
+                    lines.append(f"Mitigation {by_id[m].title} ({m})" + (f": {guidance}" if guidance else ""))
+                continue
             items = sorted({f"{by_id[o].title} ({o})" for o in linked if by_id[o].type == other_type})
             for i in range(0, len(items), ITEMS_PER_LINE):
                 lines.append(f"{label}: " + "; ".join(items[i:i + ITEMS_PER_LINE]))

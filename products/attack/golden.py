@@ -93,7 +93,9 @@ def build() -> list[dict]:
         intents.append(("detect", f"How can I detect \"{docs[t].title}\"?", rel, t, "describe"))
     with_mit = [t for t in techniques if into[(t, "mitigates")]]
     for t in pick(with_mit, COUNTS["mitigate"]):
-        rel = {t: 1, **{m: 2 for m in into[(t, "mitigates")]}}
+        # The technique page is a primary answer too: it carries the technique-specific advice for each
+        # mitigation (DECISIONS D22, D24); the mitigation pages themselves are generic.
+        rel = {t: 2, **{m: 2 for m in into[(t, "mitigates")]}}
         intents.append(("mitigate", f"How can I mitigate or prevent \"{docs[t].title}\"?", rel, t, "describe"))
     groups_sw = [g for g in of_type("group") if len([s for s in out[(g, "uses")] if docs[s].type == "software"]) >= 5]
     for g in pick(groups_sw, COUNTS["group_software"]):

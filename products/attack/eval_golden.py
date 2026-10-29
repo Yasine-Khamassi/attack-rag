@@ -5,7 +5,9 @@ Configs:
   dense        bge-m3 + pgvector only
   keyword      BM25 only
   hybrid       dense + keyword (RRF) + exact-ID pinning, no LLM
-  full         hybrid + Claude Haiku 5.5 translation + Haiku rerank (the production pipeline), run RUNS times
+  full_noexpand  hybrid + Claude Haiku 5.5 translation + Haiku rerank, 1 run (ablation for the expansion step)
+  full         as above + linked-document expansion (a top technique's mitigations and detections join the
+               rerank candidates); the production pipeline, run RUNS times
                because the LLM reranker is not deterministic (DECISIONS D19); mean and min/max are reported.
 
 Writes eval/results/golden_eval.json (per question, per run, top 10). With --update-baseline the summary also
@@ -29,12 +31,23 @@ from core.query import ClaudeTranslator
 from core.rerank import ClaudeReranker
 from core.schema import Document
 from core.search import HybridSearcher
-from products.attack.ingest import DOCS_PATH, ROOT, TENANT_ID
+from products.attack.ingest import DOCS_PATH, REL_PATH, ROOT, TENANT_ID
 
 GOLDEN_PATH = ROOT / "eval" / "golden.jsonl"
 RESULTS_PATH = ROOT / "eval" / "results" / "golden_eval.json"
 BASELINE_PATH = ROOT / "eval" / "baseline.json"
 LLM_MODEL = "claude-haiku-5-5"
+EXPAND_TOP = 5
+
+
+def load_links() -> dict[str, list[str]]:
+    """technique -> its mitigations and detection strategies (the one-hop answers to "how do I stop/spot X")."""
+    links: dict[str, list[str]] = defaultdict(list)
+    with REL_PATH.open(encoding="utf-8") as f:
+        for r in map(json.loads, f):
+            if r["relation"] in ("mitigates", "detects"):
+                links[r["target"]].append(r["source"])
+    return dict(links)
 
 
 def summarize(rows: list[dict]) -> dict:
@@ -50,6 +63,8 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--runs", type=int, default=3)
     parser.add_argument("--update-baseline", action=argparse.BooleanOptionalAction, default=False)
+    parser.add_argument("--rescore", action=argparse.BooleanOptionalAction, default=False,
+                        help="recompute metrics from the saved top-10 rankings with the current labels (no API calls)")
     args = parser.parse_args()
 
     with GOLDEN_PATH.open(encoding="utf-8") as f:
@@ -61,8 +76,25 @@ def main() -> None:
 
     configs: dict[str, list[list[dict]]] = {}
     timing: dict[str, float] = {}
+    if args.rescore:
+        saved = json.loads(RESULTS_PATH.read_text(encoding="utf-8"))
+        by_id = {q["id"]: q for q in questions}
+        for name, runs in saved["per_question"].items():
+            configs[name] = [[{**row, "metrics": score(row["top10"], by_id[row["id"]]["relevance"])} for row in rows]
+                             for rows in runs]
+            timing[name] = saved["summary"][name]["ms_per_question"]
+        args.runs = saved["runs_full"]
+    else:
+        configs, timing = run_configs(questions, aliases, args.runs)
+    finish(questions, configs, timing, args, spent_before)
+
+
+def run_configs(questions: list[dict], aliases: dict[str, str], runs_full: int):
+    configs: dict[str, list[list[dict]]] = {}
+    timing: dict[str, float] = {}
     with db.connect() as conn:
-        searcher = HybridSearcher(conn, TENANT_ID, OllamaEmbedder(DEFAULT_MODEL), aliases=aliases)
+        searcher = HybridSearcher(conn, TENANT_ID, OllamaEmbedder(DEFAULT_MODEL), aliases=aliases,
+                                  links=load_links())
         translator = ClaudeTranslator(LLM_MODEL, target="English", domain="cybersecurity")
         reranker = ClaudeReranker(LLM_MODEL)
         searcher.dense("warm up")
@@ -70,8 +102,10 @@ def main() -> None:
             "dense": (1, lambda q: searcher.dense(q, k=10)),
             "keyword": (1, lambda q: searcher.keyword(q, k=10)),
             "hybrid": (1, lambda q: searcher.hybrid(q, k=10, pin_ids=True)),
-            "full": (args.runs, lambda q: searcher.hybrid(q, k=10, translator=translator, pin_ids=True,
-                                                          reranker=reranker)),
+            "full_noexpand": (1, lambda q: searcher.hybrid(q, k=10, translator=translator, pin_ids=True,
+                                                           reranker=reranker)),
+            "full": (runs_full, lambda q: searcher.hybrid(q, k=10, translator=translator, pin_ids=True,
+                                                          reranker=reranker, expand_top=EXPAND_TOP)),
         }
         for name, (runs, search) in plans.items():
             configs[name] = []
@@ -85,7 +119,10 @@ def main() -> None:
                 configs[name].append(rows)
                 print(f"{name} run {run + 1}/{runs}: {mean([r['metrics'] for r in rows])}", flush=True)
             timing[name] = round(1000 * (time.perf_counter() - start) / (runs * len(questions)))
+    return configs, timing
 
+
+def finish(questions, configs, timing, args, spent_before) -> None:
     summary = {}
     for name, runs in configs.items():
         per_run = [summarize(rows) for rows in runs]

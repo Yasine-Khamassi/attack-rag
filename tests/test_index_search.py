@@ -147,3 +147,14 @@ def test_reranker_scores_both_question_versions(conn, embedder, indexed):
     reranker = WordReranker("persistence")
     hits = HybridSearcher(conn, "tenant-a", embedder).hybrid("سؤال", translator=Translator(), reranker=reranker)
     assert hits[0].doc_id == "A3" and reranker.seen == ["سؤال", "scheduled task persistence"]
+
+
+def test_linked_documents_reach_the_reranker(conn, embedder, indexed):
+    # "B1" belongs to another tenant: a link to it must be ignored. "A2" is linked from A1.
+    s = HybridSearcher(conn, "tenant-a", embedder, links={"A1": ["A2", "B1"]})
+    reranker = WordReranker("attachment")
+    hits = s.hybrid("credential dumping memory", reranker=reranker, rerank_depth=1, expand_top=1)
+    assert hits[0].doc_id == "A2"                       # only reachable through the link, then ranked first
+    assert all(h.doc_id != "B1" for h in hits)
+    without = s.hybrid("credential dumping memory", reranker=WordReranker("attachment"), rerank_depth=1)
+    assert without[0].doc_id == "A1"                    # no expansion: A2 never reaches the reranker

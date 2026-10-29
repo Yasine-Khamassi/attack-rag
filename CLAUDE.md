@@ -56,12 +56,14 @@ Do not start a phase until the previous gate passes.
   `core/metrics.py`, `products/attack/eval_golden.py`, baseline `eval/baseline.json`, CI gate
   `tests/test_eval_gate.py` (D21). Full pipeline: hit@5 0.877, nDCG@10 0.768 (3 runs, spread +-0.01).
   **Rule: any change to retrieval code re-runs `eval_golden` (~$0.73) and commits the results.**
-  Weak spot: mitigate questions nDCG 0.232.
+- Step 6: mitigation advice ingested (D22), link expansion (D23, D25), mitigate labels revised (D24). Current
+  baseline (full, 3 runs): hit@5 0.957, recall@10 0.912, MRR 0.851, nDCG@10 0.786. `eval_golden --rescore`
+  re-scores saved rankings for free. Claude spend to date $2.58 (cap $5 in .env).
 
 ## Next step
-Step 6: fix "how do I mitigate X?" (likely missing: technique-specific guidance in `mitigates` relationship
-descriptions). Then phase 3: answering (cited answers with Claude Haiku 5.5, refuse when sources are thin, FastAPI +
-simple web page, faithfulness metric). Arabic golden questions still need a native-speaker review.
+Phase 3: answering. Cited answers with Claude Haiku 5.5 from the retrieved chunks, refuse when sources are thin,
+FastAPI + simple web page with links to attack.mitre.org, faithfulness metric (Sonnet 5.5 as judge on a sample
+only, to save tokens). Owner still to review the Arabic golden questions.
 
 ## Stack
 Python 3.11+, Postgres + pgvector (Docker or pgserver), BM25 (core/bm25.py), bge-m3 embeddings (Ollama),

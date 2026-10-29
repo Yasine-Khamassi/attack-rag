@@ -184,3 +184,27 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 **Next**
 - Step 6: mitigation questions. Check whether technique-specific mitigation guidance (in `mitigates` relationship descriptions) is missing from the documents.
+
+## 2026-10-30 · Step 6: Mitigation questions (phase 2)
+
+**Done**
+- Ingest: technique docs list each mitigation with MITRE's technique-specific advice from the `mitigates` relationship description (D22).
+- Core: one-hop linked-document expansion before reranking (`links`, `expand_top`), tenant-safe, tested (D23).
+- Eval: `full_noexpand` ablation; `--rescore` re-scores saved top-10 rankings with current labels at no API cost.
+- Labels: technique page graded primary for mitigate questions (D24). Old-label results kept in `eval/results/golden_eval_old_labels.json`.
+- `docs/steps/05-golden-set-and-eval.md`. Tests: 67 passed.
+
+**Numbers** (116 questions)
+- Re-index: 3,581 chunks (914 newly embedded, 312 s).
+- Old labels: full (expansion, 3 runs) hit@5 0.845 · nDCG 0.762; full_noexpand 0.862 · 0.748; mitigate nDCG 0.248, hit@5 0.104.
+- Revised labels (D24): dense 0.681 / 0.482 · keyword 0.741 / 0.595 · hybrid 0.905 / 0.686 · full_noexpand 0.974 / 0.778 · **full 0.957 (0.948-0.974) / 0.786 (0.774-0.801)** (hit@5 / nDCG@10). Mitigate: hit@5 0.917, nDCG 0.426.
+- Mitigate questions: subject technique ranked 1st in 9/16, top 5 in 14/16.
+- Cost: this eval $1.35 (4 reranked runs incl. ablation; expansion makes rerank calls ~50% larger). Claude spend to date $2.58 of the $5 cap.
+
+**Problems found**
+- Expansion: no gain beyond noise; kept on (D25), cheaper option noted for high-volume use.
+- The eval cost more than estimated ($1.35 vs ~$0.75) because of the extra ablation run and larger rerank inputs.
+
+**Next**
+- Phase 3: cited answers (Claude Haiku 5.5), refusal when sources are thin, FastAPI + simple page, faithfulness metric.
+- Owner: review the Arabic golden questions (`eval/golden.jsonl`, lang "ar").

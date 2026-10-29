@@ -49,8 +49,9 @@ def rrf(rankings: list[list[str]], k: int = 60) -> list[tuple[str, float]]:
 
 class HybridSearcher:
     def __init__(self, conn: psycopg.Connection, tenant_id: str, embedder: OllamaEmbedder,
-                 aliases: dict[str, str] | None = None):
-        """`aliases`: extra IDs that should resolve to a document (e.g. old IDs -> current doc_id)."""
+                 aliases: dict[str, str] | None = None, links: dict[str, list[str]] | None = None):
+        """`aliases`: extra IDs that should resolve to a document (e.g. old IDs -> current doc_id).
+        `links`: doc_id -> related doc_ids worth showing the reranker when that doc ranks high (one hop)."""
         self.conn, self.tenant_id, self.embedder = conn, tenant_id, embedder
         rows = conn.execute("SELECT chunk_id, doc_id, text, title, url FROM chunks WHERE tenant_id = %s "
                             "ORDER BY doc_id, ordinal", (tenant_id,)).fetchall()
@@ -65,6 +66,7 @@ class HybridSearcher:
         self.bm25 = BM25([r[0] for r in rows], [r[2] for r in rows])
         self.id_map = {normalize(alias): doc for alias, doc in (aliases or {}).items() if doc in self.doc_info}
         self.id_map |= {normalize(doc): doc for doc in self.doc_info}
+        self.links = {d: [x for x in linked if x in self.doc_info] for d, linked in (links or {}).items()}
         # HNSW returns at most ef_search candidates; raise it above the depth we ask for.
         conn.execute("SET hnsw.ef_search = 200")
 
@@ -93,11 +95,15 @@ class HybridSearcher:
         return out
 
     def hybrid(self, query: str, k: int = 10, depth: int = 50, rrf_k: int = 60, translator=None,
-               reranker=None, rerank_depth: int = 30, pin_ids: bool = False) -> list[Hit]:
+               reranker=None, rerank_depth: int = 30, pin_ids: bool = False, expand_top: int = 0,
+               max_expanded: int = 20) -> list[Hit]:
         """Dense + keyword, fused with RRF. Options, in pipeline order:
         - translator: a question in another language is also searched in its translation (4 rankings fused);
         - reranker: a cross-encoder re-orders the top `rerank_depth` documents (all their chunks are scored,
           the best chunk counts; with a translation, the better of the two question versions counts);
+        - expand_top: before reranking, documents linked to the top `expand_top` results (see `links`) join the
+          candidates, up to `max_expanded`. Lets the reranker reach answers one hop away (question -> topic ->
+          its countermeasure) that share no words with the question;
         - pin_ids: documents named by ID in the question go first."""
         queries = [query]
         if translator is not None and (translated := translator.translate(query)):
@@ -110,6 +116,12 @@ class HybridSearcher:
 
         if reranker is not None:
             head, tail = ranked[:rerank_depth], ranked[rerank_depth:]
+            if expand_top:
+                present = {d for d, _, _ in head}
+                extra = [x for d, _, _ in head[:expand_top] for x in self.links.get(d, []) if x not in present]
+                extra = list(dict.fromkeys(extra))[:max_expanded]
+                head += [(x, self.doc_chunks[x][0], 0.0) for x in extra]
+                tail = [r for r in tail if r[0] not in set(extra)]
             chunk_ids = [c for d, _, _ in head for c in self.doc_chunks[d]]
             texts = [self.chunk_text[c] for c in chunk_ids]
             # A reranker that reads any language only needs the original question.

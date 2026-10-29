@@ -11,13 +11,14 @@ reranker is not deterministic). From `python -m products.attack.eval_golden`; ra
 
 | Config | hit@5 | recall@10 | MRR@10 | nDCG@10 | Latency (CPU) |
 |---|---|---|---|---|---|
-| Dense only (bge-m3 + pgvector) | 0.569 | 0.601 | 0.486 | 0.454 | 2.1 s |
-| BM25 only | 0.655 | 0.746 | 0.556 | 0.581 | 7 ms |
-| Hybrid (RRF) + exact-ID pinning | 0.802 | 0.838 | 0.678 | 0.660 | 2.1 s |
-| + Claude Haiku 5.5 translation + rerank | **0.877** | **0.873** | **0.784** | **0.768** | 5.2 s |
+| Dense only (bge-m3 + pgvector) | 0.681 | 0.642 | 0.578 | 0.482 | 2.1 s |
+| BM25 only | 0.741 | 0.756 | 0.609 | 0.595 | 7 ms |
+| Hybrid (RRF) + exact-ID pinning | 0.905 | 0.848 | 0.763 | 0.686 | 2.1 s |
+| + Claude Haiku 5.5 translation + rerank | **0.957** | **0.912** | **0.851** | **0.786** | 5.1 s |
 
-Arabic questions score like English ones (nDCG 0.745 vs 0.733). CI fails if committed results drop below
-`eval/baseline.json`. Weak spot: "how do I mitigate X?" questions (nDCG 0.232), being worked on.
+Arabic questions over English documents score close to English ones (nDCG 0.749 vs 0.777). CI fails if committed
+results drop below `eval/baseline.json`. How the set is built and what the eval found:
+[docs/steps/05-golden-set-and-eval.md](docs/steps/05-golden-set-and-eval.md).
 Faithfulness of generated answers comes with phase 3.
 
 _Demo video: (link)_
@@ -41,6 +42,10 @@ See [docs/DECISIONS.md](docs/DECISIONS.md).
 ## What did not work
 
 - **Dense retrieval alone cannot find ATT&CK IDs.** In the step 3 probe, all three embedding models missed bare-ID questions ("ما هي التقنية T1003.001؟") entirely. That is why keyword search is part of the design ([step 3](docs/steps/03-database-and-embeddings.md)).
+
+- **The eval found a data gap no model could fix.** "How do I mitigate X?" scored nDCG 0.232: MITRE's
+  technique-specific mitigation advice lives in relationship descriptions, which ingestion had dropped
+  ([step 5-6](docs/steps/05-golden-set-and-eval.md)).
 
 _(more as the project goes)_
 
