@@ -68,3 +68,13 @@ def test_listwise_rerank_parsing(fake_claude, monkeypatch):
     reply["text"] = "3, 1\n9, 3"  # 9 is out of range, the repeated 3 is ignored
     s = r.scores("q", ["a", "b", "c", "d"])
     assert s[2] > s[0] > s[1] > s[3]  # ranked first, ranked second, then incoming order for the rest
+
+
+def test_warns_once_near_budget(fake_claude, capsys):
+    make, _, _ = fake_claude
+    Claude._warned = False
+    c = make(budget=0.00018)  # one call = 0.00015 -> 83% of budget after the first call
+    c.complete("one")
+    c.complete("two")
+    assert capsys.readouterr().err.count("WARNING: Claude spend") == 1
+    Claude._warned = False

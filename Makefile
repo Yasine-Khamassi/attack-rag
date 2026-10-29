@@ -11,7 +11,7 @@ PY ?= $(if $(wildcard $(VENV_PY)),$(VENV_PY),python)
 
 install:            ## create .venv; install package, dev tools and local Postgres (pgserver)
 	python -m venv .venv
-	$(VENV_PY) -m pip install -e ".[dev,local-db,llm]"
+	$(VENV_PY) -m pip install -e ".[dev,local-db,llm,api]"
 
 ingest:             ## download ATT&CK (cached) and build data/processed/*.jsonl
 	$(PY) -m products.attack.ingest

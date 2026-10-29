@@ -208,3 +208,31 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 **Next**
 - Phase 3: cited answers (Claude Haiku 5.5), refusal when sources are thin, FastAPI + simple page, faithfulness metric.
 - Owner: review the Arabic golden questions (`eval/golden.jsonl`, lang "ar").
+
+## 2026-10-30 · Step 7: Cited answers, refusals, guards, web page (phase 3)
+
+**Done**
+- Spend cap set from the owner's balance ($95 left, stop at $50): `LLM_BUDGET_USD=42.58` ($2.58 spent + $40, $5 margin for estimate error); warning printed once at 80%.
+- `core/answer.py` (numbered sources, citation per sentence, `NO_ANSWER`, deterministic checks, language + citation guards), `core/judge.py` (faithfulness, Sonnet 5.5), `products/attack/assistant.py`, `products/attack/eval_answers.py`, `eval/unanswerable.jsonl` (12), `products/attack/api.py` + `static/index.html` (FastAPI page, RTL-aware, citations link to attack.mitre.org).
+- `docs/steps/06-cited-answers.md`. Tests: 84 passed (API tested with a fake assistant).
+
+**Numbers** (40 answerable golden questions + 12 unanswerable; writer Haiku 5.5, judge Sonnet 5.5)
+- v1: answer rate 95%, refusals 12/12, fully cited 94.7%, faithfulness 0.948, language 100%.
+- v2 (caveat rule): fully cited 30%, faithfulness 0.783, language 87.5%, refusals 11/12.
+- v3: answer rate 100%, refusals 12/12, fully cited 97.5%, faithfulness 0.932, language 100%.
+- v3 on a fresh sample (seed 12): answer rate 97.5%, fully cited 89.7%, language 94.9%, faithfulness 0.924.
+- **v3 + guards, fresh sample: answer rate 100%, refusals 12/12, fully cited 100%, invalid citations 0, language 100% (repair fired on 5%), cites primary 97.5%, faithfulness 0.960 (EN 0.986, AR 0.956, mixed 0.934).**
+- No "no" verdicts from the judge in any run; partials are extra specifics beyond the sources.
+- ~8 s per question; ~$0.30 per 52-question run. Claude spend to date $4.11 of $42.58.
+- Web page checked in a browser: Arabic answer rendered right-to-left, citations linked, "citations 100%".
+
+**Gate (phase 3): every claim cites a retrieved doc. Passed** (100% on the fresh sample; enforced by the citation guard).
+
+**Problems found**
+- Prompt instructions are not reliable on new questions (D28); rules that must always hold are now code (D29).
+- The model leaked its own instructions into answers ("In the Arabic answer, IDs stay in Latin script").
+- `--out` for the answer eval was silently not applied by a scripted edit; one validation run overwrote the main results file (restored from the copy kept before the run).
+- The model ignores "at most 6 sentences" (10 bullets seen); not enforced yet.
+
+**Next**
+- Phase 4: tenant isolation in the database (Postgres row-level security + a test with a large and a tiny tenant, D13), per-conversation logs, tool framework; README results + 90-second demo video.

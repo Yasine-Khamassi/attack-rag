@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ATT&amp;CK Analyst Assistant</title>
+<style>
+  :root { --bg:#0f1419; --panel:#171e26; --line:#263241; --text:#e6edf3; --muted:#8b98a8; --accent:#4cc2ff;
+          --ok:#3fb950; --warn:#d29922; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.55 system-ui, "Segoe UI", Tahoma, sans-serif; }
+  main { max-width:860px; margin:0 auto; padding:28px 16px 60px; }
+  h1 { font-size:20px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 20px; }
+  form { display:flex; gap:8px; }
+  textarea { flex:1; resize:vertical; min-height:52px; padding:12px; border-radius:8px; border:1px solid var(--line);
+             background:var(--panel); color:var(--text); font:inherit; }
+  button { padding:0 18px; border:0; border-radius:8px; background:var(--accent); color:#00121f; font-weight:600;
+           cursor:pointer; }
+  button:disabled { opacity:.5; cursor:wait; }
+  .examples { margin:10px 0 24px; display:flex; flex-wrap:wrap; gap:6px; }
+  .examples button { background:var(--panel); color:var(--muted); border:1px solid var(--line); font-weight:400;
+                     padding:6px 10px; font-size:13px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-top:16px; }
+  .answer { white-space:pre-wrap; }
+  .answer a { color:var(--accent); text-decoration:none; font-size:12px; vertical-align:super; }
+  .refused { color:var(--warn); }
+  .sources ol { margin:8px 0 0; padding-inline-start:22px; }
+  .sources li { margin:4px 0; color:var(--muted); }
+  .sources li.cited { color:var(--text); }
+  .sources a { color:var(--accent); }
+  .meta { color:var(--muted); font-size:12px; margin-top:10px; }
+  .badge { display:inline-block; padding:1px 7px; border-radius:10px; font-size:12px; border:1px solid var(--line); }
+  .badge.ok { color:var(--ok); border-color:var(--ok); }
+  .badge.warn { color:var(--warn); border-color:var(--warn); }
+</style>
+</head>
+<body>
+<main>
+  <h1>ATT&amp;CK Analyst Assistant</h1>
+  <p class="sub">Ask about adversary techniques, detection and mitigation, in English or Arabic. Every sentence cites
+    the MITRE ATT&amp;CK page it comes from.</p>
+  <form id="f">
+    <textarea id="q" dir="auto" placeholder="How do I detect Kerberoasting?   ·   كيف أكتشف حقن العمليات؟" required></textarea>
+    <button id="go" type="submit">Ask</button>
+  </form>
+  <div class="examples" id="ex"></div>
+  <div id="out"></div>
+</main>
+<script>
+const EXAMPLES = ["How do I detect Kerberoasting?", "Which malware does APT29 use?", "What does T1070.001 mean?",
+                  "كيف أمنع المهاجمين من استخدام PowerShell بشكل خبيث؟", "ما هي البرمجيات التي تستخدمها مجموعة Lazarus؟"];
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+for (const e of EXAMPLES) {
+  const b = document.createElement("button"); b.type = "button"; b.textContent = e; b.dir = "auto";
+  b.onclick = () => { $("q").value = e; ask(); }; $("ex").appendChild(b);
+}
+$("f").onsubmit = ev => { ev.preventDefault(); ask(); };
+
+async function ask() {
+  const question = $("q").value.trim(); if (!question) return;
+  $("go").disabled = true; $("out").innerHTML = '<div class="card meta">Searching ATT&amp;CK and writing a cited answer…</div>';
+  try {
+    const r = await fetch("/api/ask", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({question})});
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.detail || r.statusText);
+    render(d);
+  } catch (e) { $("out").innerHTML = `<div class="card refused">Error: ${esc(String(e.message || e))}</div>`; }
+  finally { $("go").disabled = false; }
+}
+
+function render(d) {
+  const url = n => (d.sources.find(s => s.n === n) || {}).url;
+  const body = d.refused
+    ? '<p class="refused">The ATT&amp;CK sources don\'t answer this question, so no answer is given.</p>'
+    : `<div class="answer" dir="auto">${esc(d.answer).replace(/\[(\d{1,2})\]/g, (m, n) =>
+        url(+n) ? `<a href="${url(+n)}" target="_blank" rel="noopener">[${n}]</a>` : m)}</div>`;
+  const sources = d.sources.map(s => `<li class="${s.cited ? "cited" : ""}"><a href="${s.url || "#"}" target="_blank"
+      rel="noopener">${esc(s.doc_id)}</a> ${esc(s.title)}${s.cited ? "" : " (not cited)"}</li>`).join("");
+  const c = d.checks, full = c.citation_coverage === 1;
+  $("out").innerHTML = `<div class="card">${body}
+    <div class="meta"><span class="badge ${full ? "ok" : "warn"}">citations ${Math.round(c.citation_coverage*100)}%</span>
+      retrieval ${d.timing.retrieval_s}s · answer ${d.timing.answer_s}s</div></div>
+    <div class="card sources"><strong>Sources</strong><ol>${sources}</ol></div>`;
+}
+</script>
+</body>
+</html>

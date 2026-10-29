@@ -19,7 +19,18 @@ reranker is not deterministic). From `python -m products.attack.eval_golden`; ra
 Arabic questions over English documents score close to English ones (nDCG 0.749 vs 0.777). CI fails if committed
 results drop below `eval/baseline.json`. How the set is built and what the eval found:
 [docs/steps/05-golden-set-and-eval.md](docs/steps/05-golden-set-and-eval.md).
-Faithfulness of generated answers comes with phase 3.
+**Answers** (phase 3; fresh sample of 40 golden questions + 12 unanswerable; Claude Haiku 5.5 writes, Claude
+Sonnet 5.5 judges; `python -m products.attack.eval_answers --seed 12`):
+
+| Metric | Result |
+|---|---|
+| Answers with every claim cited | 100% |
+| Unanswerable questions refused (fake IDs, off-topic, predictions) | 12/12 |
+| Faithfulness (claims supported by their cited source) | 0.960 (English 0.986, Arabic 0.956) |
+| Answer in the question's language | 100% |
+
+How: numbered sources, a citation after every sentence or a fixed refusal, then code guards for language and
+citations ([step 7](docs/steps/06-cited-answers.md)). Try it: `uvicorn products.attack.api:app --port 8000`.
 
 _Demo video: (link)_
 
@@ -46,6 +57,10 @@ See [docs/DECISIONS.md](docs/DECISIONS.md).
 - **The eval found a data gap no model could fix.** "How do I mitigate X?" scored nDCG 0.232: MITRE's
   technique-specific mitigation advice lives in relationship descriptions, which ingestion had dropped
   ([step 5-6](docs/steps/05-golden-set-and-eval.md)).
+
+- **Prompt rules are not reliable on new questions.** Adding one sentence to the answer prompt dropped fully
+  cited answers from 94.7% to 30%; a tuned prompt slipped from 97.5% to 89.7% on questions it hadn't seen. Rules
+  that must always hold now run as code after the model ([step 7](docs/steps/06-cited-answers.md)).
 
 _(more as the project goes)_
 

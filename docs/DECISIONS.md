@@ -146,3 +146,27 @@ Never edit an old entry; add a new one that supersedes it.
 - **Result:** with expansion (3 runs) hit@5 0.957, nDCG 0.786; without (1 run) 0.974 / 0.778: within run-to-run noise. Expansion adds ~50% rerank tokens (~$0.003 vs ~$0.002 per question).
 - **Chose:** keep it on for this product (it has the 3-run baseline; re-baselining the cheaper option would cost another ~$0.73 for no measured gain).
 - **Revisit:** for high-volume use of the core, default to `expand_top=0` unless an eval shows a gain.
+
+## D26: Answers cite a source after every sentence or refuse with a fixed marker
+- **Chose:** `core/answer.py`: the top 6 reranked chunks are numbered [1]-[6]; Claude Haiku 5.5 (thinking off, effort medium) must cite after every sentence and reply exactly `NO_ANSWER` when the sources don't answer. Deterministic checks on every answer: citation coverage (a citation covers the text since the previous one; list lead-ins ending in ":" are headings), invalid citation numbers, language match.
+- **Rejected:** free-form answers with a source list at the end (can't tell which claim comes from where); structured JSON output per claim (harder to read and stream; the [n] form is checkable with a regex).
+- **Why:** "every claim cites a retrieved doc" is the phase 3 gate, and it can only be enforced if citations are machine-checkable.
+- **Cost:** ~$0.001 per answer, ~1-4 s. Citation presence is not truth: see D27.
+
+## D27: Faithfulness is judged by a stronger model (Sonnet 5.5), on a sample
+- **Chose:** `core/judge.py`: Claude Sonnet 5.5 (effort low) reads each claim with only the sources it cites: yes / partial / no. Uncited claims count as unsupported without a call. Run by `products/attack/eval_answers.py` on 40 answerable golden questions (stratified by template and language) + 12 unanswerable ones.
+- **Rejected:** Haiku judging Haiku (a model grading its own tier tends to agree with itself); Opus 5.5 (2x Sonnet's price; owner's rule: stronger models only where they pay off).
+- **Why:** a citation can point at a source that doesn't say what the sentence claims; only reading both catches that.
+- **Cost:** ~$0.31 per 52-question run (writer + judge + retrieval).
+
+## D28: Prompt changes are validated on a fresh sample
+- **Finding:** v1 rules: 94.7% of answers fully cited, faithfulness 0.948, 2 false refusals, 2 uncited claims (one was the model explaining its language choice). v2 added "if the sources cover only part, answer it and say what they don't cover": the model then ended almost every answer with an uncited caveat (fully cited 30%, faithfulness 0.783) and answered ID-only Arabic questions in English (language match 87.5%).
+- **Chose:** v3 keeps "answer the part the sources support" without the caveat clause, restores the explicit Arabic rule, and keeps "don't add details the sources don't state" and "never mention these rules". Because v1-v3 were tuned on the same 52 questions, the final prompt is also measured on a fresh sample (`--seed 12`) it was never tuned on.
+- **Cost:** one extra eval run per prompt change (~$0.31).
+
+## D29: Deterministic guards after the model: citation and language
+- **Finding:** on a fresh validation sample the v3 prompt dropped to 89.7% fully cited answers and 94.9% language match (vs 97.5% / 100% on the sample it was tuned on). Uncited sentences were caveats ("the sources do not describe..."), advice ("review these IDs in ATT&CK"), or the rules leaking into the answer; language misses were short Arabic ID questions answered in English.
+- **Chose:** two guards in `core/answer.py` after every model answer: (1) language guard: if the answer's script doesn't match the question's, one Haiku rewrite call that keeps every [n]; (2) citation guard: claims no citation covers are removed (`removed` lists them); if nothing cited remains, the answer becomes a refusal. The eval reports how often each guard fires, so the model's raw compliance stays visible.
+- **Rejected:** more prompt rewording (v2 showed a new instruction can break other behaviour); regenerating the whole answer on failure (2x cost, may fail again).
+- **Why:** the phase 3 gate "every claim cites a retrieved doc" must hold for every answer, not for most; a guard makes it true by construction.
+- **Cost:** removed sentences are usually caveats, sometimes a useful sentence the model forgot to cite; a language repair adds ~1-2 s and ~$0.0003 when it fires.

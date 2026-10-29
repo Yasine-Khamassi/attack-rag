@@ -1,0 +1,4181 @@
+{
+ "summary": {
+  "answerable": 40,
+  "unanswerable": 12,
+  "answer_rate": 0.95,
+  "refusal_rate_unanswerable": 1.0,
+  "citation_coverage": 0.99,
+  "answers_fully_cited": 0.947,
+  "answers_with_invalid_citation": 0.0,
+  "language_match": 1.0,
+  "cites_primary_source": 0.974,
+  "faithfulness": 0.948,
+  "answers_fully_faithful": 0.711,
+  "by_lang": {
+   "en": {
+    "faithfulness": 0.945,
+    "cites_primary_source": 1.0
+   },
+   "ar": {
+    "faithfulness": 0.935,
+    "cites_primary_source": 0.923
+   },
+   "mixed": {
+    "faithfulness": 0.968,
+    "cites_primary_source": 1.0
+   }
+  },
+  "seconds_per_question": 7.87,
+  "cost_usd": 0.3118,
+  "writer": "claude-haiku-5-5",
+  "judge": "claude-sonnet-5-5"
+ },
+ "rows": [
+  {
+   "id": "g044ar",
+   "lang": "ar",
+   "kind": "alias",
+   "answerable": true,
+   "question": "ما هي المجموعة التهديدية المعروفة باسم BANISHED KITTEN، ومن يقف وراءها؟",
+   "answer": "المجموعة المعروفة باسم BANISHED KITTEN هي VOID MANTICORE (G1055) [1]. تُقيَّم بأنها تعمل لصالح وزارة الاستخبارات والأمن الإيرانية (MOIS) [1]. وقد نشطت منذ منتصف عام 2022 على الأقل، وتنفذ عمليات تدميرية تجمع بين هجمات المسح (wiper) وحملات الاختراق والتسريب [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 7.93,
+    "answer_s": 1.74
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "G1055",
+     "title": "VOID MANTICORE",
+     "url": "https://attack.mitre.org/groups/G1055",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "G0137",
+     "title": "Ferocious Kitten",
+     "url": "https://attack.mitre.org/groups/G0137",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "G0117",
+     "title": "Fox Kitten",
+     "url": "https://attack.mitre.org/groups/G0117",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "G0059",
+     "title": "Magic Hound",
+     "url": "https://attack.mitre.org/groups/G0059",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "G0049",
+     "title": "OilRig",
+     "url": "https://attack.mitre.org/groups/G0049",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "G0130",
+     "title": "Ajax Security Team",
+     "url": "https://attack.mitre.org/groups/G0130",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "المجموعة المعروفة باسم BANISHED KITTEN هي VOID MANTICORE (G1055) [1].",
+     "yes"
+    ],
+    [
+     "تُقيَّم بأنها تعمل لصالح وزارة الاستخبارات والأمن الإيرانية (MOIS) [1].",
+     "yes"
+    ],
+    [
+     "وقد نشطت منذ منتصف عام 2022 على الأقل، وتنفذ عمليات تدميرية تجمع بين هجمات المسح (wiper) وحملات الاختراق والتسريب [1].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g045en",
+   "lang": "en",
+   "kind": "alias",
+   "answerable": true,
+   "question": "Which threat group is also known as Emperor Dragonfly, and what is its tradecraft?",
+   "answer": "Cinnamon Tempest (G1021) is also known as Emperor Dragonfly, along with DEV-0401 and BRONZE STARLIGHT [1]. It is a China-based group active since at least 2021 that deploys multiple strains of ransomware based on leaked Babuk source code [1]. It acts independently across the attack lifecycle rather than using an affiliate model [1]. Its tradecraft includes exploiting public-facing applications (T1190), using valid accounts (T1078), and deploying tools such as Cobalt Strike, Sliver, Impacket, and PlugX [1]. It also uses exfiltration to cloud storage (T1567.002) and protocol tunneling (T1572) [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 3.79,
+    "answer_s": 1.53
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "G1021",
+     "title": "Cinnamon Tempest",
+     "url": "https://attack.mitre.org/groups/G1021",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "G0035",
+     "title": "Dragonfly",
+     "url": "https://attack.mitre.org/groups/G0035",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "C0063",
+     "title": "2025 Poland Wiper Attacks",
+     "url": "https://attack.mitre.org/campaigns/C0063",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "G0017",
+     "title": "DragonOK",
+     "url": "https://attack.mitre.org/groups/G0017",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "G0009",
+     "title": "Deep Panda",
+     "url": "https://attack.mitre.org/groups/G0009",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "G0044",
+     "title": "Winnti Group",
+     "url": "https://attack.mitre.org/groups/G0044",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "Cinnamon Tempest (G1021) is also known as Emperor Dragonfly, along with DEV-0401 and BRONZE STARLIGHT [1].",
+     "yes"
+    ],
+    [
+     "It is a China-based group active since at least 2021 that deploys multiple strains of ransomware based on leaked Babuk source code [1].",
+     "yes"
+    ],
+    [
+     "It acts independently across the attack lifecycle rather than using an affiliate model [1].",
+     "yes"
+    ],
+    [
+     "Its tradecraft includes exploiting public-facing applications (T1190), using valid accounts (T1078), and deploying tools such as Cobalt Strike, Sliver, Impacket, and PlugX [1].",
+     "yes"
+    ],
+    [
+     "It also uses exfiltration to cloud storage (T1567.002) and protocol tunneling (T1572) [1].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g045ar",
+   "lang": "ar",
+   "kind": "alias",
+   "answerable": true,
+   "question": "أي مجموعة تهديد تُعرف أيضًا باسم Emperor Dragonfly، وما هي أساليبها التقنية (TTPs)؟",
+   "answer": "المجموعة التي تُعرف باسم Emperor Dragonfly هي Cinnamon Tempest (G1021) [1]. وهي مجموعة تهديد مقرها الصين، نشطة منذ عام 2021 على الأقل، وتنشر عدة سلالات من برامج الفدية المبنية على الشيفرة المصدرية المسربة لـ Babuk [1]. ومن أساليبها التقنية: تنفيذ الأوامر عبر PowerShell (T1059.001) وWindows Command Shell (T1059.003) وPython (T1059.006) [1]، واستخدام Valid Accounts (T1078) وDomain Accounts (T1078.002) [1]، وتعديل سياسات المجموعة Group Policy Modification (T1484.001) [1]، وتنفيذ Windows Service (T1543.003) وWindows Management Instrumentation (T1047) [1]، والتنقل الجانبي عبر SMB/Windows Admin Shares (T1021.002) [1]، وتنفيذ الاختراق عبر Exploit Public-Facing Application (T1190) [1]، والتسلل عبر أدوات مثل Ingress Tool Transfer (T1105) وProtocol Tunneling (T1572) [1]، والتسريب إلى التخزين السحابي Exfiltration to Cloud Storage (T1567.002) [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 7.59,
+    "answer_s": 4.23
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "G1021",
+     "title": "Cinnamon Tempest",
+     "url": "https://attack.mitre.org/groups/G1021",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "S0075",
+     "title": "Reg",
+     "url": "https://attack.mitre.org/software/S0075",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "G0035",
+     "title": "Dragonfly",
+     "url": "https://attack.mitre.org/groups/G0035",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "G0007",
+     "title": "APT28",
+     "url": "https://attack.mitre.org/groups/G0007",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "G0027",
+     "title": "Threat Group-3390",
+     "url": "https://attack.mitre.org/groups/G0027",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "C0063",
+     "title": "2025 Poland Wiper Attacks",
+     "url": "https://attack.mitre.org/campaigns/C0063",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "المجموعة التي تُعرف باسم Emperor Dragonfly هي Cinnamon Tempest (G1021) [1].",
+     "yes"
+    ],
+    [
+     "وهي مجموعة تهديد مقرها الصين، نشطة منذ عام 2021 على الأقل، وتنشر عدة سلالات من برامج الفدية المبنية على الشيفرة المصدرية المسربة لـ Babuk [1].",
+     "yes"
+    ],
+    [
+     "ومن أساليبها التقنية: تنفيذ الأوامر عبر PowerShell (T1059.001) وWindows Command Shell (T1059.003) وPython (T1059.006) [1]، واستخدام Valid Accounts (T1078) وDomain Accounts (T1078.002) [1]، وتعديل سياسات المجموعة Group Policy Modification (T1484.001) [1]، وتنفيذ Windows Service (T1543.003) وWindows Management Instrumentation (T1047) [1]، والتنقل الجانبي عبر SMB/Windows Admin Shares (T1021.002) [1]، وتنفيذ الاختراق عبر Exploit Public-Facing Application (T1190) [1]، والتسلل عبر أدوات مثل Ingress Tool Transfer (T1105) وProtocol Tunneling (T1572) [1]، والتسريب إلى التخزين السحابي Exfiltration to Cloud Storage (T1567.002) [1].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g044en",
+   "lang": "en",
+   "kind": "alias",
+   "answerable": true,
+   "question": "What threat group goes by the name BANISHED KITTEN, and who is behind it?",
+   "answer": "VOID MANTICORE is the group that goes by the alias BANISHED KITTEN [1]. It is assessed to operate on behalf of Iran's Ministry of Intelligence and Security (MOIS) [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 3.7,
+    "answer_s": 1.32
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "G1055",
+     "title": "VOID MANTICORE",
+     "url": "https://attack.mitre.org/groups/G1055",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "G0137",
+     "title": "Ferocious Kitten",
+     "url": "https://attack.mitre.org/groups/G0137",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "G0117",
+     "title": "Fox Kitten",
+     "url": "https://attack.mitre.org/groups/G0117",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "G0059",
+     "title": "Magic Hound",
+     "url": "https://attack.mitre.org/groups/G0059",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "G0049",
+     "title": "OilRig",
+     "url": "https://attack.mitre.org/groups/G0049",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "G0130",
+     "title": "Ajax Security Team",
+     "url": "https://attack.mitre.org/groups/G0130",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "VOID MANTICORE is the group that goes by the alias BANISHED KITTEN [1].",
+     "yes"
+    ],
+    [
+     "It is assessed to operate on behalf of Iran's Ministry of Intelligence and Security (MOIS) [1].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g066mx",
+   "lang": "mixed",
+   "kind": "bare_id",
+   "answerable": true,
+   "question": "T1484.002",
+   "answer": "T1484.002 is Trust Modification, a technique under the defense-impairment and privilege-escalation tactics that applies to Identity Provider and Windows platforms [1]. Adversaries add or modify domain trusts or trust configuration to evade defenses or elevate privileges [1]. In Active Directory, this can be used to forge SAML tokens by adding the adversary's own signing certificate to a domain trust, rather than compromising the existing signing certificate [1]. An adversary may also convert an AD domain to a federated domain via AD FS and alter claim issuance rules to log in with any valid credentials as a specified user [1].\n\nDetection (DET0458) covers Windows events such as EventCode 5136, 4704, and Sysmon EventCode 1, watching for changes to trust attributes made via netdom, nltest, or PowerShell [2]. For identity providers, it monitors Microsoft 365 and Azure sign-in logs for operations such as \"Set domain authentication\" or \"Add federated identity provider\" [2].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 4.64,
+    "answer_s": 2.03
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1484.002",
+     "title": "Trust Modification",
+     "url": "https://attack.mitre.org/techniques/T1484/002",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "DET0458",
+     "title": "Detection of Trust Relationship Modifications in Domain or Tenant Policies",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0458",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "DET0270",
+     "title": "Detection of Domain or Tenant Policy Modifications via AD and Identity Provider",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0270",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "M1051",
+     "title": "Update Software",
+     "url": "https://attack.mitre.org/mitigations/M1051",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "DET0305",
+     "title": "Detection of Group Policy Modifications via AD Object Changes and File Activity",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0305",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1484.001",
+     "title": "Group Policy Modification",
+     "url": "https://attack.mitre.org/techniques/T1484/001",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "T1484.002 is Trust Modification, a technique under the defense-impairment and privilege-escalation tactics that applies to Identity Provider and Windows platforms [1].",
+     "yes"
+    ],
+    [
+     "Adversaries add or modify domain trusts or trust configuration to evade defenses or elevate privileges [1].",
+     "yes"
+    ],
+    [
+     "In Active Directory, this can be used to forge SAML tokens by adding the adversary's own signing certificate to a domain trust, rather than compromising the existing signing certificate [1].",
+     "yes"
+    ],
+    [
+     "An adversary may also convert an AD domain to a federated domain via AD FS and alter claim issuance rules to log in with any valid credentials as a specified user [1].",
+     "yes"
+    ],
+    [
+     "Detection (DET0458) covers Windows events such as EventCode 5136, 4704, and Sysmon EventCode 1, watching for changes to trust attributes made via netdom, nltest, or PowerShell [2].",
+     "yes"
+    ],
+    [
+     "For identity providers, it monitors Microsoft 365 and Azure sign-in logs for operations such as \"Set domain authentication\" or \"Add federated identity provider\" [2].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g065mx",
+   "lang": "mixed",
+   "kind": "bare_id",
+   "answerable": true,
+   "question": "T1591.003",
+   "answer": "T1591.003 is Identify Business Tempo, a reconnaissance sub-technique of Gather Victim Org Information (T1591) [1]. It involves gathering details such as operational hours/days of the week and the times/dates of purchases and shipments of the victim's hardware and software resources [1]. Adversaries may obtain this via direct elicitation through Phishing for Information, or from online or accessible data sets such as Social Media or Search Victim-Owned Websites [1]. Detection is associated with DET0849, which notes that this activity often has a very high occurrence and false positive rate and may occur outside the target's visibility, so defenders may focus on later stages such as Initial Access [3]. Mitigation is listed as M1056 (Pre-compromise), which states that preventive controls are limited here, so the focus should be on minimizing the amount and sensitivity of data available externally [1][4].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 4.36,
+    "answer_s": 3.01
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1591.003",
+     "title": "Identify Business Tempo",
+     "url": "https://attack.mitre.org/techniques/T1591/003",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "DET0890",
+     "title": "Detection of Gather Victim Org Information",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0890",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "DET0849",
+     "title": "Detection of Identify Business Tempo",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0849",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "M1056",
+     "title": "Pre-compromise",
+     "url": "https://attack.mitre.org/mitigations/M1056",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "DET0855",
+     "title": "Detection of Business Relationships",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0855",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1591.002",
+     "title": "Business Relationships",
+     "url": "https://attack.mitre.org/techniques/T1591/002",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "T1591.003 is Identify Business Tempo, a reconnaissance sub-technique of Gather Victim Org Information (T1591) [1].",
+     "yes"
+    ],
+    [
+     "It involves gathering details such as operational hours/days of the week and the times/dates of purchases and shipments of the victim's hardware and software resources [1].",
+     "yes"
+    ],
+    [
+     "Adversaries may obtain this via direct elicitation through Phishing for Information, or from online or accessible data sets such as Social Media or Search Victim-Owned Websites [1].",
+     "yes"
+    ],
+    [
+     "Detection is associated with DET0849, which notes that this activity often has a very high occurrence and false positive rate and may occur outside the target's visibility, so defenders may focus on later stages such as Initial Access [3].",
+     "yes"
+    ],
+    [
+     "Mitigation is listed as M1056 (Pre-compromise), which states that preventive controls are limited here, so the focus should be on minimizing the amount and sensitivity of data available externally [1][4].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g068mx",
+   "lang": "mixed",
+   "kind": "bare_id",
+   "answerable": true,
+   "question": "T1569.001",
+   "answer": "- T1569.001 (Launchctl) is a sub-technique of System Services (T1569) under the execution tactic, applicable to macOS [1].\n- Adversaries abuse launchctl to execute commands or programs as Launch Agents or Launch Daemons, using subcommands such as load, unload, and start [1].\n- Example usage includes running launchctl load -w on a plist in a user's LaunchAgents directory, or /bin/launchctl load [1].\n- Mitigation: prevent users from installing their own launch agents or launch daemons via User Account Management (M1018) [1].\n- Detection: Detection Strategy DET0265, Analytic AN0736, correlates plist creation or modification in LaunchAgents/LaunchDaemons with subsequent launchctl execution, flagging abnormal executable paths such as /tmp or /Shared [2].\n- Software using this technique includes macOS.OSAMiner (S1048) [3] and Cuckoo Stealer (S1153) [4].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 3.88,
+    "answer_s": 2.83
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1569.001",
+     "title": "Launchctl",
+     "url": "https://attack.mitre.org/techniques/T1569/001",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "DET0265",
+     "title": "Detection Strategy for System Services: Launchctl",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0265",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "S1048",
+     "title": "macOS.OSAMiner",
+     "url": "https://attack.mitre.org/software/S1048",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "S1153",
+     "title": "Cuckoo Stealer",
+     "url": "https://attack.mitre.org/software/S1153",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "M1026",
+     "title": "Privileged Account Management",
+     "url": "https://attack.mitre.org/mitigations/M1026",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "G0139",
+     "title": "TeamTNT",
+     "url": "https://attack.mitre.org/groups/G0139",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "- T1569.001 (Launchctl) is a sub-technique of System Services (T1569) under the execution tactic, applicable to macOS [1].",
+     "yes"
+    ],
+    [
+     "- Adversaries abuse launchctl to execute commands or programs as Launch Agents or Launch Daemons, using subcommands such as load, unload, and start [1].",
+     "yes"
+    ],
+    [
+     "- Example usage includes running launchctl load -w on a plist in a user's LaunchAgents directory, or /bin/launchctl load [1].",
+     "yes"
+    ],
+    [
+     "- Mitigation: prevent users from installing their own launch agents or launch daemons via User Account Management (M1018) [1].",
+     "yes"
+    ],
+    [
+     "- Detection: Detection Strategy DET0265, Analytic AN0736, correlates plist creation or modification in LaunchAgents/LaunchDaemons with subsequent launchctl execution, flagging abnormal executable paths such as /tmp or /Shared [2].",
+     "yes"
+    ],
+    [
+     "- Software using this technique includes macOS.OSAMiner (S1048) [3] and Cuckoo Stealer (S1153) [4].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g067mx",
+   "lang": "mixed",
+   "kind": "bare_id",
+   "answerable": true,
+   "question": "T1583.002",
+   "answer": "T1583.002 is the DNS Server sub-technique of Acquire Infrastructure (T1583) under the resource-development tactic, where adversaries set up their own DNS servers for use during targeting [1]. Adversaries running their own DNS servers can control server-side DNS C2 traffic and provide conditional responses to malware [1]. Detection of DNS Server is covered by DET0862, but this activity largely occurs outside the target's visibility, so the analytic focuses on related stages such as Command and Control [2]. The technique cannot be easily mitigated with preventive controls; the closest mitigation is M1056 (Pre-compromise) [1][4]. Groups that use this technique include Axiom (G0001) [5] and HEXANE (G1001) [6].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 3.98,
+    "answer_s": 2.35
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1583.002",
+     "title": "DNS Server",
+     "url": "https://attack.mitre.org/techniques/T1583/002",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "DET0862",
+     "title": "Detection of DNS Server",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0862",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "DET0863",
+     "title": "Detection of Domains",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0863",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "M1056",
+     "title": "Pre-compromise",
+     "url": "https://attack.mitre.org/mitigations/M1056",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "G0001",
+     "title": "Axiom",
+     "url": "https://attack.mitre.org/groups/G0001",
+     "cited": true
+    },
+    {
+     "n": 6,
+     "doc_id": "G1001",
+     "title": "HEXANE",
+     "url": "https://attack.mitre.org/groups/G1001",
+     "cited": true
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 0.9,
+   "verdicts": [
+    [
+     "T1583.002 is the DNS Server sub-technique of Acquire Infrastructure (T1583) under the resource-development tactic, where adversaries set up their own DNS servers for use during targeting [1].",
+     "yes"
+    ],
+    [
+     "Adversaries running their own DNS servers can control server-side DNS C2 traffic and provide conditional responses to malware [1].",
+     "yes"
+    ],
+    [
+     "Detection of DNS Server is covered by DET0862, but this activity largely occurs outside the target's visibility, so the analytic focuses on related stages such as Command and Control [2].",
+     "yes"
+    ],
+    [
+     "The technique cannot be easily mitigated with preventive controls; the closest mitigation is M1056 (Pre-compromise) [1][4].",
+     "partial"
+    ],
+    [
+     "Groups that use this technique include Axiom (G0001) [5] and HEXANE (G1001) [6].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g047ar",
+   "lang": "ar",
+   "kind": "campaign",
+   "answerable": true,
+   "question": "كيف يمكنني معرفة الجهة التي تقف وراء حملة RedDelta Modified PlugX Infection Chain Operations؟",
+   "answer": "تُنسب حملة RedDelta Modified PlugX Infection Chain Operations إلى مجموعة Mustang Panda (G0129) [2]. ونُفذت الحملة من منتصف عام 2023 حتى نهاية عام 2024 ضد جهات متعددة في شرق آسيا وجنوب شرقها [2]. وتُعرف Mustang Panda أيضاً بأسماء مستعارة مثل TA416 وRedDelta وBRONZE PRESIDENT [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 6.3,
+    "answer_s": 1.53
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "G0129",
+     "title": "Mustang Panda",
+     "url": "https://attack.mitre.org/groups/G0129",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "C0047",
+     "title": "RedDelta Modified PlugX Infection Chain Operations",
+     "url": "https://attack.mitre.org/campaigns/C0047",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "S0013",
+     "title": "PlugX",
+     "url": "https://attack.mitre.org/software/S0013",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "S0596",
+     "title": "ShadowPad",
+     "url": "https://attack.mitre.org/software/S0596",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "G1034",
+     "title": "Daggerfly",
+     "url": "https://attack.mitre.org/groups/G1034",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "G0017",
+     "title": "DragonOK",
+     "url": "https://attack.mitre.org/groups/G0017",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "تُنسب حملة RedDelta Modified PlugX Infection Chain Operations إلى مجموعة Mustang Panda (G0129) [2].",
+     "yes"
+    ],
+    [
+     "ونُفذت الحملة من منتصف عام 2023 حتى نهاية عام 2024 ضد جهات متعددة في شرق آسيا وجنوب شرقها [2].",
+     "yes"
+    ],
+    [
+     "وتُعرف Mustang Panda أيضاً بأسماء مستعارة مثل TA416 وRedDelta وBRONZE PRESIDENT [1].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g050en",
+   "lang": "en",
+   "kind": "campaign",
+   "answerable": true,
+   "question": "What do we know about the threat actor responsible for campaign C0027 that targeted telecom and BPO companies in 2022?",
+   "answer": "C0027 was a financially-motivated campaign linked to Scattered Spider that targeted telecommunications and BPO companies from at least June through December 2022 [1]. During this campaign, Scattered Spider used social engineering, performed SIM swapping, and attempted to leverage access from victim environments to mobile carrier networks [1]. Scattered Spider is also known by the aliases Roasted 0ktapus, Octo Tempest, Storm-0875, and UNC3944 [2]. Its techniques include Impersonation (T1684.001), Multi-Factor Authentication Request Generation (T1621), and External Remote Services (T1133) [2].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 4.59,
+    "answer_s": 2.59
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "C0027",
+     "title": "C0027",
+     "url": "https://attack.mitre.org/campaigns/C0027",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "G1015",
+     "title": "Scattered Spider",
+     "url": "https://attack.mitre.org/groups/G1015",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "C0058",
+     "title": "SharePoint ToolShell Exploitation",
+     "url": "https://attack.mitre.org/campaigns/C0058",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "C0059",
+     "title": "Salesforce Data Exfiltration",
+     "url": "https://attack.mitre.org/campaigns/C0059",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "C0024",
+     "title": "SolarWinds Compromise",
+     "url": "https://attack.mitre.org/campaigns/C0024",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "G1039",
+     "title": "RedCurl",
+     "url": "https://attack.mitre.org/groups/G1039",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "C0027 was a financially-motivated campaign linked to Scattered Spider that targeted telecommunications and BPO companies from at least June through December 2022 [1].",
+     "yes"
+    ],
+    [
+     "During this campaign, Scattered Spider used social engineering, performed SIM swapping, and attempted to leverage access from victim environments to mobile carrier networks [1].",
+     "yes"
+    ],
+    [
+     "Scattered Spider is also known by the aliases Roasted 0ktapus, Octo Tempest, Storm-0875, and UNC3944 [2].",
+     "yes"
+    ],
+    [
+     "Its techniques include Impersonation (T1684.001), Multi-Factor Authentication Request Generation (T1621), and External Remote Services (T1133) [2].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g049ar",
+   "lang": "ar",
+   "kind": "campaign",
+   "answerable": true,
+   "question": "ما الذي نعرفه عن حملة الاختراقات الأسترالية \"Leviathan\" والجهة الفاعلة المسؤولة عنها؟",
+   "answer": "تُعرف حملة Leviathan الأسترالية بأنها تضمنت على الأقل تسللين طويلي الأمد ضد ضحايا في أستراليا، اعتمدا على أسلوب مشابه يبدأ باستغلال خدمة خارجية ثم سرقة بيانات الاعتماد واستخدامها لتصعيد الامتيازات والحركة الجانبية [1]. وكانت الحملة تركز على exfiltration للبيانات الحساسة، بما في ذلك بيانات الاعتماد الصالحة للمؤسسات المستهدفة [1]. وتُنسب هذه الحملة إلى المجموعة Leviathan (G0065) [1]. وتُعد Leviathan مجموعة تجسس سيبراني مدعومة من الدولة الصينية، ويُنسب نشاطها إلى إدارة أمن الدولة (MSS) في Hainan State Security Department وشركة واجهة تابعة لها [2]. وقد نشطت منذ 2009 على الأقل واستهدفت قطاعات متعددة منها الحكومة والدفاع والرعاية الصحية والنقل، في الولايات المتحدة وكندا وأستراليا وأوروبا والشرق الأوسط وجنوب شرق آسيا [2].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 6.36,
+    "answer_s": 2.69
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "C0049",
+     "title": "Leviathan Australian Intrusions",
+     "url": "https://attack.mitre.org/campaigns/C0049",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "G0065",
+     "title": "Leviathan",
+     "url": "https://attack.mitre.org/groups/G0065",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "G0032",
+     "title": "Lazarus Group",
+     "url": "https://attack.mitre.org/groups/G0032",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "S0642",
+     "title": "BADFLICK",
+     "url": "https://attack.mitre.org/software/S0642",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "S0228",
+     "title": "NanHaiShu",
+     "url": "https://attack.mitre.org/software/S0228",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "S0229",
+     "title": "Orz",
+     "url": "https://attack.mitre.org/software/S0229",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "تُعرف حملة Leviathan الأسترالية بأنها تضمنت على الأقل تسللين طويلي الأمد ضد ضحايا في أستراليا، اعتمدا على أسلوب مشابه يبدأ باستغلال خدمة خارجية ثم سرقة بيانات الاعتماد واستخدامها لتصعيد الامتيازات والحركة الجانبية [1].",
+     "yes"
+    ],
+    [
+     "وكانت الحملة تركز على exfiltration للبيانات الحساسة، بما في ذلك بيانات الاعتماد الصالحة للمؤسسات المستهدفة [1].",
+     "yes"
+    ],
+    [
+     "وتُنسب هذه الحملة إلى المجموعة Leviathan (G0065) [1].",
+     "yes"
+    ],
+    [
+     "وتُعد Leviathan مجموعة تجسس سيبراني مدعومة من الدولة الصينية، ويُنسب نشاطها إلى إدارة أمن الدولة (MSS) في Hainan State Security Department وشركة واجهة تابعة لها [2].",
+     "yes"
+    ],
+    [
+     "وقد نشطت منذ 2009 على الأقل واستهدفت قطاعات متعددة منها الحكومة والدفاع والرعاية الصحية والنقل، في الولايات المتحدة وكندا وأستراليا وأوروبا والشرق الأوسط وجنوب شرق آسيا [2].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g047en",
+   "lang": "en",
+   "kind": "campaign",
+   "answerable": true,
+   "question": "How do I find out who is behind the RedDelta Modified PlugX Infection Chain Operations campaign?",
+   "answer": "The RedDelta Modified PlugX Infection Chain Operations campaign (C0047) is attributed to Mustang Panda (G0129) [2]. The campaign ran from mid-2023 through the end of 2024 against multiple entities in East and Southeast Asia [2]. Mustang Panda is a China-based cyber espionage threat actor, also known as RedDelta and TA416 [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 3.32,
+    "answer_s": 1.47
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "G0129",
+     "title": "Mustang Panda",
+     "url": "https://attack.mitre.org/groups/G0129",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "C0047",
+     "title": "RedDelta Modified PlugX Infection Chain Operations",
+     "url": "https://attack.mitre.org/campaigns/C0047",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "S0013",
+     "title": "PlugX",
+     "url": "https://attack.mitre.org/software/S0013",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "C0024",
+     "title": "SolarWinds Compromise",
+     "url": "https://attack.mitre.org/campaigns/C0024",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "C0059",
+     "title": "Salesforce Data Exfiltration",
+     "url": "https://attack.mitre.org/campaigns/C0059",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "C0062",
+     "title": "Anthropic AI-orchestrated Campaign",
+     "url": "https://attack.mitre.org/campaigns/C0062",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "The RedDelta Modified PlugX Infection Chain Operations campaign (C0047) is attributed to Mustang Panda (G0129) [2].",
+     "yes"
+    ],
+    [
+     "The campaign ran from mid-2023 through the end of 2024 against multiple entities in East and Southeast Asia [2].",
+     "yes"
+    ],
+    [
+     "Mustang Panda is a China-based cyber espionage threat actor, also known as RedDelta and TA416 [1].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g002ar",
+   "lang": "ar",
+   "kind": "definition",
+   "answerable": true,
+   "question": "كيف يمكنني اكتشاف المهاجمين الذين يسيئون استخدام بيانات اعتماد مسروقة أو حسابات مستخدمين موجودة للدخول إلى الأنظمة والحفاظ على وصولهم دون تفعيل التنبيهات؟",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 8.8,
+    "answer_s": 0.9
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1078",
+     "title": "Valid Accounts",
+     "url": "https://attack.mitre.org/techniques/T1078",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "T1078.001",
+     "title": "Default Accounts",
+     "url": "https://attack.mitre.org/techniques/T1078/001",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "T1078.002",
+     "title": "Domain Accounts",
+     "url": "https://attack.mitre.org/techniques/T1078/002",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "T1078.003",
+     "title": "Local Accounts",
+     "url": "https://attack.mitre.org/techniques/T1078/003",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "T1087",
+     "title": "Account Discovery",
+     "url": "https://attack.mitre.org/techniques/T1087",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1110.001",
+     "title": "Password Guessing",
+     "url": "https://attack.mitre.org/techniques/T1110/001",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": false,
+   "faithfulness": null,
+   "verdicts": []
+  },
+  {
+   "id": "g009en",
+   "lang": "en",
+   "kind": "definition",
+   "answerable": true,
+   "question": "How do I find out if an attacker is maintaining persistence on Windows by registering a malicious helper DLL with netsh.exe?",
+   "answer": "To detect this, monitor registry modifications under HKLM\\SOFTWARE\\Microsoft\\Netsh, which is where netsh.exe helper DLL paths are registered, corresponding to T1546.007 [1][2]. Collect WinEventLog:Security EventCode=4657 for registry value changes, plus Sysmon EventCode=1 for process creation and Sysmon EventCode=7 for image/module loads [2]. Look for new or unexpected helper DLL entries, then check for anomalous child process activity or module loads initiated by netsh.exe, since such behaviour is rarely legitimate [2]. Note that netsh.exe is also used by many threat groups (e.g., APT32, Carbanak, Dragonfly, Lazarus Group, Volt Typhoon) and is legitimate on most systems, so correlate the registry change with the subsequent execution rather than alerting on netsh.exe alone [3]. Netsh helper DLLs may also execute whenever netsh.exe runs, including through other software such as VPN clients, so baseline known-good helper entries before investigating [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 3.23,
+    "answer_s": 2.43
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1546.007",
+     "title": "Netsh Helper DLL",
+     "url": "https://attack.mitre.org/techniques/T1546/007",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "DET0575",
+     "title": "Detection Strategy for Netsh Helper DLL Persistence via Registry and Child Process Monitoring (Windows)",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0575",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "S0108",
+     "title": "netsh",
+     "url": "https://attack.mitre.org/software/S0108",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "DET0404",
+     "title": "Detect Winlogon Helper DLL Abuse via Registry and Process Artifacts on Windows",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0404",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "DET0580",
+     "title": "Detect Network Provider DLL Registration and Credential Capture",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0580",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1547.004",
+     "title": "Winlogon Helper DLL",
+     "url": "https://attack.mitre.org/techniques/T1547/004",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 0.6,
+   "verdicts": [
+    [
+     "To detect this, monitor registry modifications under HKLM\\SOFTWARE\\Microsoft\\Netsh, which is where netsh.exe helper DLL paths are registered, corresponding to T1546.007 [1][2].",
+     "yes"
+    ],
+    [
+     "Collect WinEventLog:Security EventCode=4657 for registry value changes, plus Sysmon EventCode=1 for process creation and Sysmon EventCode=7 for image/module loads [2].",
+     "partial"
+    ],
+    [
+     "Look for new or unexpected helper DLL entries, then check for anomalous child process activity or module loads initiated by netsh.exe, since such behaviour is rarely legitimate [2].",
+     "partial"
+    ],
+    [
+     "Note that netsh.exe is also used by many threat groups (e.g., APT32, Carbanak, Dragonfly, Lazarus Group, Volt Typhoon) and is legitimate on most systems, so correlate the registry change with the subsequent execution rather than alerting on netsh.exe alone [3].",
+     "partial"
+    ],
+    [
+     "Netsh helper DLLs may also execute whenever netsh.exe runs, including through other software such as VPN clients, so baseline known-good helper entries before investigating [1].",
+     "partial"
+    ]
+   ]
+  },
+  {
+   "id": "g001ar",
+   "lang": "ar",
+   "kind": "definition",
+   "answerable": true,
+   "question": "ما الذي يقوله إطار MITRE ATT&CK بشأن قيام الخصوم بإغراق خدمات الشبكة مثل DNS وخوادم الويب بالطلبات بهدف استنزافها وإحداث حجب الخدمة (DoS)؟",
+   "answer": "يصف MITRE ATT&CK هذا السلوك في التقنية T1499.002 (Service Exhaustion Flood)، ويشير إلى أن الخصوم يستهدفون خدمات الشبكة التي تقدمها الأنظمة لتنفيذ هجمات حجب الخدمة، وأن DNS وخدمات الويب من أكثر الأهداف شيوعاً [2]. ومن الأمثلة المذكورة هجوم \"HTTP flood\" البسيط، حيث يرسل الخصم عدداً كبيراً من طلبات HTTP إلى خادم ويب لإغراقه و/أو التطبيق الذي يعمل عليه [2]. ويعتمد هذا النوع من الهجمات على الحجم الخام للطلبات لاستنزاف أي من الموارد التي يحتاجها البرنامج المستهدف لتقديم الخدمة [2]. أما إذا كان الإغراق موجهاً إلى الموارد التطبيقية الثقيلة وليس إلى حجم الطلبات العام، فيُصنّف ذلك ضمن T1499.003 (Application Exhaustion Flood) [3].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 8.57,
+    "answer_s": 2.54
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1498",
+     "title": "Network Denial of Service",
+     "url": "https://attack.mitre.org/techniques/T1498",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "T1499.002",
+     "title": "Service Exhaustion Flood",
+     "url": "https://attack.mitre.org/techniques/T1499/002",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "T1499.003",
+     "title": "Application Exhaustion Flood",
+     "url": "https://attack.mitre.org/techniques/T1499/003",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "T1498.002",
+     "title": "Reflection Amplification",
+     "url": "https://attack.mitre.org/techniques/T1498/002",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "T1499",
+     "title": "Endpoint Denial of Service",
+     "url": "https://attack.mitre.org/techniques/T1499",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1498.001",
+     "title": "Direct Network Flood",
+     "url": "https://attack.mitre.org/techniques/T1498/001",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "يصف MITRE ATT&CK هذا السلوك في التقنية T1499.002 (Service Exhaustion Flood)، ويشير إلى أن الخصوم يستهدفون خدمات الشبكة التي تقدمها الأنظمة لتنفيذ هجمات حجب الخدمة، وأن DNS وخدمات الويب من أكثر الأهداف شيوعاً [2].",
+     "yes"
+    ],
+    [
+     "ومن الأمثلة المذكورة هجوم \"HTTP flood\" البسيط، حيث يرسل الخصم عدداً كبيراً من طلبات HTTP إلى خادم ويب لإغراقه و/أو التطبيق الذي يعمل عليه [2].",
+     "yes"
+    ],
+    [
+     "ويعتمد هذا النوع من الهجمات على الحجم الخام للطلبات لاستنزاف أي من الموارد التي يحتاجها البرنامج المستهدف لتقديم الخدمة [2].",
+     "yes"
+    ],
+    [
+     "أما إذا كان الإغراق موجهاً إلى الموارد التطبيقية الثقيلة وليس إلى حجم الطلبات العام، فيُصنّف ذلك ضمن T1499.003 (Application Exhaustion Flood) [3].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g007en",
+   "lang": "en",
+   "kind": "definition",
+   "answerable": true,
+   "question": "How do attackers use hijacked third-party servers to stage operations and run command and control?",
+   "answer": "Adversaries may compromise third-party servers instead of purchasing their own, using them to stage, launch, and execute an operation [1]. During post-compromise activity, these servers can be used for various tasks, including Command and Control [1]. Compromised third-party DNS servers can likewise be used for Command and Control traffic and to alter DNS records, redirecting an organization's traffic to adversary-controlled infrastructure [3]. Compromised infrastructure can also help operations blend in with normal traffic, such as contact with high-reputation or trusted sites [2].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 3.29,
+    "answer_s": 2.17
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1584.004",
+     "title": "Server",
+     "url": "https://attack.mitre.org/techniques/T1584/004",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "T1584",
+     "title": "Compromise Infrastructure",
+     "url": "https://attack.mitre.org/techniques/T1584",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "T1584.002",
+     "title": "DNS Server",
+     "url": "https://attack.mitre.org/techniques/T1584/002",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "T1583.002",
+     "title": "DNS Server",
+     "url": "https://attack.mitre.org/techniques/T1583/002",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "T1583.004",
+     "title": "Server",
+     "url": "https://attack.mitre.org/techniques/T1583/004",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1583",
+     "title": "Acquire Infrastructure",
+     "url": "https://attack.mitre.org/techniques/T1583",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "Adversaries may compromise third-party servers instead of purchasing their own, using them to stage, launch, and execute an operation [1].",
+     "yes"
+    ],
+    [
+     "During post-compromise activity, these servers can be used for various tasks, including Command and Control [1].",
+     "yes"
+    ],
+    [
+     "Compromised third-party DNS servers can likewise be used for Command and Control traffic and to alter DNS records, redirecting an organization's traffic to adversary-controlled infrastructure [3].",
+     "yes"
+    ],
+    [
+     "Compromised infrastructure can also help operations blend in with normal traffic, such as contact with high-reputation or trusted sites [2].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g018ar",
+   "lang": "ar",
+   "kind": "detect",
+   "answerable": true,
+   "question": "كيف يمكنني اكتشاف عملية Linux تقوم بإعادة كتابة مصفوفة argv الخاصة بها في الذاكرة بحيث يُظهر الأمر ps أو /proc/PID/cmdline اسمًا مضللًا؟",
+   "answer": "لاكتشاف هذا السلوك، يمكنك استخدام التحليل AN0466 ضمن استراتيجية الكشف DET0164، وهو يرتبط بالتقنية T1036.011 [1][2]. يقوم هذا التحليل على رصد أنماط بايت null غير متوقعة، وعدم التطابق بين `/proc/<pid>/cmdline` وسلسلة الأصل للعملية [2]. كما يعتمد على مصادر السجلات auditd:SYSCALL (execve أو prctl أو ptrace) وebpf:tracepoints لرصد الكتابة في منطقة الذاكرة الخاصة بـ argv[] أثناء التشغيل [2]. ويُنصح أيضًا بالتركيز على الكتابات الذاكرية التي تحدث بعد وقت قصير من بدء العملية [2].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 7.19,
+    "answer_s": 2.23
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1036.011",
+     "title": "Overwrite Process Arguments",
+     "url": "https://attack.mitre.org/techniques/T1036/011",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "DET0164",
+     "title": "Detection Strategy for Overwritten Process Arguments Masquerading",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0164",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "DET0428",
+     "title": "Detection Strategy for Bind Mounts on Linux",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0428",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "DET0593",
+     "title": "Detecting OS Credential Dumping via /proc Filesystem Access on Linux",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0593",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "DET0443",
+     "title": "Detection Strategy for Masquerading via Breaking Process Trees",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0443",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "DET0034",
+     "title": "Detection of Adversarial Process Discovery Behavior",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0034",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "لاكتشاف هذا السلوك، يمكنك استخدام التحليل AN0466 ضمن استراتيجية الكشف DET0164، وهو يرتبط بالتقنية T1036.011 [1][2].",
+     "yes"
+    ],
+    [
+     "يقوم هذا التحليل على رصد أنماط بايت null غير متوقعة، وعدم التطابق بين `/proc/<pid>/cmdline` وسلسلة الأصل للعملية [2].",
+     "yes"
+    ],
+    [
+     "كما يعتمد على مصادر السجلات auditd:SYSCALL (execve أو prctl أو ptrace) وebpf:tracepoints لرصد الكتابة في منطقة الذاكرة الخاصة بـ argv[] أثناء التشغيل [2].",
+     "yes"
+    ],
+    [
+     "ويُنصح أيضًا بالتركيز على الكتابات الذاكرية التي تحدث بعد وقت قصير من بدء العملية [2].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g020en",
+   "lang": "en",
+   "kind": "detect",
+   "answerable": true,
+   "question": "How can I detect when an attacker abuses the legacy at command to schedule malicious tasks on Windows, Linux, or macOS hosts?",
+   "answer": "Detection for at abuse is covered by DET0333, which provides platform-specific analytics [1]. On Windows, monitor Security EventCode 4698 (scheduled task creation) and Sysmon EventCode 1 (process creation), looking for anomalous processes launched by svchost.exe or taskeng.exe after at.exe or WMI Win32_ScheduledJob creation [1]. On Linux, use auditd SYSCALL execve events for at invocations and auditd SYSCALL write events for modifications under /var/spool/cron/atjobs [1]. On macOS, correlate unified log entries for the at process and job runner, file access events to /usr/lib/cron/at, and osquery process_events [1]. The technique itself is At (T1053.002), where at can also be invoked through the WMI Win32_ScheduledJob class [2]. The at.exe/at binary is catalogued as S0110 [4].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 3.68,
+    "answer_s": 1.93
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "DET0333",
+     "title": "Cross-Platform Detection of Scheduled Task/Job Abuse via `at` Utility",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0333",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "T1053.002",
+     "title": "At",
+     "url": "https://attack.mitre.org/techniques/T1053/002",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "T1053",
+     "title": "Scheduled Task/Job",
+     "url": "https://attack.mitre.org/techniques/T1053",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "S0110",
+     "title": "at",
+     "url": "https://attack.mitre.org/software/S0110",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "T1053.005",
+     "title": "Scheduled Task",
+     "url": "https://attack.mitre.org/techniques/T1053/005",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1053.007",
+     "title": "Container Orchestration Job",
+     "url": "https://attack.mitre.org/techniques/T1053/007",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "Detection for at abuse is covered by DET0333, which provides platform-specific analytics [1].",
+     "yes"
+    ],
+    [
+     "On Windows, monitor Security EventCode 4698 (scheduled task creation) and Sysmon EventCode 1 (process creation), looking for anomalous processes launched by svchost.exe or taskeng.exe after at.exe or WMI Win32_ScheduledJob creation [1].",
+     "yes"
+    ],
+    [
+     "On Linux, use auditd SYSCALL execve events for at invocations and auditd SYSCALL write events for modifications under /var/spool/cron/atjobs [1].",
+     "yes"
+    ],
+    [
+     "On macOS, correlate unified log entries for the at process and job runner, file access events to /usr/lib/cron/at, and osquery process_events [1].",
+     "yes"
+    ],
+    [
+     "The technique itself is At (T1053.002), where at can also be invoked through the WMI Win32_ScheduledJob class [2].",
+     "yes"
+    ],
+    [
+     "The at.exe/at binary is catalogued as S0110 [4].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g013ar",
+   "lang": "ar",
+   "kind": "detect",
+   "answerable": true,
+   "question": "كيف أكتشف عملية تُشغَّل باستخدام رمز وصول (access token) لمستخدم آخر، مثل تصعيد الامتيازات عبر CreateProcessWithTokenW أو runas على Windows؟",
+   "answer": "للكشف عن عملية تُشغَّل برمز وصول مستخدم آخر عبر CreateProcessWithTokenW أو CreateProcessAsUserW أو runas، يُعتمد على سلسلة سلوكية تبدأ بأمر أو استدعاء API مشبوه، ثم فتح أو تكرار للرمز أو المقبض المميز، ثم إنشاء عملية فرعية تعمل بهوية أو مستوى تكامل مختلف عن العملية الأم [1].\n\n- تحقق من سجلات WinEventLog:Security (EventCode=4688) وSysmon (EventCode=10)، وابحث عن عملية فرعية تختلف سياق أمانها (SID/LogonId/IntegrityLevel) عن أصلها، مع استدعاءات ETW:ProcThread لـ CreateProcessWithTokenW وCreateProcessAsUserW [1].\n- راقب الأحداث اللاحقة مثل 4672 وEventCode 4634 وEventCode 5136، لأنها قد تدل على امتيازات خاصة أو إجراءات لاحقة [1].\n- تنبّه إلى استخدام runas في سطر الأوامر، وإلى عمليات تكرار الرموز أو فتح المقابض عبر DuplicateTokenEx أو ImpersonateLoggedOnUser أو SetThreadToken ضمن ETW:Token وEventCode 10، لأن هذه قد تسبق إنشاء العملية [2].\n- يمكن أن تُربط هذه المؤشرات بالتقنية T1134.002 (Create Process with Token) وبالتقنية T1134.001 (Token Impersonation/Theft) حسب نوع السلوك المرصود [1][2][3][4].\n- للحد من الخطر، قيّد صلاحيات إنشاء الرموز \"Create a token object\" و\"Replace a process level token\" عبر GPO، ويُفضّل أن يعمل المسؤولون بحساب قياسي ويشغّلوا أدواتهم بامتيازات مرتفعة عبر runas [3].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 7.73,
+    "answer_s": 4.77
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "DET0456",
+     "title": "Behavior-chain detection for T1134.002 Create Process with Token (Windows)",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0456",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "DET0482",
+     "title": "Behavior-chain detection for T1134.001 Access Token Manipulation: Token Impersonation/Theft on Windows",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0482",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "T1134.002",
+     "title": "Create Process with Token",
+     "url": "https://attack.mitre.org/techniques/T1134/002",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "T1134.001",
+     "title": "Token Impersonation/Theft",
+     "url": "https://attack.mitre.org/techniques/T1134/001",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "T1134.003",
+     "title": "Make and Impersonate Token",
+     "url": "https://attack.mitre.org/techniques/T1134/003",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "DET0498",
+     "title": "Behavior‑chain detection for T1134.003 Make and Impersonate Token (Windows)",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0498",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 0.917,
+   "verdicts": [
+    [
+     "للكشف عن عملية تُشغَّل برمز وصول مستخدم آخر عبر CreateProcessWithTokenW أو CreateProcessAsUserW أو runas، يُعتمد على سلسلة سلوكية تبدأ بأمر أو استدعاء API مشبوه، ثم فتح أو تكرار للرمز أو المقبض المميز، ثم إنشاء عملية فرعية تعمل بهوية أو مستوى تكامل مختلف عن العملية الأم [1].",
+     "yes"
+    ],
+    [
+     "- تحقق من سجلات WinEventLog:Security (EventCode=4688) وSysmon (EventCode=10)، وابحث عن عملية فرعية تختلف سياق أمانها (SID/LogonId/IntegrityLevel) عن أصلها، مع استدعاءات ETW:ProcThread لـ CreateProcessWithTokenW وCreateProcessAsUserW [1].",
+     "yes"
+    ],
+    [
+     "- راقب الأحداث اللاحقة مثل 4672 وEventCode 4634 وEventCode 5136، لأنها قد تدل على امتيازات خاصة أو إجراءات لاحقة [1].",
+     "partial"
+    ],
+    [
+     "- تنبّه إلى استخدام runas في سطر الأوامر، وإلى عمليات تكرار الرموز أو فتح المقابض عبر DuplicateTokenEx أو ImpersonateLoggedOnUser أو SetThreadToken ضمن ETW:Token وEventCode 10، لأن هذه قد تسبق إنشاء العملية [2].",
+     "yes"
+    ],
+    [
+     "- يمكن أن تُربط هذه المؤشرات بالتقنية T1134.002 (Create Process with Token) وبالتقنية T1134.001 (Token Impersonation/Theft) حسب نوع السلوك المرصود [1][2][3][4].",
+     "yes"
+    ],
+    [
+     "- للحد من الخطر، قيّد صلاحيات إنشاء الرموز \"Create a token object\" و\"Replace a process level token\" عبر GPO، ويُفضّل أن يعمل المسؤولون بحساب قياسي ويشغّلوا أدواتهم بامتيازات مرتفعة عبر runas [3].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g011en",
+   "lang": "en",
+   "kind": "detect",
+   "answerable": true,
+   "question": "How can I spot attackers figuring out which user is logged into a host or who normally uses a machine, by monitoring for commands and processes that query account identity?",
+   "answer": "To detect adversaries determining the logged-in or primary user, monitor for T1033 (System Owner/User Discovery), which covers retrieving the primary, currently logged-in, or commonly used user of a system [1]. Commands such as whoami, and w and who on macOS and Linux, identify the current user, and environment variables like %USERNAME% and $USER can also expose this [1]. On Windows, detection analytic AN0254 watches Sysmon EventCode=1 and PowerShell script block logs (EventCode 4103, 4104, 4105, 4106) for built-in tools like whoami, query user, and net user, or scripts querying user information via WMI or PowerShell [2]. On Linux, AN0255 flags whoami, id, w, or cat /etc/passwd executed from non-interactive or scripting contexts using auditd execve syscall records [2]. On macOS, AN0256 covers dscl, who, and $USER usage via Terminal or malicious LaunchAgents using unified logs and Endpoint Security exec events [2]. For network devices, AN0257 watches for CLI commands such as show users and show ssh through syslog records [2]. Because these commands are also used for account enumeration, correlate hits with T1087.001 analytics (DET0303) for local account listing such as net user, id, groups, and dscl . list /Users [3][4].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 3.19,
+    "answer_s": 3.45
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1033",
+     "title": "System Owner/User Discovery",
+     "url": "https://attack.mitre.org/techniques/T1033",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "DET0093",
+     "title": "Behavioral Detection of User Discovery via Local and Remote Enumeration",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0093",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "DET0303",
+     "title": "Local Account Enumeration Across Host Platforms",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0303",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "T1087.001",
+     "title": "Local Account",
+     "url": "https://attack.mitre.org/techniques/T1087/001",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "DET0210",
+     "title": "Abuse of Domain Accounts",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0210",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "DET0407",
+     "title": "Detection of Local Account Abuse for Initial Access and Persistence",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0407",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 0.929,
+   "verdicts": [
+    [
+     "To detect adversaries determining the logged-in or primary user, monitor for T1033 (System Owner/User Discovery), which covers retrieving the primary, currently logged-in, or commonly used user of a system [1].",
+     "yes"
+    ],
+    [
+     "Commands such as whoami, and w and who on macOS and Linux, identify the current user, and environment variables like %USERNAME% and $USER can also expose this [1].",
+     "yes"
+    ],
+    [
+     "On Windows, detection analytic AN0254 watches Sysmon EventCode=1 and PowerShell script block logs (EventCode 4103, 4104, 4105, 4106) for built-in tools like whoami, query user, and net user, or scripts querying user information via WMI or PowerShell [2].",
+     "yes"
+    ],
+    [
+     "On Linux, AN0255 flags whoami, id, w, or cat /etc/passwd executed from non-interactive or scripting contexts using auditd execve syscall records [2].",
+     "yes"
+    ],
+    [
+     "On macOS, AN0256 covers dscl, who, and $USER usage via Terminal or malicious LaunchAgents using unified logs and Endpoint Security exec events [2].",
+     "yes"
+    ],
+    [
+     "For network devices, AN0257 watches for CLI commands such as show users and show ssh through syslog records [2].",
+     "yes"
+    ],
+    [
+     "Because these commands are also used for account enumeration, correlate hits with T1087.001 analytics (DET0303) for local account listing such as net user, id, groups, and dscl . list /Users [3][4].",
+     "partial"
+    ]
+   ]
+  },
+  {
+   "id": "g033ar",
+   "lang": "ar",
+   "kind": "group_software",
+   "answerable": true,
+   "question": "ما هي البرمجيات الخبيثة والأدوات التي شوهدت مجموعة Turla تستخدمها في حملات التجسس الخاصة بها؟",
+   "answer": "تستخدم مجموعة Turla عدة برمجيات خبيثة وأدوات في حملات التجسس، ومنها:\n\n- **Uroburos (S0022)**: أداة تجسس متطورة مكتوبة بلغة C، وتُستخدم من وحدات تابعة لجهاز الأمن الفيدرالي الروسي (FSB) المرتبطة بمجموعة أدوات Turla، وتتوفر لأنظمة Linux وWindows وmacOS [1].\n- **Carbon (S0335)**: باب خلفي من المرحلة الثانية وإطار عمل لسرقة المعلومات الحساسة، استُخدم انتقائياً ضد جهات حكومية ومرتبطة بالشؤون الخارجية في آسيا الوسطى [2].\n- **Crutch (S0538)**: باب خلفي مصمم لسرقة المستندات، استُخدم من قِبل Turla منذ 2015 على الأقل [3].\n- **LunarWeb (S1141)**: باب خلفي استُخدم منذ 2020 على الأقل، بما في ذلك في اختراق وزارة خارجية أوروبية، ويمكنه استخدام الإخفاء بالاستيغانوغرافيا لإخفاء قنوات التحكم والسيطرة، وقد شوهد نشره على الخوادم فقط [4].\n- **Gazer (S0168)**: باب خلفي استُخدم من قِبل Turla منذ 2016 على الأقل [5].\n- **Epic (S0091)**: باب خلفي استُخدم من قِبل Turla [6].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 6.17,
+    "answer_s": 3.78
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "S0022",
+     "title": "Uroburos",
+     "url": "https://attack.mitre.org/software/S0022",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "S0335",
+     "title": "Carbon",
+     "url": "https://attack.mitre.org/software/S0335",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "S0538",
+     "title": "Crutch",
+     "url": "https://attack.mitre.org/software/S0538",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "S1141",
+     "title": "LunarWeb",
+     "url": "https://attack.mitre.org/software/S1141",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "S0168",
+     "title": "Gazer",
+     "url": "https://attack.mitre.org/software/S0168",
+     "cited": true
+    },
+    {
+     "n": 6,
+     "doc_id": "S0091",
+     "title": "Epic",
+     "url": "https://attack.mitre.org/software/S0091",
+     "cited": true
+    }
+   ],
+   "checks": {
+    "citation_coverage": 0.857,
+    "uncited": [
+     "تستخدم مجموعة Turla عدة برمجيات خبيثة وأدوات في حملات التجسس، ومنها:"
+    ],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": false,
+   "faithfulness": 0.857,
+   "verdicts": [
+    [
+     "تستخدم مجموعة Turla عدة برمجيات خبيثة وأدوات في حملات التجسس، ومنها:",
+     "uncited"
+    ],
+    [
+     "- **Uroburos (S0022)**: أداة تجسس متطورة مكتوبة بلغة C، وتُستخدم من وحدات تابعة لجهاز الأمن الفيدرالي الروسي (FSB) المرتبطة بمجموعة أدوات Turla، وتتوفر لأنظمة Linux وWindows وmacOS [1].",
+     "yes"
+    ],
+    [
+     "- **Carbon (S0335)**: باب خلفي من المرحلة الثانية وإطار عمل لسرقة المعلومات الحساسة، استُخدم انتقائياً ضد جهات حكومية ومرتبطة بالشؤون الخارجية في آسيا الوسطى [2].",
+     "yes"
+    ],
+    [
+     "- **Crutch (S0538)**: باب خلفي مصمم لسرقة المستندات، استُخدم من قِبل Turla منذ 2015 على الأقل [3].",
+     "yes"
+    ],
+    [
+     "- **LunarWeb (S1141)**: باب خلفي استُخدم منذ 2020 على الأقل، بما في ذلك في اختراق وزارة خارجية أوروبية، ويمكنه استخدام الإخفاء بالاستيغانوغرافيا لإخفاء قنوات التحكم والسيطرة، وقد شوهد نشره على الخوادم فقط [4].",
+     "yes"
+    ],
+    [
+     "- **Gazer (S0168)**: باب خلفي استُخدم من قِبل Turla منذ 2016 على الأقل [5].",
+     "yes"
+    ],
+    [
+     "- **Epic (S0091)**: باب خلفي استُخدم من قِبل Turla [6].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g029en",
+   "lang": "en",
+   "kind": "group_software",
+   "answerable": true,
+   "question": "What ransomware and tools has the BlackByte group been using in its attacks?",
+   "answer": "BlackByte (G1043) has used the BlackByte Ransomware (S1180) and its successor, BlackByte 2.0 Ransomware (S1181) [1][2][3]. The original BlackByte Ransomware used a common key for infections, which allowed a universal decryptor to be created, whereas BlackByte 2.0 does not use a common victim decryption key [2][3]. The group also used the tools AdFind (S0552), Arp (S0099), Cobalt Strike (S0154), Exbyte (S1179), Mimikatz (S0002), and PsExec (S0029) [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 3.13,
+    "answer_s": 1.5
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "G1043",
+     "title": "BlackByte",
+     "url": "https://attack.mitre.org/groups/G1043",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "S1180",
+     "title": "BlackByte Ransomware",
+     "url": "https://attack.mitre.org/software/S1180",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "S1181",
+     "title": "BlackByte 2.0 Ransomware",
+     "url": "https://attack.mitre.org/software/S1181",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "G0119",
+     "title": "Indrik Spider",
+     "url": "https://attack.mitre.org/groups/G0119",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "G1053",
+     "title": "Storm-0501",
+     "url": "https://attack.mitre.org/groups/G1053",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "G1056",
+     "title": "TeamPCP",
+     "url": "https://attack.mitre.org/groups/G1056",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "BlackByte (G1043) has used the BlackByte Ransomware (S1180) and its successor, BlackByte 2.0 Ransomware (S1181) [1][2][3].",
+     "yes"
+    ],
+    [
+     "The original BlackByte Ransomware used a common key for infections, which allowed a universal decryptor to be created, whereas BlackByte 2.0 does not use a common victim decryption key [2][3].",
+     "yes"
+    ],
+    [
+     "The group also used the tools AdFind (S0552), Arp (S0099), Cobalt Strike (S0154), Exbyte (S1179), Mimikatz (S0002), and PsExec (S0029) [1].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g029ar",
+   "lang": "ar",
+   "kind": "group_software",
+   "answerable": true,
+   "question": "ما هي برامج الفدية والأدوات التي استخدمتها مجموعة BlackByte في هجماتها؟",
+   "answer": "مجموعة BlackByte (G1043) تستخدم عدة برامج فدية، منها BlackByte Ransomware (S1180) وBlackByte 2.0 Ransomware (S1181) [1][3]. تُعدّ BlackByte Ransomware الإصدار الذي استخدم مفتاح تشفير مشتركاً يتيح إنشاء أداة فك تشفير عامة، بينما لا يملك BlackByte 2.0 Ransomware مفتاحاً مشتركاً للضحايا [2][3]. ومن الأدوات الأخرى التي استخدمتها المجموعة: AdFind (S0552)، وArp (S0099)، وCobalt Strike (S0154)، وExbyte (S1179)، وMimikatz (S0002)، وPsExec (S0029) [1]. وExbyte أداة استخراج مكتوبة بلغة Go تنقل الملفات المجمعة إلى خدمات مشاركة الملفات عبر الإنترنت [4].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 6.17,
+    "answer_s": 2.65
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "G1043",
+     "title": "BlackByte",
+     "url": "https://attack.mitre.org/groups/G1043",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "S1181",
+     "title": "BlackByte 2.0 Ransomware",
+     "url": "https://attack.mitre.org/software/S1181",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "S1180",
+     "title": "BlackByte Ransomware",
+     "url": "https://attack.mitre.org/software/S1180",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "S1179",
+     "title": "Exbyte",
+     "url": "https://attack.mitre.org/software/S1179",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "S0029",
+     "title": "PsExec",
+     "url": "https://attack.mitre.org/software/S0029",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "S0154",
+     "title": "Cobalt Strike",
+     "url": "https://attack.mitre.org/software/S0154",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "مجموعة BlackByte (G1043) تستخدم عدة برامج فدية، منها BlackByte Ransomware (S1180) وBlackByte 2.0 Ransomware (S1181) [1][3].",
+     "yes"
+    ],
+    [
+     "تُعدّ BlackByte Ransomware الإصدار الذي استخدم مفتاح تشفير مشتركاً يتيح إنشاء أداة فك تشفير عامة، بينما لا يملك BlackByte 2.0 Ransomware مفتاحاً مشتركاً للضحايا [2][3].",
+     "yes"
+    ],
+    [
+     "ومن الأدوات الأخرى التي استخدمتها المجموعة: AdFind (S0552)، وArp (S0099)، وCobalt Strike (S0154)، وExbyte (S1179)، وMimikatz (S0002)، وPsExec (S0029) [1].",
+     "yes"
+    ],
+    [
+     "وExbyte أداة استخراج مكتوبة بلغة Go تنقل الملفات المجمعة إلى خدمات مشاركة الملفات عبر الإنترنت [4].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g030en",
+   "lang": "en",
+   "kind": "group_software",
+   "answerable": true,
+   "question": "What malware and tools has the Fox Kitten threat actor been observed using against oil and gas and government targets?",
+   "answer": "Fox Kitten has been observed using China Chopper (S0020), Pay2Key (S0556), PsExec (S0029), SystemBC (S9001), and ngrok (S0508) [1][5]. Pay2Key is a ransomware used by Fox Kitten since at least July 2020, including campaigns against Israeli companies [2]. Fox Kitten has targeted oil and gas and government verticals among others [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 4.24,
+    "answer_s": 1.98
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "G0117",
+     "title": "Fox Kitten",
+     "url": "https://attack.mitre.org/groups/G0117",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "S0556",
+     "title": "Pay2Key",
+     "url": "https://attack.mitre.org/software/S0556",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "G0049",
+     "title": "OilRig",
+     "url": "https://attack.mitre.org/groups/G0049",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "G1001",
+     "title": "HEXANE",
+     "url": "https://attack.mitre.org/groups/G1001",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "S0508",
+     "title": "ngrok",
+     "url": "https://attack.mitre.org/software/S0508",
+     "cited": true
+    },
+    {
+     "n": 6,
+     "doc_id": "G1017",
+     "title": "Volt Typhoon",
+     "url": "https://attack.mitre.org/groups/G1017",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "Fox Kitten has been observed using China Chopper (S0020), Pay2Key (S0556), PsExec (S0029), SystemBC (S9001), and ngrok (S0508) [1][5].",
+     "yes"
+    ],
+    [
+     "Pay2Key is a ransomware used by Fox Kitten since at least July 2020, including campaigns against Israeli companies [2].",
+     "yes"
+    ],
+    [
+     "Fox Kitten has targeted oil and gas and government verticals among others [1].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g054mx",
+   "lang": "mixed",
+   "kind": "id",
+   "answerable": true,
+   "question": "ما هي التقنية T1556؟",
+   "answer": "التقنية T1556 هي \"Modify Authentication Process\" (تعديل عملية المصادقة)، وتتمثل في أن المهاجمين قد يعدلون آليات المصادقة وعملياتها للوصول إلى بيانات اعتماد المستخدمين أو تمكين وصول غير مصرح به إلى الحسابات [1]. وتُنفَّذ هذه التقنية عادةً ضمن التكتيكات: defense-impairment وpersistence وcredential-access [1]. وتتيح للمهاجم المصادقة إلى خدمة أو نظام دون استخدام حسابات صالحة (Valid Accounts) [1]. ومن الأمثلة الواردة في المصادر تعديل صورة نظام أجهزة الشبكة لتضمين كلمة مرور ثابتة تتجاوز آليات المصادقة المحلية وهي التقنية الفرعية T1556.004 [4]. أما التخفيف الموصى به فهو إدارة حسابات المستخدمين (M1018)، وكذلك تطبيق المصادقة متعددة العوامل (M1032) [1][3].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 7.4,
+    "answer_s": 2.62
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1556",
+     "title": "Modify Authentication Process",
+     "url": "https://attack.mitre.org/techniques/T1556",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "T1556.009",
+     "title": "Conditional Access Policies",
+     "url": "https://attack.mitre.org/techniques/T1556/009",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "M1032",
+     "title": "Multi-factor Authentication",
+     "url": "https://attack.mitre.org/mitigations/M1032",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "T1556.004",
+     "title": "Network Device Authentication",
+     "url": "https://attack.mitre.org/techniques/T1556/004",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "T1556.001",
+     "title": "Domain Controller Authentication",
+     "url": "https://attack.mitre.org/techniques/T1556/001",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1556.002",
+     "title": "Password Filter DLL",
+     "url": "https://attack.mitre.org/techniques/T1556/002",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "التقنية T1556 هي \"Modify Authentication Process\" (تعديل عملية المصادقة)، وتتمثل في أن المهاجمين قد يعدلون آليات المصادقة وعملياتها للوصول إلى بيانات اعتماد المستخدمين أو تمكين وصول غير مصرح به إلى الحسابات [1].",
+     "yes"
+    ],
+    [
+     "وتُنفَّذ هذه التقنية عادةً ضمن التكتيكات: defense-impairment وpersistence وcredential-access [1].",
+     "yes"
+    ],
+    [
+     "وتتيح للمهاجم المصادقة إلى خدمة أو نظام دون استخدام حسابات صالحة (Valid Accounts) [1].",
+     "yes"
+    ],
+    [
+     "ومن الأمثلة الواردة في المصادر تعديل صورة نظام أجهزة الشبكة لتضمين كلمة مرور ثابتة تتجاوز آليات المصادقة المحلية وهي التقنية الفرعية T1556.004 [4].",
+     "yes"
+    ],
+    [
+     "أما التخفيف الموصى به فهو إدارة حسابات المستخدمين (M1018)، وكذلك تطبيق المصادقة متعددة العوامل (M1032) [1][3].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g052mx",
+   "lang": "mixed",
+   "kind": "id",
+   "answerable": true,
+   "question": "ما هي التقنية T1688؟",
+   "answer": "التقنية T1688 هي **Safe Mode Boot** (تشغيل الوضع الآمن)، وهي من نوع technique وتنتمي إلى تكتيك defense-impairment، وتستهدف منصة Windows [1]. تُعرّف بأن المهاجمين قد يسيئون استخدام الوضع الآمن في Windows لتعطيل دفاعات نقطة النهاية، إذ يبدأ النظام بمجموعة محدودة من السائقات والخدمات، ولا تعمل برامج الأمان الخارجية مثل أدوات EDR غالباً بعد الإقلاع في هذا الوضع [1]. يمكن للمهاجم فرض الإقلاع في الوضع الآمن عند إعادة التشغيل التالية عبر تعديل ملفات Boot Configuration Data (BCD) [1]، كما يمكنه إضافة تطبيقاته الخبيثة إلى قائمة الخدمات التي تبدأ في الوضع الآمن بتعديل قيم السجل (Modify Registry)، أو تسجيل كائنات COM خبيثة تُحمَّل في هذا الوضع [1]. من أمثلة استخدامها مجموعة LockBit 3.0 [3]. أما للكشف فيُنصح بمراقبة تغييرات إعدادات الإقلاع المرتبطة بأدوات مثل bcdedit.exe وbootcfg.exe، وتعديلات سجل مفاتيح SafeBoot، من خلال سجلات Security (EventCode=4688) وSysmon (EventCode=12، 13، 14) [2]. وللتخفيف يُوصى بتقييد حسابات المدير بمبدأ أقل الامتيازات (M1026)، وضمان أن تعمل دفاعات نقطة النهاية في الوضع الآمن (M1054) [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 7.37,
+    "answer_s": 3.81
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1688",
+     "title": "Safe Mode Boot",
+     "url": "https://attack.mitre.org/techniques/T1688",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "DET0116",
+     "title": "Detection Strategy for Safe Mode Boot Abuse",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0116",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "S1202",
+     "title": "LockBit 3.0",
+     "url": "https://attack.mitre.org/software/S1202",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "T1542.003",
+     "title": "Bootkit",
+     "url": "https://attack.mitre.org/techniques/T1542/003",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "DET0372",
+     "title": "Multi-Platform Detection Strategy for T1678 - Delay Execution",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0372",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1689",
+     "title": "Downgrade Attack",
+     "url": "https://attack.mitre.org/techniques/T1689",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "التقنية T1688 هي **Safe Mode Boot** (تشغيل الوضع الآمن)، وهي من نوع technique وتنتمي إلى تكتيك defense-impairment، وتستهدف منصة Windows [1].",
+     "yes"
+    ],
+    [
+     "تُعرّف بأن المهاجمين قد يسيئون استخدام الوضع الآمن في Windows لتعطيل دفاعات نقطة النهاية، إذ يبدأ النظام بمجموعة محدودة من السائقات والخدمات، ولا تعمل برامج الأمان الخارجية مثل أدوات EDR غالباً بعد الإقلاع في هذا الوضع [1].",
+     "yes"
+    ],
+    [
+     "يمكن للمهاجم فرض الإقلاع في الوضع الآمن عند إعادة التشغيل التالية عبر تعديل ملفات Boot Configuration Data (BCD) [1]، كما يمكنه إضافة تطبيقاته الخبيثة إلى قائمة الخدمات التي تبدأ في الوضع الآمن بتعديل قيم السجل (Modify Registry)، أو تسجيل كائنات COM خبيثة تُحمَّل في هذا الوضع [1].",
+     "yes"
+    ],
+    [
+     "من أمثلة استخدامها مجموعة LockBit 3.0 [3].",
+     "yes"
+    ],
+    [
+     "أما للكشف فيُنصح بمراقبة تغييرات إعدادات الإقلاع المرتبطة بأدوات مثل bcdedit.exe وbootcfg.exe، وتعديلات سجل مفاتيح SafeBoot، من خلال سجلات Security (EventCode=4688) وSysmon (EventCode=12، 13، 14) [2].",
+     "yes"
+    ],
+    [
+     "وللتخفيف يُوصى بتقييد حسابات المدير بمبدأ أقل الامتيازات (M1026)، وضمان أن تعمل دفاعات نقطة النهاية في الوضع الآمن (M1054) [1].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g057mx",
+   "lang": "mixed",
+   "kind": "id",
+   "answerable": true,
+   "question": "ما هي التقنية T1594؟",
+   "answer": "T1594 هي تقنية \"Search Victim-Owned Websites\" ضمن تكتيك الاستطلاع (reconnaissance) وتنطبق على منصة PRE [1].\nتُنفَّذ هذه التقنية خارج نطاق الدفاعات المؤسسية، لذلك لا يمكن التخفيف منها بسهولة بضوابط وقائية [1].\nويكون التخفيف الأنسب، بحسب المصدر، عبر تقليل كمية البيانات الحساسة المتاحة للأطراف الخارجية (M1056) [1].\nويمكن كشفها باستخدام DET0810 [1].\nوقد استخدمت هذه التقنية مجموعات مثل TA578 وSilent Librarian وEXOTIC LILY [2][4][5].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 8.27,
+    "answer_s": 2.09
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1594",
+     "title": "Search Victim-Owned Websites",
+     "url": "https://attack.mitre.org/techniques/T1594",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "G1038",
+     "title": "TA578",
+     "url": "https://attack.mitre.org/groups/G1038",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "C0029",
+     "title": "Cutting Edge",
+     "url": "https://attack.mitre.org/campaigns/C0029",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "G0122",
+     "title": "Silent Librarian",
+     "url": "https://attack.mitre.org/groups/G0122",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "G1011",
+     "title": "EXOTIC LILY",
+     "url": "https://attack.mitre.org/groups/G1011",
+     "cited": true
+    },
+    {
+     "n": 6,
+     "doc_id": "C0040",
+     "title": "APT41 DUST",
+     "url": "https://attack.mitre.org/campaigns/C0040",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "T1594 هي تقنية \"Search Victim-Owned Websites\" ضمن تكتيك الاستطلاع (reconnaissance) وتنطبق على منصة PRE [1].",
+     "yes"
+    ],
+    [
+     "تُنفَّذ هذه التقنية خارج نطاق الدفاعات المؤسسية، لذلك لا يمكن التخفيف منها بسهولة بضوابط وقائية [1].",
+     "yes"
+    ],
+    [
+     "ويكون التخفيف الأنسب، بحسب المصدر، عبر تقليل كمية البيانات الحساسة المتاحة للأطراف الخارجية (M1056) [1].",
+     "yes"
+    ],
+    [
+     "ويمكن كشفها باستخدام DET0810 [1].",
+     "yes"
+    ],
+    [
+     "وقد استخدمت هذه التقنية مجموعات مثل TA578 وSilent Librarian وEXOTIC LILY [2][4][5].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g051mx",
+   "lang": "mixed",
+   "kind": "id",
+   "answerable": true,
+   "question": "ما هي التقنية T1569.003؟",
+   "answer": "التقنية T1569.003 هي Systemctl، وهي تقنية فرعية ضمن System Services (T1569) [1]. تتيح للمهاجم إساءة استخدام systemctl، وهو الواجهة الرئيسية لنظام systemd المسؤول عن الإقلاع وإدارة الخدمات في Linux، لتنفيذ أوامر أو برامج على هيئة خدمات systemd [1]. ومن أوامره الشائعة: start وstop وenable وdisable وstatus [1]. وتندرج ضمن تكتيك Execution وتنطبق على منصة Linux [1]. ومن إجراءات التخفيف تقييد وصول المستخدمين إلى systemctl على من يحتاجونه فعلاً (M1018) [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 7.0,
+    "answer_s": 2.27
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1569.003",
+     "title": "Systemctl",
+     "url": "https://attack.mitre.org/techniques/T1569/003",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "T1569.002",
+     "title": "Service Execution",
+     "url": "https://attack.mitre.org/techniques/T1569/002",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "T1543.003",
+     "title": "Windows Service",
+     "url": "https://attack.mitre.org/techniques/T1543/003",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "S0123",
+     "title": "xCmd",
+     "url": "https://attack.mitre.org/software/S0123",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "S0166",
+     "title": "RemoteCMD",
+     "url": "https://attack.mitre.org/software/S0166",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1565.001",
+     "title": "Stored Data Manipulation",
+     "url": "https://attack.mitre.org/techniques/T1565/001",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "التقنية T1569.003 هي Systemctl، وهي تقنية فرعية ضمن System Services (T1569) [1].",
+     "yes"
+    ],
+    [
+     "تتيح للمهاجم إساءة استخدام systemctl، وهو الواجهة الرئيسية لنظام systemd المسؤول عن الإقلاع وإدارة الخدمات في Linux، لتنفيذ أوامر أو برامج على هيئة خدمات systemd [1].",
+     "yes"
+    ],
+    [
+     "ومن أوامره الشائعة: start وstop وenable وdisable وstatus [1].",
+     "yes"
+    ],
+    [
+     "وتندرج ضمن تكتيك Execution وتنطبق على منصة Linux [1].",
+     "yes"
+    ],
+    [
+     "ومن إجراءات التخفيف تقييد وصول المستخدمين إلى systemctl على من يحتاجونه فعلاً (M1018) [1].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g028ar",
+   "lang": "ar",
+   "kind": "mitigate",
+   "answerable": true,
+   "question": "كيف يمكنني الدفاع ضد البوتات التي تتجاوز تحديات CAPTCHA من خلال تقليد سلوك التصفح البشري؟",
+   "answer": "- يُصنَّف تجاوز CAPTCHA ضمن التقنية T1696 (Anti-Automation Evasion)، وتشمل صوره التقنية T1696.002 (Avoid CAPTCHA) وT1696.001 (Automate CAPTCHA Completion) [5][1][2].\n- لا تعتمد الحماية على تقديم التحدي فقط، بل يجب تطبيق ضوابط متعددة الطبقات داخل المسار (inline) تمنع الطلبات الآلية بناءً على السلوك المرصود للطلب والجلسة، مثل التحديات الصامتة والتحقق من المتصفح/العميل وضوابط المعدل وإشارات إدارة البوتات [1][5].\n- ينبغي تقييم الطلبات المحمية باستخدام إشارات سلوكية وإشارات العميل/الجلسة والمعدل والسمعة والرموز (tokens) والأتمتة، وحظر النشاط المخالف أو تحديد معدله حتى لو لم يُعرض أي تحدٍّ CAPTCHA [1].\n- لا يُعد نجاح إتمام CAPTCHA دليلاً كافياً على أن النشاط اللاحق بشري، لذا يجب الاستمرار في تقييم الطلبات بعد اجتياز التحدي وتتبع إعادة استخدام الرموز [2].\n- لا يكشف إتمام CAPTCHA عن الطريقة المستخدمة لحله (يدوياً أو بأدوات آلية أو بخدمة حل بشرية خارجية)، ولا توجد استراتيجية كشف مستهدفة تعتمد على تليمتري CAPTCHA وحده لرصد Avoid CAPTCHA [3][4].\n- يمكن استخدام تصفية حركة المرور على مستوى التطبيق (Application Layer Filtering) ضمن M1037 لتطبيق هذه الضوابط [6].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 7.15,
+    "answer_s": 4.4
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1696.002",
+     "title": "Avoid CAPTCHA",
+     "url": "https://attack.mitre.org/techniques/T1696/002",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "T1696.001",
+     "title": "Automate CAPTCHA Completion",
+     "url": "https://attack.mitre.org/techniques/T1696/001",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "DET0938",
+     "title": "Detection of Avoid CAPTCHA",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0938",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "DET0937",
+     "title": "Detection of Automated CAPTCHA",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0937",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "T1696",
+     "title": "Anti-Automation Evasion",
+     "url": "https://attack.mitre.org/techniques/T1696",
+     "cited": true
+    },
+    {
+     "n": 6,
+     "doc_id": "M1037",
+     "title": "Filter Network Traffic",
+     "url": "https://attack.mitre.org/mitigations/M1037",
+     "cited": true
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 0.917,
+   "verdicts": [
+    [
+     "- يُصنَّف تجاوز CAPTCHA ضمن التقنية T1696 (Anti-Automation Evasion)، وتشمل صوره التقنية T1696.002 (Avoid CAPTCHA) وT1696.001 (Automate CAPTCHA Completion) [5][1][2].",
+     "yes"
+    ],
+    [
+     "- لا تعتمد الحماية على تقديم التحدي فقط، بل يجب تطبيق ضوابط متعددة الطبقات داخل المسار (inline) تمنع الطلبات الآلية بناءً على السلوك المرصود للطلب والجلسة، مثل التحديات الصامتة والتحقق من المتصفح/العميل وضوابط المعدل وإشارات إدارة البوتات [1][5].",
+     "yes"
+    ],
+    [
+     "- ينبغي تقييم الطلبات المحمية باستخدام إشارات سلوكية وإشارات العميل/الجلسة والمعدل والسمعة والرموز (tokens) والأتمتة، وحظر النشاط المخالف أو تحديد معدله حتى لو لم يُعرض أي تحدٍّ CAPTCHA [1].",
+     "yes"
+    ],
+    [
+     "- لا يُعد نجاح إتمام CAPTCHA دليلاً كافياً على أن النشاط اللاحق بشري، لذا يجب الاستمرار في تقييم الطلبات بعد اجتياز التحدي وتتبع إعادة استخدام الرموز [2].",
+     "yes"
+    ],
+    [
+     "- لا يكشف إتمام CAPTCHA عن الطريقة المستخدمة لحله (يدوياً أو بأدوات آلية أو بخدمة حل بشرية خارجية)، ولا توجد استراتيجية كشف مستهدفة تعتمد على تليمتري CAPTCHA وحده لرصد Avoid CAPTCHA [3][4].",
+     "yes"
+    ],
+    [
+     "- يمكن استخدام تصفية حركة المرور على مستوى التطبيق (Application Layer Filtering) ضمن M1037 لتطبيق هذه الضوابط [6].",
+     "partial"
+    ]
+   ]
+  },
+  {
+   "id": "g026en",
+   "lang": "en",
+   "kind": "mitigate",
+   "answerable": true,
+   "question": "how do I stop attackers from using the Windows Installer command-line binary to run malicious packages on my endpoints",
+   "answer": "- Restrict execution of msiexec.exe to privileged accounts or groups that genuinely need it, which reduces opportunities for malicious use (Privileged Account Management, M1026) [1].\n- Disable the AlwaysInstallElevated policy, since enabling it allows Windows Installer packages to run with elevated (SYSTEM) privileges [1].\n- Use application control such as AppLocker or WDAC with allowlists based on hash, path, or digital signature, and remove local administrator rights from non-IT users [2].\n- Configure Software Restriction Policies to deny execution of binaries and restrict .msi files to trusted directories only [2].\n- Enable Attack Surface Reduction rules on Windows 10 to block potentially malicious executables, including those downloaded and launched by Office applications, scripting interpreters, or email clients [3].\n- Monitor for msiexec abuse using the detection for local, network, and DLL execution (DET0158) [1], and enable logging of installation events through Event ID 4688 and 11707 [2].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 3.67,
+    "answer_s": 2.19
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1218.007",
+     "title": "Msiexec",
+     "url": "https://attack.mitre.org/techniques/T1218/007",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "M1033",
+     "title": "Limit Software Installation",
+     "url": "https://attack.mitre.org/mitigations/M1033",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "T1204.002",
+     "title": "Malicious File",
+     "url": "https://attack.mitre.org/techniques/T1204/002",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "T1059",
+     "title": "Command and Scripting Interpreter",
+     "url": "https://attack.mitre.org/techniques/T1059",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "DET0537",
+     "title": "Behavioral detection for Supply Chain Compromise (package/update tamper → install → first-run)",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0537",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1546.016",
+     "title": "Installer Packages",
+     "url": "https://attack.mitre.org/techniques/T1546/016",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "- Restrict execution of msiexec.exe to privileged accounts or groups that genuinely need it, which reduces opportunities for malicious use (Privileged Account Management, M1026) [1].",
+     "yes"
+    ],
+    [
+     "- Disable the AlwaysInstallElevated policy, since enabling it allows Windows Installer packages to run with elevated (SYSTEM) privileges [1].",
+     "yes"
+    ],
+    [
+     "- Use application control such as AppLocker or WDAC with allowlists based on hash, path, or digital signature, and remove local administrator rights from non-IT users [2].",
+     "yes"
+    ],
+    [
+     "- Configure Software Restriction Policies to deny execution of binaries and restrict .msi files to trusted directories only [2].",
+     "yes"
+    ],
+    [
+     "- Enable Attack Surface Reduction rules on Windows 10 to block potentially malicious executables, including those downloaded and launched by Office applications, scripting interpreters, or email clients [3].",
+     "yes"
+    ],
+    [
+     "- Monitor for msiexec abuse using the detection for local, network, and DLL execution (DET0158) [1], and enable logging of installation events through Event ID 4688 and 11707 [2].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g024ar",
+   "lang": "ar",
+   "kind": "mitigate",
+   "answerable": true,
+   "question": "كيف أمنع المهاجمين من حذف ملفات السجلات النظامية أو العبث بها على خوادم Linux وmacOS؟",
+   "answer": "- تشفير ملفات الأحداث وتعمية محتواها محليًا وأثناء النقل يمنع المهاجم من الحصول على تغذية راجعة من السجلات، وهذا هو الإجراء الموصى به ضد الحذف أو التلاعب بسجلات Linux وmacOS [1].\n- يمكن رصد السلوك المرتبط بحذف سجلات Linux وmacOS (T1685.006) عبر كشف السلوك المسمى DET0520 [1].\n- تقييد صلاحيات الملفات والمجلدات عبر أدوات مثل chown وchmod، مثل تنفيذ chmod 750 وchown root:admin على الملفات الحساسة، يقلل من قدرة المهاجم على تعديل الملفات أو قفلها عليه [6][4].\n- تفعيل التدقيق على الوصول إلى نظام الملفات باستخدام auditd لتسجيل محاولات الوصول غير المصرح بها وتغييرات الصلاحيات [6].\n- استخدام أدوات مراقبة سلامة الملفات (FIM) مثل Wazuh أو OSSEC أو Tripwire لمراقبة التغييرات على صلاحيات الملفات الحرجة [6].\n- تعزيز التدقيق على نظام Linux Audit (auditd) وحمايته، إذ يمكن للمهاجم ذي صلاحيات الجذر تعطيل خدمة auditd أو تعديل ملفات audit.rules وaudit.conf لإخفاء نشاطه [5].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 7.89,
+    "answer_s": 3.57
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1685.006",
+     "title": "Clear Linux or Mac System Logs",
+     "url": "https://attack.mitre.org/techniques/T1685/006",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "T1070.003",
+     "title": "Clear Command History",
+     "url": "https://attack.mitre.org/techniques/T1070/003",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "T1552",
+     "title": "Unsecured Credentials",
+     "url": "https://attack.mitre.org/techniques/T1552",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "T1222.002",
+     "title": "Linux and Mac Permissions",
+     "url": "https://attack.mitre.org/techniques/T1222/002",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "T1685.004",
+     "title": "Disable or Modify Linux Audit System Log",
+     "url": "https://attack.mitre.org/techniques/T1685/004",
+     "cited": true
+    },
+    {
+     "n": 6,
+     "doc_id": "M1022",
+     "title": "Restrict File and Directory Permissions",
+     "url": "https://attack.mitre.org/mitigations/M1022",
+     "cited": true
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 0.75,
+   "verdicts": [
+    [
+     "- تشفير ملفات الأحداث وتعمية محتواها محليًا وأثناء النقل يمنع المهاجم من الحصول على تغذية راجعة من السجلات، وهذا هو الإجراء الموصى به ضد الحذف أو التلاعب بسجلات Linux وmacOS [1].",
+     "partial"
+    ],
+    [
+     "- يمكن رصد السلوك المرتبط بحذف سجلات Linux وmacOS (T1685.006) عبر كشف السلوك المسمى DET0520 [1].",
+     "yes"
+    ],
+    [
+     "- تقييد صلاحيات الملفات والمجلدات عبر أدوات مثل chown وchmod، مثل تنفيذ chmod 750 وchown root:admin على الملفات الحساسة، يقلل من قدرة المهاجم على تعديل الملفات أو قفلها عليه [6][4].",
+     "partial"
+    ],
+    [
+     "- تفعيل التدقيق على الوصول إلى نظام الملفات باستخدام auditd لتسجيل محاولات الوصول غير المصرح بها وتغييرات الصلاحيات [6].",
+     "yes"
+    ],
+    [
+     "- استخدام أدوات مراقبة سلامة الملفات (FIM) مثل Wazuh أو OSSEC أو Tripwire لمراقبة التغييرات على صلاحيات الملفات الحرجة [6].",
+     "yes"
+    ],
+    [
+     "- تعزيز التدقيق على نظام Linux Audit (auditd) وحمايته، إذ يمكن للمهاجم ذي صلاحيات الجذر تعطيل خدمة auditd أو تعديل ملفات audit.rules وaudit.conf لإخفاء نشاطه [5].",
+     "partial"
+    ]
+   ]
+  },
+  {
+   "id": "g025en",
+   "lang": "en",
+   "kind": "mitigate",
+   "answerable": true,
+   "question": "how do I stop attackers from routing their command and control traffic through an intermediary proxy host on my network",
+   "answer": "Use network intrusion prevention with signatures to detect and block C2 traffic at network boundaries, which mitigates External Proxy (T1090.002) [2]. Also detect External Proxy behavior through outbound relay to intermediate infrastructure (DET0325) [1]. Filter egress traffic with firewalls or endpoint security software to block unauthorized outbound C2 communications [3]. Apply protocol-based filtering and network segmentation to restrict which hosts can talk to external destinations and limit lateral movement [3]. Note that adversaries may change C2 signatures over time, so signatures need regular updating [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 3.65,
+    "answer_s": 1.66
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1090.002",
+     "title": "External Proxy",
+     "url": "https://attack.mitre.org/techniques/T1090/002",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "M1031",
+     "title": "Network Intrusion Prevention",
+     "url": "https://attack.mitre.org/mitigations/M1031",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "M1037",
+     "title": "Filter Network Traffic",
+     "url": "https://attack.mitre.org/mitigations/M1037",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "T1095",
+     "title": "Non-Application Layer Protocol",
+     "url": "https://attack.mitre.org/techniques/T1095",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "T1611",
+     "title": "Escape to Host",
+     "url": "https://attack.mitre.org/techniques/T1611",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1102.003",
+     "title": "One-Way Communication",
+     "url": "https://attack.mitre.org/techniques/T1102/003",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 0.7,
+   "verdicts": [
+    [
+     "Use network intrusion prevention with signatures to detect and block C2 traffic at network boundaries, which mitigates External Proxy (T1090.002) [2].",
+     "partial"
+    ],
+    [
+     "Also detect External Proxy behavior through outbound relay to intermediate infrastructure (DET0325) [1].",
+     "yes"
+    ],
+    [
+     "Filter egress traffic with firewalls or endpoint security software to block unauthorized outbound C2 communications [3].",
+     "yes"
+    ],
+    [
+     "Apply protocol-based filtering and network segmentation to restrict which hosts can talk to external destinations and limit lateral movement [3].",
+     "partial"
+    ],
+    [
+     "Note that adversaries may change C2 signatures over time, so signatures need regular updating [1].",
+     "partial"
+    ]
+   ]
+  },
+  {
+   "id": "g060mx",
+   "lang": "mixed",
+   "kind": "revoked_id",
+   "answerable": true,
+   "question": "ما معنى T1148؟",
+   "answer": "T1148 هو معرّف قديم لتقنية \"Prevent Command History Logging\" المدرجة حاليًا تحت المعرّف T1690 [1]. وتُصنّف هذه التقنية ضمن تكتيك defense-impairment وتنطبق على منصات ESXi وLinux وmacOS وNetwork Devices وWindows [1]. وتتمثل في أن يعطّل المهاجم تسجيل سجل الأوامر لإخفاء الأوامر التي ينفذها على النظام المخترق [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 6.46,
+    "answer_s": 4.28
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1690",
+     "title": "Prevent Command History Logging",
+     "url": "https://attack.mitre.org/techniques/T1690",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "T1190",
+     "title": "Exploit Public-Facing Application",
+     "url": "https://attack.mitre.org/techniques/T1190",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "DET0411",
+     "title": "Detection Strategy for Hide Infrastructure",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0411",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "DET0524",
+     "title": "Traffic Signaling (Port-knock / magic-packet → firewall or service activation) – T1205",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0524",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "DET0372",
+     "title": "Multi-Platform Detection Strategy for T1678 - Delay Execution",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0372",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "DET0176",
+     "title": "Drive-by Compromise — Behavior-based, Multi-platform Detection Strategy (T1189)",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0176",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "T1148 هو معرّف قديم لتقنية \"Prevent Command History Logging\" المدرجة حاليًا تحت المعرّف T1690 [1].",
+     "yes"
+    ],
+    [
+     "وتُصنّف هذه التقنية ضمن تكتيك defense-impairment وتنطبق على منصات ESXi وLinux وmacOS وNetwork Devices وWindows [1].",
+     "yes"
+    ],
+    [
+     "وتتمثل في أن يعطّل المهاجم تسجيل سجل الأوامر لإخفاء الأوامر التي ينفذها على النظام المخترق [1].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g064mx",
+   "lang": "mixed",
+   "kind": "revoked_id",
+   "answerable": true,
+   "question": "ما معنى T1032؟",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 7.59,
+    "answer_s": 0.95
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1573",
+     "title": "Encrypted Channel",
+     "url": "https://attack.mitre.org/techniques/T1573",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "T1543.003",
+     "title": "Windows Service",
+     "url": "https://attack.mitre.org/techniques/T1543/003",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "T1090.002",
+     "title": "External Proxy",
+     "url": "https://attack.mitre.org/techniques/T1090/002",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "T1102.002",
+     "title": "Bidirectional Communication",
+     "url": "https://attack.mitre.org/techniques/T1102/002",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "M1032",
+     "title": "Multi-factor Authentication",
+     "url": "https://attack.mitre.org/mitigations/M1032",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1090.001",
+     "title": "Internal Proxy",
+     "url": "https://attack.mitre.org/techniques/T1090/001",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": false,
+   "faithfulness": null,
+   "verdicts": []
+  },
+  {
+   "id": "g061mx",
+   "lang": "mixed",
+   "kind": "revoked_id",
+   "answerable": true,
+   "question": "ما معنى T1126؟",
+   "answer": "T1126 هو المعرّف القديم لتقنية \"Network Share Connection Removal\"، والمعرّف الحالي لها هو T1070.005 [1]. وهي تقنية فرعية ضمن Indicator Removal (T1070) تُستخدم لإزالة اتصالات مشاركة الشبكة بهدف طمس آثار النشاط [1]. ويُكتشف هذا السلوك بواسطة DET0103 [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 7.07,
+    "answer_s": 1.47
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1070.005",
+     "title": "Network Share Connection Removal",
+     "url": "https://attack.mitre.org/techniques/T1070/005",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "T1070.003",
+     "title": "Clear Command History",
+     "url": "https://attack.mitre.org/techniques/T1070/003",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "T1190",
+     "title": "Exploit Public-Facing Application",
+     "url": "https://attack.mitre.org/techniques/T1190",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "T1685",
+     "title": "Disable or Modify Tools",
+     "url": "https://attack.mitre.org/techniques/T1685",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "T1132.001",
+     "title": "Standard Encoding",
+     "url": "https://attack.mitre.org/techniques/T1132/001",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1136",
+     "title": "Create Account",
+     "url": "https://attack.mitre.org/techniques/T1136",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "T1126 هو المعرّف القديم لتقنية \"Network Share Connection Removal\"، والمعرّف الحالي لها هو T1070.005 [1].",
+     "yes"
+    ],
+    [
+     "وهي تقنية فرعية ضمن Indicator Removal (T1070) تُستخدم لإزالة اتصالات مشاركة الشبكة بهدف طمس آثار النشاط [1].",
+     "yes"
+    ],
+    [
+     "ويُكتشف هذا السلوك بواسطة DET0103 [1].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g063mx",
+   "lang": "mixed",
+   "kind": "revoked_id",
+   "answerable": true,
+   "question": "ما معنى T1122؟",
+   "answer": "T1122 is the previous ID for the technique now known as T1546.015, Component Object Model Hijacking [1]. The question is in Arabic, so I answer in Arabic and keep the ID in Latin script.\n\n- يُشير المعرّف T1122 إلى تقنية \"Component Object Model Hijacking\" قبل إعادة تصنيفها [1].\n- المعرّف الحالي لهذه التقنية هو T1546.015، وتندرج تحت تكتيكَي privilege-escalation وpersistence على منصة Windows [1].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 7.07,
+    "answer_s": 1.74
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1546.015",
+     "title": "Component Object Model Hijacking",
+     "url": "https://attack.mitre.org/techniques/T1546/015",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "T1550.001",
+     "title": "Application Access Token",
+     "url": "https://attack.mitre.org/techniques/T1550/001",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "T1222",
+     "title": "File and Directory Permissions Modification",
+     "url": "https://attack.mitre.org/techniques/T1222",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "T1132.002",
+     "title": "Non-Standard Encoding",
+     "url": "https://attack.mitre.org/techniques/T1132/002",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "T1102",
+     "title": "Web Service",
+     "url": "https://attack.mitre.org/techniques/T1102",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "DET0326",
+     "title": "Behavior-chain detection for T1132.002 Data Encoding: Non-Standard Encoding across Windows, Linux, macOS, ESXi",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0326",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 0.75,
+    "uncited": [
+     "The question is in Arabic, so I answer in Arabic and keep the ID in Latin script."
+    ],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 0.75,
+   "verdicts": [
+    [
+     "T1122 is the previous ID for the technique now known as T1546.015, Component Object Model Hijacking [1].",
+     "yes"
+    ],
+    [
+     "The question is in Arabic, so I answer in Arabic and keep the ID in Latin script.",
+     "uncited"
+    ],
+    [
+     "- يُشير المعرّف T1122 إلى تقنية \"Component Object Model Hijacking\" قبل إعادة تصنيفها [1].",
+     "yes"
+    ],
+    [
+     "- المعرّف الحالي لهذه التقنية هو T1546.015، وتندرج تحت تكتيكَي privilege-escalation وpersistence على منصة Windows [1].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g037ar",
+   "lang": "ar",
+   "kind": "software_groups",
+   "answerable": true,
+   "question": "كيف استخدم المهاجمون NanoCore RAT في حملاتهم منذ عام 2013؟",
+   "answer": "- NanoCore هو أداة وصول عن بُعد (RAT) معيارية مطوّرة بلغة .NET، تُستخدم للتجسس على الضحايا وسرقة المعلومات، ويعمل على منصة Windows (S0336) [1].\n- يُستخدم منذ عام 2013 من قِبل مجموعات تهديد متعددة، منها APT33 وGorgon Group وGroup5 وSilverTerrier (S0336) [1].\n- تشمل التقنيات المرتبطة به التقاط الصوت والفيديو وتسجيل ضغطات المفاتيح (T1123، T1125، T1056.001) [1].\n- كما يستخدم المهاجمون تقنيات الاستمرارية والتمويه، مثل تعديل السجل وتعديل مجلد Startup والتشفير المتماثل والتعتيم (T1112، T1547.001، T1573.001، T1027) [1].\n- وتُنقل الأدوات الإضافية عبر Ingress Tool Transfer (T1105)، وتُنفّذ الأوامر عبر Windows Command Shell وVisual Basic (T1059.003، T1059.005) [1].\n- وتُوزَّع البرمجية أيضًا عبر أدوات تحميل مثل GuLoader منذ ديسمبر 2019 [6].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 6.55,
+    "answer_s": 2.67
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "S0336",
+     "title": "NanoCore",
+     "url": "https://attack.mitre.org/software/S0336",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "G0043",
+     "title": "Group5",
+     "url": "https://attack.mitre.org/groups/G0043",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "G0078",
+     "title": "Gorgon Group",
+     "url": "https://attack.mitre.org/groups/G0078",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "G0064",
+     "title": "APT33",
+     "url": "https://attack.mitre.org/groups/G0064",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "G0083",
+     "title": "SilverTerrier",
+     "url": "https://attack.mitre.org/groups/G0083",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "S0561",
+     "title": "GuLoader",
+     "url": "https://attack.mitre.org/software/S0561",
+     "cited": true
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 0.917,
+   "verdicts": [
+    [
+     "- NanoCore هو أداة وصول عن بُعد (RAT) معيارية مطوّرة بلغة .NET، تُستخدم للتجسس على الضحايا وسرقة المعلومات، ويعمل على منصة Windows (S0336) [1].",
+     "yes"
+    ],
+    [
+     "- يُستخدم منذ عام 2013 من قِبل مجموعات تهديد متعددة، منها APT33 وGorgon Group وGroup5 وSilverTerrier (S0336) [1].",
+     "yes"
+    ],
+    [
+     "- تشمل التقنيات المرتبطة به التقاط الصوت والفيديو وتسجيل ضغطات المفاتيح (T1123، T1125، T1056.001) [1].",
+     "yes"
+    ],
+    [
+     "- كما يستخدم المهاجمون تقنيات الاستمرارية والتمويه، مثل تعديل السجل وتعديل مجلد Startup والتشفير المتماثل والتعتيم (T1112، T1547.001، T1573.001، T1027) [1].",
+     "partial"
+    ],
+    [
+     "- وتُنقل الأدوات الإضافية عبر Ingress Tool Transfer (T1105)، وتُنفّذ الأوامر عبر Windows Command Shell وVisual Basic (T1059.003، T1059.005) [1].",
+     "yes"
+    ],
+    [
+     "- وتُوزَّع البرمجية أيضًا عبر أدوات تحميل مثل GuLoader منذ ديسمبر 2019 [6].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g038en",
+   "lang": "en",
+   "kind": "software_groups",
+   "answerable": true,
+   "question": "Which threat actors have been observed using ftp to move tools onto compromised hosts or pull data out?",
+   "answer": "The sources state that ftp is used by APT33 (G0064), APT39 (G0087), APT41 (G0096), Naikon (G0019), and OilRig (G0049) [3]. Quad7 Activity, a campaign that used ftp, is also linked to China-affiliated threat actors [5]. The ftp utility is used for Ingress Tool Transfer (T1105) and Lateral Tool Transfer (T1570), as well as Exfiltration Over Unencrypted Non-C2 Protocol (T1048.003) [3].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 4.55,
+    "answer_s": 1.61
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1210",
+     "title": "Exploitation of Remote Services",
+     "url": "https://attack.mitre.org/techniques/T1210",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "G1041",
+     "title": "Sea Turtle",
+     "url": "https://attack.mitre.org/groups/G1041",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "S0095",
+     "title": "ftp",
+     "url": "https://attack.mitre.org/software/S0095",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "C0038",
+     "title": "HomeLand Justice",
+     "url": "https://attack.mitre.org/campaigns/C0038",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "C0055",
+     "title": "Quad7 Activity",
+     "url": "https://attack.mitre.org/campaigns/C0055",
+     "cited": true
+    },
+    {
+     "n": 6,
+     "doc_id": "T1105",
+     "title": "Ingress Tool Transfer",
+     "url": "https://attack.mitre.org/techniques/T1105",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "The sources state that ftp is used by APT33 (G0064), APT39 (G0087), APT41 (G0096), Naikon (G0019), and OilRig (G0049) [3].",
+     "yes"
+    ],
+    [
+     "Quad7 Activity, a campaign that used ftp, is also linked to China-affiliated threat actors [5].",
+     "yes"
+    ],
+    [
+     "The ftp utility is used for Ingress Tool Transfer (T1105) and Lateral Tool Transfer (T1570), as well as Exfiltration Over Unencrypted Non-C2 Protocol (T1048.003) [3].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g035ar",
+   "lang": "ar",
+   "kind": "software_groups",
+   "answerable": true,
+   "question": "كيف يُستخدم الأداة Reg.exe للاستعلام عن مفاتيح سجل Windows أو إضافتها أو تعديلها أثناء الهجمات؟",
+   "answer": "أداة Reg هي أداة سطر أوامر مدمجة في Windows تُستخدم للاستعلام عن معلومات سجل Windows وإضافتها وتعديلها وحذفها [1]. يستخدم المهاجمون Reg في الاستعلام عن السجل لجمع معلومات عن النظام والإعدادات والبرامج المثبتة، وهو ما يندرج تحت التقنية T1012 [1][4]. كما تُستخدم لتعديل السجل (T1112) لإخفاء إعدادات أو حمولات خبيثة وتعطيل الدفاعات أو تنفيذ الملفات على أنظمة بعيدة في إطار الحركة الجانبية، ويتطلب ذلك عادةً حسابات صالحة والوصول إلى مشاركات SMB/Windows Admin Shares وتشغيل خدمة السجل عن بُعد على الجهاز الهدف [1][2]. ويستخدم المهاجمون أيضاً Reg للبحث عن بيانات اعتماد مخزنة في السجل، مثل الأمر reg query HKLM /f password /t REG_SZ /s (T1552.002) [3]. ولاكتشاف هذا النشاط، يمكن مراقبة تنفيذ سطر الأوامر الذي يستهدف HKLM أو HKCU مع كلمات مفتاحية مثل 'password' أو 'cred' أو 'logon' عبر Sysmon (EventCode=1) وأحداث السجل (EventCode=13 و14) [6].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 7.29,
+    "answer_s": 3.32
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "S0075",
+     "title": "Reg",
+     "url": "https://attack.mitre.org/software/S0075",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "T1112",
+     "title": "Modify Registry",
+     "url": "https://attack.mitre.org/techniques/T1112",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "T1552.002",
+     "title": "Credentials in Registry",
+     "url": "https://attack.mitre.org/techniques/T1552/002",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "T1012",
+     "title": "Query Registry",
+     "url": "https://attack.mitre.org/techniques/T1012",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "T1003.002",
+     "title": "Security Account Manager",
+     "url": "https://attack.mitre.org/techniques/T1003/002",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "DET0250",
+     "title": "Detect Credential Discovery via Windows Registry Enumeration",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0250",
+     "cited": true
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 0.8,
+   "verdicts": [
+    [
+     "أداة Reg هي أداة سطر أوامر مدمجة في Windows تُستخدم للاستعلام عن معلومات سجل Windows وإضافتها وتعديلها وحذفها [1].",
+     "partial"
+    ],
+    [
+     "يستخدم المهاجمون Reg في الاستعلام عن السجل لجمع معلومات عن النظام والإعدادات والبرامج المثبتة، وهو ما يندرج تحت التقنية T1012 [1][4].",
+     "yes"
+    ],
+    [
+     "كما تُستخدم لتعديل السجل (T1112) لإخفاء إعدادات أو حمولات خبيثة وتعطيل الدفاعات أو تنفيذ الملفات على أنظمة بعيدة في إطار الحركة الجانبية، ويتطلب ذلك عادةً حسابات صالحة والوصول إلى مشاركات SMB/Windows Admin Shares وتشغيل خدمة السجل عن بُعد على الجهاز الهدف [1][2].",
+     "yes"
+    ],
+    [
+     "ويستخدم المهاجمون أيضاً Reg للبحث عن بيانات اعتماد مخزنة في السجل، مثل الأمر reg query HKLM /f password /t REG_SZ /s (T1552.002) [3].",
+     "partial"
+    ],
+    [
+     "ولاكتشاف هذا النشاط، يمكن مراقبة تنفيذ سطر الأوامر الذي يستهدف HKLM أو HKCU مع كلمات مفتاحية مثل 'password' أو 'cred' أو 'logon' عبر Sysmon (EventCode=1) وأحداث السجل (EventCode=13 و14) [6].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "g035en",
+   "lang": "en",
+   "kind": "software_groups",
+   "answerable": true,
+   "question": "How does Reg.exe get used to query, add, or modify Windows Registry keys during attacks?",
+   "answer": "Reg is a built-in Windows command-line utility that can query, add, modify, and remove Registry information [1]. Adversaries use it to query the Registry for environmental discovery, gathering system, configuration, and installed-software details that shape follow-on behaviour [4]. To search for insecurely stored credentials, they run commands such as \"reg query HKLM /f password /t REG_SZ /s\" or the same against HKCU [3]. Reg is also used to modify the Registry to hide payloads, impair defenses, or aid execution during lateral movement, which requires the remote Registry service and access to the target's admin shares [2]. For persistence, a Registry run key can be added with \"reg add\" so a program executes at user logon [6]. Reg can also dump the SAM and SYSTEM hives with \"reg save HKLM\\sam\" and \"reg save HKLM\\system\" for offline hash extraction [5].",
+   "refused": false,
+   "timing": {
+    "retrieval_s": 4.19,
+    "answer_s": 2.96
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "S0075",
+     "title": "Reg",
+     "url": "https://attack.mitre.org/software/S0075",
+     "cited": true
+    },
+    {
+     "n": 2,
+     "doc_id": "T1112",
+     "title": "Modify Registry",
+     "url": "https://attack.mitre.org/techniques/T1112",
+     "cited": true
+    },
+    {
+     "n": 3,
+     "doc_id": "T1552.002",
+     "title": "Credentials in Registry",
+     "url": "https://attack.mitre.org/techniques/T1552/002",
+     "cited": true
+    },
+    {
+     "n": 4,
+     "doc_id": "T1012",
+     "title": "Query Registry",
+     "url": "https://attack.mitre.org/techniques/T1012",
+     "cited": true
+    },
+    {
+     "n": 5,
+     "doc_id": "T1003.002",
+     "title": "Security Account Manager",
+     "url": "https://attack.mitre.org/techniques/T1003/002",
+     "cited": true
+    },
+    {
+     "n": 6,
+     "doc_id": "T1547.001",
+     "title": "Registry Run Keys / Startup Folder",
+     "url": "https://attack.mitre.org/techniques/T1547/001",
+     "cited": true
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   },
+   "cites_primary": true,
+   "faithfulness": 1.0,
+   "verdicts": [
+    [
+     "Reg is a built-in Windows command-line utility that can query, add, modify, and remove Registry information [1].",
+     "yes"
+    ],
+    [
+     "Adversaries use it to query the Registry for environmental discovery, gathering system, configuration, and installed-software details that shape follow-on behaviour [4].",
+     "yes"
+    ],
+    [
+     "To search for insecurely stored credentials, they run commands such as \"reg query HKLM /f password /t REG_SZ /s\" or the same against HKCU [3].",
+     "yes"
+    ],
+    [
+     "Reg is also used to modify the Registry to hide payloads, impair defenses, or aid execution during lateral movement, which requires the remote Registry service and access to the target's admin shares [2].",
+     "yes"
+    ],
+    [
+     "For persistence, a Registry run key can be added with \"reg add\" so a program executes at user logon [6].",
+     "yes"
+    ],
+    [
+     "Reg can also dump the SAM and SYSTEM hives with \"reg save HKLM\\sam\" and \"reg save HKLM\\system\" for offline hash extraction [5].",
+     "yes"
+    ]
+   ]
+  },
+  {
+   "id": "u01en",
+   "lang": "en",
+   "kind": "off_topic",
+   "answerable": false,
+   "question": "What is the best pizza place in Dubai Marina?",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 3.26,
+    "answer_s": 1.07
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "G0009",
+     "title": "Deep Panda",
+     "url": "https://attack.mitre.org/groups/G0009",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "T1690",
+     "title": "Prevent Command History Logging",
+     "url": "https://attack.mitre.org/techniques/T1690",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "G0069",
+     "title": "MuddyWater",
+     "url": "https://attack.mitre.org/groups/G0069",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "T1548.005",
+     "title": "Temporary Elevated Cloud Access",
+     "url": "https://attack.mitre.org/techniques/T1548/005",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "G1012",
+     "title": "CURIUM",
+     "url": "https://attack.mitre.org/groups/G1012",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1059",
+     "title": "Command and Scripting Interpreter",
+     "url": "https://attack.mitre.org/techniques/T1059",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   }
+  },
+  {
+   "id": "u02en",
+   "lang": "en",
+   "kind": "off_topic",
+   "answerable": false,
+   "question": "Who won the 2022 football World Cup final?",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 4.07,
+    "answer_s": 0.99
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "C0034",
+     "title": "2022 Ukraine Electric Power Attack",
+     "url": "https://attack.mitre.org/campaigns/C0034",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "C0038",
+     "title": "HomeLand Justice",
+     "url": "https://attack.mitre.org/campaigns/C0038",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "G0059",
+     "title": "Magic Hound",
+     "url": "https://attack.mitre.org/groups/G0059",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "S1058",
+     "title": "Prestige",
+     "url": "https://attack.mitre.org/software/S1058",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "S1162",
+     "title": "Playcrypt",
+     "url": "https://attack.mitre.org/software/S1162",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "S0693",
+     "title": "CaddyWiper",
+     "url": "https://attack.mitre.org/software/S0693",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   }
+  },
+  {
+   "id": "u03en",
+   "lang": "en",
+   "kind": "fake_id",
+   "answerable": false,
+   "question": "What is ATT&CK technique T9999.123 and how is it detected?",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 4.07,
+    "answer_s": 0.88
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1564.012",
+     "title": "File/Path Exclusions",
+     "url": "https://attack.mitre.org/techniques/T1564/012",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "DET0867",
+     "title": "Detection of Vulnerability Scanning",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0867",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "DET0470",
+     "title": "Detecting Protocol or Service Impersonation via Anomalous TLS, HTTP Header, and Port Mismatch Correlation",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0470",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "DET0099",
+     "title": "Detection Strategy for T1542.001 Pre-OS Boot: System Firmware",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0099",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "DET0021",
+     "title": "Behavioral Detection for Service Stop across Platforms",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0021",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "DET0499",
+     "title": "Behavioral Detection of Fallback or Alternate C2 Channels",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0499",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   }
+  },
+  {
+   "id": "u04en",
+   "lang": "en",
+   "kind": "fake_name",
+   "answerable": false,
+   "question": "Which groups use the HyperNova-X stealer malware?",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 4.36,
+    "answer_s": 1.05
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "S1240",
+     "title": "RedLine Stealer",
+     "url": "https://attack.mitre.org/software/S1240",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "S1148",
+     "title": "Raccoon Stealer",
+     "url": "https://attack.mitre.org/software/S1148",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "S1153",
+     "title": "Cuckoo Stealer",
+     "url": "https://attack.mitre.org/software/S1153",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "S1196",
+     "title": "Troll Stealer",
+     "url": "https://attack.mitre.org/software/S1196",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "S1029",
+     "title": "AuTo Stealer",
+     "url": "https://attack.mitre.org/software/S1029",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "S9041",
+     "title": "TeamPCP Cloud Stealer",
+     "url": "https://attack.mitre.org/software/S9041",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   }
+  },
+  {
+   "id": "u05en",
+   "lang": "en",
+   "kind": "future",
+   "answerable": false,
+   "question": "Which company will APT29 attack next month?",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 4.3,
+    "answer_s": 2.01
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "G0050",
+     "title": "APT32",
+     "url": "https://attack.mitre.org/groups/G0050",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "G0016",
+     "title": "APT29",
+     "url": "https://attack.mitre.org/groups/G0016",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "C0024",
+     "title": "SolarWinds Compromise",
+     "url": "https://attack.mitre.org/campaigns/C0024",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "C0023",
+     "title": "Operation Ghost",
+     "url": "https://attack.mitre.org/campaigns/C0023",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "S0052",
+     "title": "OnionDuke",
+     "url": "https://attack.mitre.org/software/S0052",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "S0054",
+     "title": "CloudDuke",
+     "url": "https://attack.mitre.org/software/S0054",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   }
+  },
+  {
+   "id": "u06en",
+   "lang": "en",
+   "kind": "out_of_corpus",
+   "answerable": false,
+   "question": "What is the current share price of CrowdStrike?",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 3.76,
+    "answer_s": 1.32
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "S0369",
+     "title": "CoinTicker",
+     "url": "https://attack.mitre.org/software/S0369",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "G0073",
+     "title": "APT19",
+     "url": "https://attack.mitre.org/groups/G0073",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "S0154",
+     "title": "Cobalt Strike",
+     "url": "https://attack.mitre.org/software/S0154",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "T1124",
+     "title": "System Time Discovery",
+     "url": "https://attack.mitre.org/techniques/T1124",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "G0119",
+     "title": "Indrik Spider",
+     "url": "https://attack.mitre.org/groups/G0119",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1593",
+     "title": "Search Open Websites/Domains",
+     "url": "https://attack.mitre.org/techniques/T1593",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   }
+  },
+  {
+   "id": "u07ar",
+   "lang": "ar",
+   "kind": "off_topic",
+   "answerable": false,
+   "question": "ما هي أفضل طريقة لطبخ الكبسة باللحم؟",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 7.47,
+    "answer_s": 0.9
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "T1003.001",
+     "title": "LSASS Memory",
+     "url": "https://attack.mitre.org/techniques/T1003/001",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "T1558.004",
+     "title": "AS-REP Roasting",
+     "url": "https://attack.mitre.org/techniques/T1558/004",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "T1550.003",
+     "title": "Pass the Ticket",
+     "url": "https://attack.mitre.org/techniques/T1550/003",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "T1560.002",
+     "title": "Archive via Library",
+     "url": "https://attack.mitre.org/techniques/T1560/002",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "T1078.003",
+     "title": "Local Accounts",
+     "url": "https://attack.mitre.org/techniques/T1078/003",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1003",
+     "title": "OS Credential Dumping",
+     "url": "https://attack.mitre.org/techniques/T1003",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   }
+  },
+  {
+   "id": "u08ar",
+   "lang": "ar",
+   "kind": "off_topic",
+   "answerable": false,
+   "question": "كم عدد سكان مدينة الرياض في عام 2024؟",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 7.21,
+    "answer_s": 0.96
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "C0061",
+     "title": "Operation Digital Eye",
+     "url": "https://attack.mitre.org/campaigns/C0061",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "S9018",
+     "title": "HeartCrypt",
+     "url": "https://attack.mitre.org/software/S9018",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "S1164",
+     "title": "UPSTYLE",
+     "url": "https://attack.mitre.org/software/S1164",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "S1194",
+     "title": "Akira _v2",
+     "url": "https://attack.mitre.org/software/S1194",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "G0049",
+     "title": "OilRig",
+     "url": "https://attack.mitre.org/groups/G0049",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "G0122",
+     "title": "Silent Librarian",
+     "url": "https://attack.mitre.org/groups/G0122",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   }
+  },
+  {
+   "id": "u09ar",
+   "lang": "ar",
+   "kind": "fake_id",
+   "answerable": false,
+   "question": "ما هي التقنية T9998 وكيف يمكن اكتشافها؟",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 7.0,
+    "answer_s": 1.23
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "DET0885",
+     "title": "Detection of Compromise Infrastructure",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0885",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "M1056",
+     "title": "Pre-compromise",
+     "url": "https://attack.mitre.org/mitigations/M1056",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "DET0499",
+     "title": "Behavioral Detection of Fallback or Alternate C2 Channels",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0499",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "T1205",
+     "title": "Traffic Signaling",
+     "url": "https://attack.mitre.org/techniques/T1205",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "T1070.004",
+     "title": "File Deletion",
+     "url": "https://attack.mitre.org/techniques/T1070/004",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "DET0850",
+     "title": "Detection of Obtain Capabilities",
+     "url": "https://attack.mitre.org/detectionstrategies/DET0850",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   }
+  },
+  {
+   "id": "u10ar",
+   "lang": "ar",
+   "kind": "fake_name",
+   "answerable": false,
+   "question": "ما هي المجموعات التي تستخدم برنامج QuantumLeech الخبيث؟",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 7.95,
+    "answer_s": 0.82
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "S1242",
+     "title": "Qilin",
+     "url": "https://attack.mitre.org/software/S1242",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "G1036",
+     "title": "Moonstone Sleet",
+     "url": "https://attack.mitre.org/groups/G1036",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "G0114",
+     "title": "Chimera",
+     "url": "https://attack.mitre.org/groups/G0114",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "G0008",
+     "title": "Carbanak",
+     "url": "https://attack.mitre.org/groups/G0008",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "G1012",
+     "title": "CURIUM",
+     "url": "https://attack.mitre.org/groups/G1012",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "S0271",
+     "title": "KEYMARBLE",
+     "url": "https://attack.mitre.org/software/S0271",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   }
+  },
+  {
+   "id": "u11ar",
+   "lang": "ar",
+   "kind": "future",
+   "answerable": false,
+   "question": "ما هي الدولة التي ستستهدفها مجموعة Lazarus في الأسبوع القادم؟",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 7.32,
+    "answer_s": 1.22
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "G0032",
+     "title": "Lazarus Group",
+     "url": "https://attack.mitre.org/groups/G0032",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "C0022",
+     "title": "Operation Dream Job",
+     "url": "https://attack.mitre.org/campaigns/C0022",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "G1004",
+     "title": "LAPSUS$",
+     "url": "https://attack.mitre.org/groups/G1004",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "G0138",
+     "title": "Andariel",
+     "url": "https://attack.mitre.org/groups/G0138",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "G1049",
+     "title": "AppleJeus",
+     "url": "https://attack.mitre.org/groups/G1049",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "G1006",
+     "title": "Earth Lusca",
+     "url": "https://attack.mitre.org/groups/G1006",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   }
+  },
+  {
+   "id": "u12ar",
+   "lang": "ar",
+   "kind": "out_of_corpus",
+   "answerable": false,
+   "question": "ما هو سعر سهم شركة Palo Alto Networks اليوم؟",
+   "answer": "NO_ANSWER",
+   "refused": true,
+   "timing": {
+    "retrieval_s": 6.95,
+    "answer_s": 0.88
+   },
+   "sources": [
+    {
+     "n": 1,
+     "doc_id": "S1164",
+     "title": "UPSTYLE",
+     "url": "https://attack.mitre.org/software/S1164",
+     "cited": false
+    },
+    {
+     "n": 2,
+     "doc_id": "C0048",
+     "title": "Operation MidnightEclipse",
+     "url": "https://attack.mitre.org/campaigns/C0048",
+     "cited": false
+    },
+    {
+     "n": 3,
+     "doc_id": "G0073",
+     "title": "APT19",
+     "url": "https://attack.mitre.org/groups/G0073",
+     "cited": false
+    },
+    {
+     "n": 4,
+     "doc_id": "G1032",
+     "title": "INC Ransom",
+     "url": "https://attack.mitre.org/groups/G1032",
+     "cited": false
+    },
+    {
+     "n": 5,
+     "doc_id": "C0055",
+     "title": "Quad7 Activity",
+     "url": "https://attack.mitre.org/campaigns/C0055",
+     "cited": false
+    },
+    {
+     "n": 6,
+     "doc_id": "T1599.001",
+     "title": "Network Address Translation Traversal",
+     "url": "https://attack.mitre.org/techniques/T1599/001",
+     "cited": false
+    }
+   ],
+   "checks": {
+    "citation_coverage": 1.0,
+    "uncited": [],
+    "invalid_citations": [],
+    "language_ok": true
+   }
+  }
+ ]
+}

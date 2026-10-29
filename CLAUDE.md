@@ -60,10 +60,16 @@ Do not start a phase until the previous gate passes.
   baseline (full, 3 runs): hit@5 0.957, recall@10 0.912, MRR 0.851, nDCG@10 0.786. `eval_golden --rescore`
   re-scores saved rankings for free. Claude spend to date $2.58 (cap $5 in .env).
 
+- **Phase 3 gate passed** (step 7): `core/answer.py` (cite every sentence or `NO_ANSWER`, language + citation
+  guards, D26/D29), `core/judge.py` (Sonnet 5.5 faithfulness, D27), `products/attack/assistant.py`, `api.py` +
+  `static/index.html` (`uvicorn products.attack.api:app --port 8000`). Fresh sample: 100% fully cited, 12/12
+  refusals, faithfulness 0.960. Prompt changes must be validated with `eval_answers --seed 12` (D28).
+- Claude spend to date $4.11; cap `LLM_BUDGET_USD=42.58` in .env = owner's $95 balance - $50 floor - $5 margin.
+
 ## Next step
-Phase 3: answering. Cited answers with Claude Haiku 5.5 from the retrieved chunks, refuse when sources are thin,
-FastAPI + simple web page with links to attack.mitre.org, faithfulness metric (Sonnet 5.5 as judge on a sample
-only, to save tokens). Owner still to review the Arabic golden questions.
+Phase 4: tenant isolation enforced in Postgres (row-level security, a test with one large and one tiny tenant, fix
+D13 with pgvector iterative scans or per-tenant indexes), per-conversation logs, tool framework with an allowlist;
+README results + a 90-second demo video (owner records it). Owner still to review the Arabic golden questions.
 
 ## Stack
 Python 3.11+, Postgres + pgvector (Docker or pgserver), BM25 (core/bm25.py), bge-m3 embeddings (Ollama),

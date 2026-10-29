@@ -1,0 +1,12 @@
+{"id": "u01en", "lang": "en", "kind": "off_topic", "query": "What is the best pizza place in Dubai Marina?"}
+{"id": "u02en", "lang": "en", "kind": "off_topic", "query": "Who won the 2022 football World Cup final?"}
+{"id": "u03en", "lang": "en", "kind": "fake_id", "query": "What is ATT&CK technique T9999.123 and how is it detected?"}
+{"id": "u04en", "lang": "en", "kind": "fake_name", "query": "Which groups use the HyperNova-X stealer malware?"}
+{"id": "u05en", "lang": "en", "kind": "future", "query": "Which company will APT29 attack next month?"}
+{"id": "u06en", "lang": "en", "kind": "out_of_corpus", "query": "What is the current share price of CrowdStrike?"}
+{"id": "u07ar", "lang": "ar", "kind": "off_topic", "query": "ما هي أفضل طريقة لطبخ الكبسة باللحم؟"}
+{"id": "u08ar", "lang": "ar", "kind": "off_topic", "query": "كم عدد سكان مدينة الرياض في عام 2024؟"}
+{"id": "u09ar", "lang": "ar", "kind": "fake_id", "query": "ما هي التقنية T9998 وكيف يمكن اكتشافها؟"}
+{"id": "u10ar", "lang": "ar", "kind": "fake_name", "query": "ما هي المجموعات التي تستخدم برنامج QuantumLeech الخبيث؟"}
+{"id": "u11ar", "lang": "ar", "kind": "future", "query": "ما هي الدولة التي ستستهدفها مجموعة Lazarus في الأسبوع القادم؟"}
+{"id": "u12ar", "lang": "ar", "kind": "out_of_corpus", "query": "ما هو سعر سهم شركة Palo Alto Networks اليوم؟"}

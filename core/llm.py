@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import time
 from pathlib import Path
 
@@ -24,6 +25,7 @@ PRICES = {
     "claude-opus-5-5": (4.00, 20.00),
 }
 DEFAULT_MODEL = "claude-haiku-5-5"
+WARN_AT = 0.8  # print a warning once spend passes this share of the budget
 
 
 class BudgetExceeded(RuntimeError):
@@ -54,6 +56,8 @@ def cost_usd(model: str, input_tokens: int, output_tokens: int) -> float:
 
 
 class Claude:
+    _warned = False
+
     def __init__(self, model: str = DEFAULT_MODEL, budget_usd: float | None = None, purpose: str = "",
                  log: Path = USAGE_LOG):
         import anthropic  # imported here so the rest of core works without the SDK installed
@@ -70,6 +74,10 @@ class Claude:
         spent = spent_usd(self.log)
         if spent >= self.budget:
             raise BudgetExceeded(f"LLM budget reached: ${spent:.4f} of ${self.budget:.2f} spent")
+        if spent >= WARN_AT * self.budget and not Claude._warned:
+            Claude._warned = True
+            print(f"WARNING: Claude spend ${spent:.2f} is over {WARN_AT:.0%} of the ${self.budget:.2f} budget",
+                  file=sys.stderr)
         kwargs = {"system": system} if system else {}
         if self.model == "claude-haiku-5-5":
             # Simple, short tasks: no thinking, lowest effort (Haiku 5.5 allows disabling at effort <= high).
