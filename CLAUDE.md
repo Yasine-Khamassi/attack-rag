@@ -52,10 +52,16 @@ Do not start a phase until the previous gate passes.
 - Model rule from the owner: use Claude Haiku 5.5 by default; Sonnet/Opus 5.5 only for one-off quality checks;
   stop all Claude use and tell the owner if remaining credit would fall to $50.
 
+- **Phase 2 gate passed** (step 5): golden set `eval/golden.jsonl` (116 q, graded, leak-checked, D20), metrics
+  `core/metrics.py`, `products/attack/eval_golden.py`, baseline `eval/baseline.json`, CI gate
+  `tests/test_eval_gate.py` (D21). Full pipeline: hit@5 0.877, nDCG@10 0.768 (3 runs, spread +-0.01).
+  **Rule: any change to retrieval code re-runs `eval_golden` (~$0.73) and commits the results.**
+  Weak spot: mitigate questions nDCG 0.232.
+
 ## Next step
-Phase 2: golden set of 100+ questions (EN/AR/mixed, graded relevance: parent vs sub-technique, group page vs one
-linked doc; Arabic reviewed by a native speaker), eval harness in `core/eval/` (recall@k, MRR, nDCG, faithfulness),
-reranked configs run 3x (mean + spread), CI gate that fails on regression.
+Step 6: fix "how do I mitigate X?" (likely missing: technique-specific guidance in `mitigates` relationship
+descriptions). Then phase 3: answering (cited answers with Claude Haiku 5.5, refuse when sources are thin, FastAPI +
+simple web page, faithfulness metric). Arabic golden questions still need a native-speaker review.
 
 ## Stack
 Python 3.11+, Postgres + pgvector (Docker or pgserver), BM25 (core/bm25.py), bge-m3 embeddings (Ollama),

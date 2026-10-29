@@ -158,3 +158,29 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 **Next**
 - Phase 2: golden set of 100+ questions (EN/AR/mixed, graded relevance, Arabic reviewed by a native speaker), eval harness (recall@k, MRR, nDCG, faithfulness), several runs per reranked config, CI regression gate.
+
+## 2026-10-30 · Step 5: Golden set, graded metrics, CI regression gate (phase 2)
+
+**Done**
+- `eval/golden.jsonl`: 116 questions (49 English, 49 Arabic, 18 mixed/ID) generated from ATT&CK templates, labels from the data, graded relevance (D20). Haiku rewrites + Arabic translations, cached by prompt hash in `eval/golden_llm_cache.json`.
+- `core/metrics.py` (hit@5, recall@10, MRR@10, nDCG@10), `products/attack/eval_golden.py`, `eval/baseline.json`, `tests/test_eval_gate.py` (D21).
+- Tests: 66 passed (incl. 5 gate tests).
+
+**Numbers** (116 questions; full pipeline = mean of 3 runs, min-max in brackets)
+- dense: hit@5 0.569 · recall@10 0.601 · MRR 0.486 · nDCG@10 0.454 · 2.1 s/question
+- keyword: 0.655 · 0.746 · 0.556 · 0.581 · 7 ms
+- hybrid + ID pinning: 0.802 · 0.838 · 0.678 · 0.660 · 2.1 s
+- **full (+ Haiku translation + rerank): 0.877 (0.871-0.888) · 0.873 · 0.784 · 0.768 (0.764-0.770) · 5.2 s**
+- Full by language (nDCG / hit@5): Arabic 0.745 / 0.864 · English 0.733 / 0.844 · mixed 0.922 / 1.0.
+- Full by template (nDCG / hit@5): alias 0.979 / 1.0 · campaign 0.974 / 1.0 · revoked ID 1.0 / 1.0 · ID 0.897 / 1.0 · detect 0.858 / 0.967 · definition 0.804 / 0.944 · group->software 0.779 / 0.945 · software->groups 0.684 / 0.972 · **mitigate 0.232 / 0.271**.
+- Cost: golden set generation $0.0058; one eval (3 full runs) $0.73. Claude spend to date ~$1.23.
+
+**Problems found**
+- Haiku leaked answers into rewritten questions (group names, IDs; once via the Arabic translation). Fixed with description-only input, an explicit rule and an automatic leak check (D20); the CI gate re-checks it.
+- Committing LLM prompts would have copied MITRE description text into the repo; the cache is keyed by prompt hash instead.
+- "How do I mitigate X?" is far below every other template (nDCG 0.232).
+
+**Gate (phase 2): baseline scores recorded, CI fails on regression. Passed.**
+
+**Next**
+- Step 6: mitigation questions. Check whether technique-specific mitigation guidance (in `mitigates` relationship descriptions) is missing from the documents.

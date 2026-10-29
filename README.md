@@ -5,21 +5,20 @@
 
 ## Results
 
-Retrieval so far (phase 1). 32 probe questions (12 English, the same 12 in Arabic, 8 Arabic with English IDs);
-hit@5 = a correct document in the top 5, MRR@10 = 1/rank of the first correct one. From
-`python -m products.attack.retrieval_check`; raw numbers in `eval/results/`.
+**Golden set:** 116 questions generated from ATT&CK's structure (49 English, 49 Arabic, 18 Arabic-with-ID), graded
+relevance from the data, answer-leak checked ([how](docs/DECISIONS.md)). Full pipeline = mean of 3 runs (the LLM
+reranker is not deterministic). From `python -m products.attack.eval_golden`; raw numbers in `eval/results/`.
 
-| Config | hit@5 | MRR@10 | Latency per question (CPU) |
-|---|---|---|---|
-| Dense only (bge-m3 + pgvector) | 0.781 | 0.698 | ~2.1 s |
-| BM25 only | 0.469 | 0.375 | 5 ms |
-| Hybrid (RRF) | 0.875 | 0.768 | ~2.1 s |
-| + query translation (Claude Haiku 5.5) | 1.0 | 0.768 | ~3.3 s |
-| + exact-ID pinning | 1.0 | 0.784 | ~3.3 s |
-| + reranker (Claude Haiku 5.5, listwise) | **1.0** | **0.896** | ~5.1 s |
+| Config | hit@5 | recall@10 | MRR@10 | nDCG@10 | Latency (CPU) |
+|---|---|---|---|---|---|
+| Dense only (bge-m3 + pgvector) | 0.569 | 0.601 | 0.486 | 0.454 | 2.1 s |
+| BM25 only | 0.655 | 0.746 | 0.556 | 0.581 | 7 ms |
+| Hybrid (RRF) + exact-ID pinning | 0.802 | 0.838 | 0.678 | 0.660 | 2.1 s |
+| + Claude Haiku 5.5 translation + rerank | **0.877** | **0.873** | **0.784** | **0.768** | 5.2 s |
 
-Phase 1 gate (20 separate spot-check questions, correct doc in top 5): **20/20**.
-Recall@10, nDCG and faithfulness on a 100+ question golden set come in phase 2.
+Arabic questions score like English ones (nDCG 0.745 vs 0.733). CI fails if committed results drop below
+`eval/baseline.json`. Weak spot: "how do I mitigate X?" questions (nDCG 0.232), being worked on.
+Faithfulness of generated answers comes with phase 3.
 
 _Demo video: (link)_
 
