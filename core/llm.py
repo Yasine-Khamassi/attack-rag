@@ -57,6 +57,7 @@ def cost_usd(model: str, input_tokens: int, output_tokens: int) -> float:
 
 class Claude:
     _warned = False
+    total_cost = 0.0  # USD spent by this process, all instances (per-turn cost = difference)
 
     def __init__(self, model: str = DEFAULT_MODEL, budget_usd: float | None = None, purpose: str = "",
                  log: Path = USAGE_LOG):
@@ -71,6 +72,13 @@ class Claude:
 
     def complete(self, prompt: str, system: str | None = None, max_tokens: int = 1024,
                  effort: str = "low") -> str:
+        response = self.create([{"role": "user", "content": prompt}], system=system, max_tokens=max_tokens,
+                               effort=effort)
+        return "".join(b.text for b in response.content if b.type == "text").strip()
+
+    def create(self, messages: list, system: str | None = None, max_tokens: int = 1024, effort: str = "low",
+               tools: list | None = None):
+        """One Messages API call with the budget check and usage logging. Returns the SDK response."""
         spent = spent_usd(self.log)
         if spent >= self.budget:
             raise BudgetExceeded(f"LLM budget reached: ${spent:.4f} of ${self.budget:.2f} spent")
@@ -79,18 +87,21 @@ class Claude:
             print(f"WARNING: Claude spend ${spent:.2f} is over {WARN_AT:.0%} of the ${self.budget:.2f} budget",
                   file=sys.stderr)
         kwargs = {"system": system} if system else {}
+        if tools:
+            kwargs["tools"] = tools
         if self.model == "claude-haiku-5-5":
             # Simple, short tasks: no thinking, lowest effort (Haiku 5.5 allows disabling at effort <= high).
             kwargs["thinking"] = {"type": "disabled"}
         start = time.perf_counter()
         response = self.client.messages.create(
-            model=self.model, max_tokens=max_tokens, output_config={"effort": effort},
-            messages=[{"role": "user", "content": prompt}], **kwargs)
+            model=self.model, max_tokens=max_tokens, output_config={"effort": effort}, messages=messages, **kwargs)
         usage = response.usage
+        cost = cost_usd(self.model, usage.input_tokens, usage.output_tokens)
+        Claude.total_cost += cost
         record = {
             "ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "model": self.model, "purpose": self.purpose,
             "input_tokens": usage.input_tokens, "output_tokens": usage.output_tokens,
-            "cost_usd": round(cost_usd(self.model, usage.input_tokens, usage.output_tokens), 8),
+            "cost_usd": round(cost, 8),
             "seconds": round(time.perf_counter() - start, 2), "stop_reason": response.stop_reason,
         }
         self.log.parent.mkdir(parents=True, exist_ok=True)
@@ -98,4 +109,4 @@ class Claude:
             f.write(json.dumps(record) + "\n")
         if response.stop_reason == "refusal":
             raise RuntimeError(f"model refused ({getattr(response.stop_details, 'category', None)})")
-        return "".join(b.text for b in response.content if b.type == "text").strip()
+        return response

@@ -17,7 +17,8 @@ class FakeAssistant:
     def __init__(self, reply="Attackers request service tickets to crack offline [1].", fail=False):
         self.reply, self.fail = reply, fail
 
-    def ask(self, question):
+    def ask(self, question, conversation_id=None):
+        self.conversation_id = conversation_id
         if self.fail:
             raise BudgetExceeded("LLM budget reached")
         src = [Source(1, "T1558.003", "T1558.003#0", "Kerberoasting", "https://attack.mitre.org/techniques/T1558/003", "x")]
@@ -50,3 +51,11 @@ def test_validation_and_budget(client):
     assert client(FakeAssistant()).post("/api/ask", json={"question": ""}).status_code == 422
     r = client(FakeAssistant(fail=True)).post("/api/ask", json={"question": "anything"})
     assert r.status_code == 503 and "budget" in r.json()["detail"]
+
+
+def test_conversation_id_is_passed_and_validated(client):
+    fake = FakeAssistant()
+    c = client(fake)
+    assert c.post("/api/ask", json={"question": "q?", "conversation_id": "abc-123"}).status_code == 200
+    assert fake.conversation_id == "abc-123"
+    assert c.post("/api/ask", json={"question": "q?", "conversation_id": "bad id; drop"}).status_code == 422

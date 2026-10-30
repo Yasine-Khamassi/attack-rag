@@ -51,6 +51,7 @@
 const EXAMPLES = ["How do I detect Kerberoasting?", "Which malware does APT29 use?", "What does T1070.001 mean?",
                   "كيف أمنع المهاجمين من استخدام PowerShell بشكل خبيث؟", "ما هي البرمجيات التي تستخدمها مجموعة Lazarus؟"];
 const $ = id => document.getElementById(id);
+const CONVERSATION = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())).replace(/[^A-Za-z0-9-]/g, "");
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 for (const e of EXAMPLES) {
   const b = document.createElement("button"); b.type = "button"; b.textContent = e; b.dir = "auto";
@@ -62,7 +63,7 @@ async function ask() {
   const question = $("q").value.trim(); if (!question) return;
   $("go").disabled = true; $("out").innerHTML = '<div class="card meta">Searching ATT&amp;CK and writing a cited answer…</div>';
   try {
-    const r = await fetch("/api/ask", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({question})});
+    const r = await fetch("/api/ask", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({question, conversation_id: CONVERSATION})});
     const d = await r.json();
     if (!r.ok) throw new Error(d.detail || r.statusText);
     render(d);
@@ -81,7 +82,7 @@ function render(d) {
   const c = d.checks, full = c.citation_coverage === 1;
   $("out").innerHTML = `<div class="card">${body}
     <div class="meta"><span class="badge ${full ? "ok" : "warn"}">citations ${Math.round(c.citation_coverage*100)}%</span>
-      retrieval ${d.timing.retrieval_s}s · answer ${d.timing.answer_s}s</div></div>
+      retrieval ${d.timing.retrieval_s}s · answer ${d.timing.answer_s}s · $${d.timing.cost_usd ?? "?"}</div></div>
     <div class="card sources"><strong>Sources</strong><ol>${sources}</ol></div>`;
 }
 </script>

@@ -5,9 +5,8 @@ Configs:
   dense        bge-m3 + pgvector only
   keyword      BM25 only
   hybrid       dense + keyword (RRF) + exact-ID pinning, no LLM
-  full_noexpand  hybrid + Claude Haiku 5.5 translation + Haiku rerank, 1 run (ablation for the expansion step)
-  full         as above + linked-document expansion (a top technique's mitigations and detections join the
-               rerank candidates); the production pipeline, run RUNS times
+  full         hybrid + Claude Haiku 5.5 translation + Haiku rerank with the production settings in
+               products/attack/settings.py (depth, excerpt length, link expansion); run RUNS times
                because the LLM reranker is not deterministic (DECISIONS D19); mean and min/max are reported.
 
 Writes eval/results/golden_eval.json (per question, per run, top 10). With --update-baseline the summary also
@@ -24,6 +23,7 @@ import time
 from collections import defaultdict
 
 from core import db
+from core.cache import TTLCache
 from core.embeddings import DEFAULT_MODEL, OllamaEmbedder
 from core.llm import spent_usd
 from core.metrics import mean, score
@@ -32,22 +32,13 @@ from core.rerank import ClaudeReranker
 from core.schema import Document
 from core.search import HybridSearcher
 from products.attack.ingest import DOCS_PATH, REL_PATH, ROOT, TENANT_ID
+from products.attack import pipeline
+from products.attack.pipeline import load_links
+from products.attack.settings import EXPAND_TOP, LLM_MODEL, RERANK_CHARS, RERANK_DEPTH
 
 GOLDEN_PATH = ROOT / "eval" / "golden.jsonl"
 RESULTS_PATH = ROOT / "eval" / "results" / "golden_eval.json"
 BASELINE_PATH = ROOT / "eval" / "baseline.json"
-LLM_MODEL = "claude-haiku-5-5"
-EXPAND_TOP = 5
-
-
-def load_links() -> dict[str, list[str]]:
-    """technique -> its mitigations and detection strategies (the one-hop answers to "how do I stop/spot X")."""
-    links: dict[str, list[str]] = defaultdict(list)
-    with REL_PATH.open(encoding="utf-8") as f:
-        for r in map(json.loads, f):
-            if r["relation"] in ("mitigates", "detects"):
-                links[r["target"]].append(r["source"])
-    return dict(links)
 
 
 def summarize(rows: list[dict]) -> dict:
@@ -96,21 +87,22 @@ def run_configs(questions: list[dict], aliases: dict[str, str], runs_full: int):
         searcher = HybridSearcher(conn, TENANT_ID, OllamaEmbedder(DEFAULT_MODEL), aliases=aliases,
                                   links=load_links())
         translator = ClaudeTranslator(LLM_MODEL, target="English", domain="cybersecurity")
-        reranker = ClaudeReranker(LLM_MODEL)
+        reranker = ClaudeReranker(LLM_MODEL, max_chars=RERANK_CHARS)
         searcher.dense("warm up")
         plans = {
             "dense": (1, lambda q: searcher.dense(q, k=10)),
             "keyword": (1, lambda q: searcher.keyword(q, k=10)),
             "hybrid": (1, lambda q: searcher.hybrid(q, k=10, pin_ids=True)),
-            "full_noexpand": (1, lambda q: searcher.hybrid(q, k=10, translator=translator, pin_ids=True,
-                                                           reranker=reranker)),
-            "full": (runs_full, lambda q: searcher.hybrid(q, k=10, translator=translator, pin_ids=True,
-                                                          reranker=reranker, expand_top=EXPAND_TOP)),
+            "full": (runs_full, lambda q: pipeline.search(searcher, q, translator, reranker)[0]),
         }
         for name, (runs, search) in plans.items():
             configs[name] = []
             start = time.perf_counter()
             for run in range(runs):
+                # Each run starts cold: the rerank/translation caches would otherwise replay run 1 and hide
+                # the LLM reranker's run-to-run variance (found when 3 runs came back identical, D38).
+                reranker.cache = TTLCache(max_items=2048, ttl_seconds=86_400)
+                translator._cache.clear()
                 rows = []
                 for q in questions:
                     ranked = [h.doc_id for h in search(q["query"])]
@@ -137,6 +129,7 @@ def finish(questions, configs, timing, args, spent_before) -> None:
 
     cost = round(spent_usd() - spent_before, 4)
     result = {"questions": len(questions), "embedding": DEFAULT_MODEL, "llm": LLM_MODEL, "runs_full": args.runs,
+              "rerank": {"depth": RERANK_DEPTH, "chars": RERANK_CHARS, "expand_top": EXPAND_TOP},
               "cost_usd": cost, "summary": summary,
               "per_question": {name: runs for name, runs in configs.items()}}
     RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)

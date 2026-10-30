@@ -26,7 +26,8 @@ def test_fully_cited_answer():
     a, llm = answer("Attackers inject code into processes [1]. Defenders watch memory access patterns [2][1].")
     assert not a.refused and a.cited == [1, 2] and a.uncited == [] and a.invalid_citations == []
     assert a.citation_coverage == 1.0 and a.language_ok
-    assert "[1] first source text" in llm.calls[0]["prompt"] and "You help analysts." in llm.calls[0]["system"]
+    assert '<source n="1">\nfirst source text' in llm.calls[0]["prompt"]
+    assert "You help analysts." in llm.calls[0]["system"]
 
 
 def test_uncited_and_invalid_citations_are_reported():

@@ -236,3 +236,30 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 **Next**
 - Phase 4: tenant isolation in the database (Postgres row-level security + a test with a large and a tiny tenant, D13), per-conversation logs, tool framework; README results + 90-second demo video.
+
+## 2026-10-30 · Steps 8-10: Tenant isolation, tools, security, cost (phases 4-6; overnight, owner approved)
+
+**Done**
+- Phase 4: `db.connect_app` (restricted login role `rag_app`) + RLS on `chunks` and `conversations` (D31); exact search for small tenants, HNSW for large (D32); `core/convlog.py` + API endpoints for history and usage; `core/tools.py` (strict schemas, allowlist, tenant injection, results as citable sources) and the ATT&CK lookup tool (D33).
+- Phase 5: `core/guardrails.py` (input, source and output guards), `core/security_log.py` (ECS-style JSON events), sources wrapped as untrusted data (D34); red-team suite (D35); `tests/test_source_hygiene.py` after a backspace character silently broke two patterns.
+- Phase 6: cheaper rerank (D30), `core/cache.py` (query embeddings, rerank results, answers keyed by index fingerprint), `core/routing.py` (ID-only questions skip translation and rerank) (D36), `products/attack/cost_report.py`; shared `products/attack/settings.py` and `pipeline.py` so the assistant and evals run the same pipeline.
+- Tests: 134 passed (tenancy against real Postgres incl. the starvation reproduction, tools, guardrails incl. a 0-false-positive check on the corpus, caches, routing).
+
+**Numbers**
+- Rerank call ~24k -> ~6.1k input tokens ($0.00246 -> $0.00064). Golden (cheap rerank, 3 cold runs): hit@5 0.951 (0.948-0.957), recall@10 0.877, MRR 0.856, nDCG 0.766 (recall was 0.912: accepted trade-off, D30); latency 5.1 s -> 2.2 s.
+- Guardrails: 0 false positives on 3,581 chunks and 116 golden questions; 0/3 legitimate prompt-injection questions blocked.
+- Red-team ASR without -> with guards: 22.2% -> 5.6% (direct 37.5% -> 0%; semantic poisoning 50% residual).
+- Answers (fresh sample, full pipeline incl. tools + guards + routing): 100% fully cited, faithfulness 0.970 (EN 0.993, AR 0.965), refusals 12/12, answer rate 95%, language 97.4%.
+- Cost: mean $0.0010 per question (p95 $0.0014); ID lookups $0.0005; ~$3 per 1,000 three-question conversations.
+- Claude spend to date ~$4.8 of the $42.58 cap.
+
+**Problems found**
+- `search` name collision in the eval (an imported function shadowed by a loop variable) crashed one golden run.
+- Cached evaluation runs were identical (D38).
+- The CI gate correctly failed on the recall@10 drop until the baseline was deliberately re-set (D30).
+
+**Gates:** phase 4 (tenant A never retrieves tenant B: enforced by RLS, tested) passed; phase 5 (ASR published before and after) passed; phase 6 (caching, routing, cost per conversation) done.
+
+**Next**
+- Owner: record the 90-second demo; review the Arabic golden questions.
+- Possible core work: document provenance / trusted sources (D35), pgvector >= 0.8 for iterative scans, persistent answer cache for multi-process deployments.

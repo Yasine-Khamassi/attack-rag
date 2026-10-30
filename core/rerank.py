@@ -10,6 +10,8 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 
+from core.cache import TTLCache, key
+
 # Candidates, all multilingual (Arabic included):
 RERANKERS = {
     "bge-reranker-v2-m3": "BAAI/bge-reranker-v2-m3",                            # 568M params
@@ -45,10 +47,14 @@ class ClaudeReranker:
 
         self.name, self.max_chars = model, max_chars
         self.llm = Claude(model, purpose="rerank")
+        self.cache = TTLCache(max_items=2048, ttl_seconds=86_400)  # same question + same candidates -> same order
 
     def scores(self, query: str, passages: Sequence[str]) -> list[float]:
         if not passages:
             return []
+        cache_key = key(self.name, self.max_chars, query, list(passages))
+        if (cached := self.cache.get(cache_key)) is not None:
+            return cached
         listing = "\n\n".join(f"[{i}] {p[:self.max_chars]}" for i, p in enumerate(passages, 1))
         prompt = (f"Question: {query}\n\nSearch results:\n\n{listing}\n\n"
                   "Rank the results by how directly they answer the question. Reply with the result numbers "
@@ -62,4 +68,6 @@ class ClaudeReranker:
                 order.append(int(digits) - 1)
         n = len(passages)
         rank = {idx: pos for pos, idx in enumerate(order)}
-        return [float(2 * n - rank[i]) if i in rank else float(n - i) / n for i in range(n)]
+        result = [float(2 * n - rank[i]) if i in rank else float(n - i) / n for i in range(n)]
+        self.cache.put(cache_key, result)
+        return result

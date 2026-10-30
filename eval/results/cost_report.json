@@ -1,0 +1,20 @@
+{
+ "questions": 52,
+ "mean_usd": 0.000999,
+ "p50_usd": 0.001001,
+ "p95_usd": 0.001449,
+ "by_route": {
+  "full": {
+   "n": 40,
+   "mean_usd": 0.001155
+  },
+  "id_lookup": {
+   "n": 12,
+   "mean_usd": 0.000477
+  }
+ },
+ "per_conversation_usd": 0.003,
+ "per_1000_conversations_usd": 3.0,
+ "per_100k_conversations_usd": 299.68,
+ "assumption": "3 questions per conversation; no answer-cache hits"
+}

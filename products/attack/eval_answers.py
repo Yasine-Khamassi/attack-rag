@@ -22,6 +22,7 @@ from core.judge import FaithfulnessJudge
 from core.llm import Claude, spent_usd
 from products.attack.assistant import Assistant, to_json
 from products.attack.ingest import ROOT
+from products.attack.settings import JUDGE_MODEL
 
 GOLDEN_PATH = ROOT / "eval" / "golden.jsonl"
 UNANSWERABLE_PATH = ROOT / "eval" / "unanswerable.jsonl"
@@ -54,7 +55,7 @@ def rate(rows: list[dict], key) -> float:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--per-template", type=int, default=4)
-    parser.add_argument("--judge", default="claude-sonnet-5-5")
+    parser.add_argument("--judge", default=JUDGE_MODEL)
     parser.add_argument("--seed", type=int, default=SEED)
     parser.add_argument("--out", default="answers_eval.json")
     args = parser.parse_args()

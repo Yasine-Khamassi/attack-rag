@@ -47,11 +47,19 @@ def rrf(rankings: list[list[str]], k: int = 60) -> list[tuple[str, float]]:
     return sorted(scores.items(), key=lambda x: -x[1])
 
 
+EXACT_MAX_ROWS = 20_000  # tenants up to this many chunks get exact vector search (D32)
+
+
 class HybridSearcher:
     def __init__(self, conn: psycopg.Connection, tenant_id: str, embedder: OllamaEmbedder,
-                 aliases: dict[str, str] | None = None, links: dict[str, list[str]] | None = None):
+                 aliases: dict[str, str] | None = None, links: dict[str, list[str]] | None = None,
+                 exact_max_rows: int = EXACT_MAX_ROWS):
         """`aliases`: extra IDs that should resolve to a document (e.g. old IDs -> current doc_id).
-        `links`: doc_id -> related doc_ids worth showing the reranker when that doc ranks high (one hop)."""
+        `links`: doc_id -> related doc_ids worth showing the reranker when that doc ranks high (one hop).
+        `exact_max_rows`: below this tenant size, dense search is exact over the tenant's rows (see dense())."""
+        session_tenant = conn.execute("SELECT current_setting('app.tenant_id', true)").fetchone()[0]
+        if session_tenant and session_tenant != tenant_id:
+            raise PermissionError(f"connection is pinned to tenant {session_tenant!r}, not {tenant_id!r}")
         self.conn, self.tenant_id, self.embedder = conn, tenant_id, embedder
         rows = conn.execute("SELECT chunk_id, doc_id, text, title, url FROM chunks WHERE tenant_id = %s "
                             "ORDER BY doc_id, ordinal", (tenant_id,)).fetchall()
@@ -67,18 +75,35 @@ class HybridSearcher:
         self.id_map = {normalize(alias): doc for alias, doc in (aliases or {}).items() if doc in self.doc_info}
         self.id_map |= {normalize(doc): doc for doc in self.doc_info}
         self.links = {d: [x for x in linked if x in self.doc_info] for d, linked in (links or {}).items()}
-        # HNSW returns at most ef_search candidates; raise it above the depth we ask for.
+        self.exact = len(rows) <= exact_max_rows
+        # HNSW returns at most ef_search candidates; raise it above the depth we ask for. pgvector >= 0.8 can
+        # also keep scanning until enough rows pass the tenant filter (iterative scans); older versions can't.
         conn.execute("SET hnsw.ef_search = 200")
+        try:
+            with conn.transaction():
+                conn.execute("SET hnsw.iterative_scan = relaxed_order")
+            self.iterative = True
+        except psycopg.Error:
+            self.iterative = False
 
     def _hits(self, ranked: list[tuple[str, str, float]], k: int) -> list[Hit]:
         return [Hit(d, c, s, *self.doc_info[d]) for d, c, s in ranked[:k]]
 
     def dense(self, query: str, k: int = 10, depth: int = 50) -> list[Hit]:
+        """HNSW picks its nearest candidates *before* the tenant filter, so a small tenant sharing a table with a
+        large one can get few or no results (D13). Small tenants therefore get an exact scan of their own rows
+        (the MATERIALIZED CTE keeps the planner from using the HNSW index); large tenants use HNSW."""
         qv = to_pgvector(self.embedder.embed_queries([query])[0])
-        rows = self.conn.execute(
-            """SELECT chunk_id, 1 - (embedding <=> %s::vector) FROM chunks
-               WHERE tenant_id = %s ORDER BY embedding <=> %s::vector LIMIT %s""",
-            (qv, self.tenant_id, qv, depth)).fetchall()
+        if self.exact:
+            query_sql = """WITH t AS MATERIALIZED (SELECT chunk_id, embedding FROM chunks WHERE tenant_id = %s)
+                           SELECT chunk_id, 1 - (embedding <=> %s::vector) FROM t
+                           ORDER BY embedding <=> %s::vector LIMIT %s"""
+            params = (self.tenant_id, qv, qv, depth)
+        else:
+            query_sql = """SELECT chunk_id, 1 - (embedding <=> %s::vector) FROM chunks
+                           WHERE tenant_id = %s ORDER BY embedding <=> %s::vector LIMIT %s"""
+            params = (qv, self.tenant_id, qv, depth)
+        rows = self.conn.execute(query_sql, params).fetchall()
         return self._hits(_collapse(rows, self.chunk_doc), k)
 
     def keyword(self, query: str, k: int = 10, depth: int = 50) -> list[Hit]:

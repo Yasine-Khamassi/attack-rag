@@ -36,7 +36,7 @@ plug into. Corpus-specific code lives in `products/<name>/`.
 
 Do not start a phase until the previous gate passes.
 
-## Current state (2026-10-29)
+## Current state (2026-10-30)
 - **Phase 0 done.** Steps 1-2: ingestion (2,530 docs, 21,660 relationships), `core/` + `products/attack/` split.
 - **Phase 1 done** (gate: 20/20 spot checks in the top 5). Steps 3-4, details in `docs/steps/03-*`, `04-*`:
   - Postgres + pgvector (`docker-compose.yml`; local fallback `pgserver`, D9); CI green on GitHub Actions.
@@ -66,10 +66,26 @@ Do not start a phase until the previous gate passes.
   refusals, faithfulness 0.960. Prompt changes must be validated with `eval_answers --seed 12` (D28).
 - Claude spend to date $4.11; cap `LLM_BUDGET_USD=42.58` in .env = owner's $95 balance - $50 floor - $5 margin.
 
+- **Phase 4 gate passed** (step 8, D31-D33): serving path uses `db.connect_app(tenant)` (login role `rag_app`,
+  no superuser, no BYPASSRLS; `app.tenant_id` pinned per session) + RLS on `chunks` and `conversations`; exact
+  search for tenants <= 20k chunks (HNSW starvation reproduced in `tests/test_tenancy.py`); `core/convlog.py`
+  (per-turn log), `core/tools.py` (strict schemas, allowlist, tenant injected by code) + `lookup_attack_object`.
+  Serving connections run in autocommit (D37).
+- **Phase 5 gate passed** (step 9, D34-D35): `core/guardrails.py` (input / source / output), `core/security_log.py`
+  (ECS JSON -> `data/security_events.jsonl`), `products/attack/redteam.py`: ASR 22.2% -> 5.6% (direct 37.5% -> 0;
+  semantic poisoning 50% residual, mitigation = provenance). 0 false positives on corpus + golden questions.
+- **Phase 6 done** (step 10, D30, D36, D38): cheap rerank (top 15 x 600 chars), `core/cache.py`, `core/routing.py`,
+  `products/attack/cost_report.py`: $0.0010/question, ~$3 per 1,000 conversations. Golden baseline (3 cold runs): hit@5 0.951, recall@10 0.877, MRR 0.856, nDCG 0.766. Shared pipeline in
+  `products/attack/settings.py` + `pipeline.py`. Evals reset caches per run (D38).
+- Answers (fresh sample, full pipeline): 100% cited, faithfulness 0.970, refusals 12/12.
+- Never edit regexes or `\b` through shell heredocs (they became backspace characters twice); use the Edit tool.
+  `tests/test_source_hygiene.py` guards the code.
+- Tag `core-v0.2.0` = the core used by the downstream product.
+
 ## Next step
-Phase 4: tenant isolation enforced in Postgres (row-level security, a test with one large and one tiny tenant, fix
-D13 with pgvector iterative scans or per-tenant indexes), per-conversation logs, tool framework with an allowlist;
-README results + a 90-second demo video (owner records it). Owner still to review the Arabic golden questions.
+All six phases are done. Owner: record the 90-second demo video, review the Arabic golden questions, rotate the
+API key that was pasted in chat. Possible core work: document provenance / trusted sources (D35), pgvector >= 0.8
+iterative scans, a shared (Redis/Postgres) answer cache for multi-process deployments.
 
 ## Stack
 Python 3.11+, Postgres + pgvector (Docker or pgserver), BM25 (core/bm25.py), bge-m3 embeddings (Ollama),

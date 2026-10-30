@@ -65,6 +65,8 @@ def test_listwise_rerank_parsing(fake_claude, monkeypatch):
     make, reply, _ = fake_claude
     r = ClaudeReranker.__new__(ClaudeReranker)
     r.name, r.max_chars, r.llm = "claude-haiku-5-5", 800, make()
+    from core.cache import TTLCache
+    r.cache = TTLCache()
     reply["text"] = "3, 1\n9, 3"  # 9 is out of range, the repeated 3 is ignored
     s = r.scores("q", ["a", "b", "c", "d"])
     assert s[2] > s[0] > s[1] > s[3]  # ranked first, ranked second, then incoming order for the rest

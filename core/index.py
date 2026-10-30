@@ -14,8 +14,10 @@ from collections.abc import Iterable, Sequence
 
 import numpy as np
 import psycopg
+from psycopg import sql
 
 from core.chunking import Chunk, chunk_document
+from core.db import APP_ROLE, ensure_app_role
 from core.embeddings import OllamaEmbedder
 from core.schema import Document
 
@@ -49,9 +51,47 @@ def ensure_schema(conn: psycopg.Connection, model: str, dim: int) -> None:
         PRIMARY KEY (tenant_id, chunk_id))""")
     conn.execute("CREATE INDEX IF NOT EXISTS chunks_tenant ON chunks (tenant_id)")
     conn.execute("CREATE INDEX IF NOT EXISTS chunks_hnsw ON chunks USING hnsw (embedding vector_cosine_ops)")
+    conn.execute("""CREATE TABLE IF NOT EXISTS conversations (
+        id bigserial PRIMARY KEY,
+        tenant_id text NOT NULL,
+        conversation_id text NOT NULL,
+        ts timestamptz NOT NULL DEFAULT now(),
+        question text NOT NULL,
+        answer text NOT NULL,
+        refused boolean NOT NULL,
+        sources jsonb NOT NULL DEFAULT '[]',
+        checks jsonb NOT NULL DEFAULT '{}',
+        timing jsonb NOT NULL DEFAULT '{}',
+        cost_usd double precision NOT NULL DEFAULT 0)""")
+    conn.execute("CREATE INDEX IF NOT EXISTS conversations_tenant ON conversations (tenant_id, conversation_id, ts)")
+    enable_row_level_security(conn)
     conn.execute("INSERT INTO index_meta VALUES ('model', %s) ON CONFLICT (key) DO UPDATE SET value = %s",
                  (model, model))
     conn.commit()
+
+
+def enable_row_level_security(conn: psycopg.Connection) -> None:
+    """Tenant isolation in the database (DECISIONS D31). The serving role (db.APP_ROLE) may read only its own
+    tenant's chunks and read/append only its own tenant's conversation log; it can never write chunks. The
+    admin connection (owner / superuser) that builds the index is not affected."""
+    ensure_app_role(conn)
+    role, schema = sql.Identifier(APP_ROLE), sql.Identifier(conn.execute("SELECT current_schema()").fetchone()[0])
+    same_tenant = "tenant_id = current_setting('app.tenant_id', true)"
+    conn.execute(sql.SQL("GRANT USAGE ON SCHEMA {} TO {}").format(schema, role))
+    conn.execute(sql.SQL("GRANT SELECT ON chunks TO {}").format(role))
+    conn.execute(sql.SQL("GRANT SELECT, INSERT ON conversations TO {}").format(role))
+    conn.execute(sql.SQL("GRANT USAGE ON SEQUENCE conversations_id_seq TO {}").format(role))
+    for table, policy, command in (("chunks", "chunks_tenant_read", "SELECT"),
+                                   ("conversations", "conversations_tenant_read", "SELECT"),
+                                   ("conversations", "conversations_tenant_append", "INSERT")):
+        conn.execute(sql.SQL("ALTER TABLE {} ENABLE ROW LEVEL SECURITY").format(sql.Identifier(table)))
+        conn.execute(sql.SQL("ALTER TABLE {} FORCE ROW LEVEL SECURITY").format(sql.Identifier(table)))
+        exists = conn.execute("SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = %s "
+                              "AND policyname = %s", (table, policy)).fetchone()
+        if not exists:
+            clause = "WITH CHECK" if command == "INSERT" else "USING"
+            conn.execute(sql.SQL("CREATE POLICY {} ON {} FOR " + command + " TO {} " + clause + " (" + same_tenant + ")")
+                         .format(sql.Identifier(policy), sql.Identifier(table), role))
 
 
 def seed_cache(conn: psycopg.Connection, model: str, hashes: Sequence[str], vectors: np.ndarray) -> int:

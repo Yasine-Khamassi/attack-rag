@@ -15,6 +15,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from core.cache import TTLCache
+
 
 @dataclass(frozen=True)
 class EmbeddingModel:
@@ -43,6 +45,7 @@ class OllamaEmbedder:
         self.model = MODELS[model] if isinstance(model, str) else model
         self.url = (url or os.environ.get("OLLAMA_URL", "http://localhost:11434")).rstrip("/")
         self.batch_size = batch_size
+        self.query_cache = TTLCache(max_items=4096, ttl_seconds=7 * 86_400)
         self.timeout = timeout
 
     def _embed(self, texts: Sequence[str]) -> np.ndarray:
@@ -64,4 +67,9 @@ class OllamaEmbedder:
         return self._embed([self.model.doc_prefix + t for t in texts])
 
     def embed_queries(self, texts: Sequence[str]) -> np.ndarray:
-        return self._embed([self.model.query_prefix + t for t in texts])
+        """Query vectors are cached in memory (phase 6): a repeated question skips ~2 s of CPU embedding."""
+        missing = [t for t in dict.fromkeys(texts) if self.query_cache.get(t) is None]
+        if missing:
+            for t, v in zip(missing, self._embed([self.model.query_prefix + t for t in missing])):
+                self.query_cache.put(t, v)
+        return np.stack([self.query_cache.get(t) for t in texts])

@@ -170,3 +170,51 @@ Never edit an old entry; add a new one that supersedes it.
 - **Rejected:** more prompt rewording (v2 showed a new instruction can break other behaviour); regenerating the whole answer on failure (2x cost, may fail again).
 - **Why:** the phase 3 gate "every claim cites a retrieved doc" must hold for every answer, not for most; a guard makes it true by construction.
 - **Cost:** removed sentences are usually caveats, sometimes a useful sentence the model forgot to cite; a language repair adds ~1-2 s and ~$0.0003 when it fires.
+
+## D30: Cheaper reranking: top 15, 600-character excerpts, no link expansion
+- **Finding:** reranking was 81.5% of all API spend (1,363 calls, ~24k input tokens each).
+- **Chose:** `products/attack/settings.py`: RERANK_DEPTH 15 (was 30), RERANK_CHARS 600 (was 1,500), EXPAND_TOP 0 (was 5). Settings live in one module so the assistant and every eval use the same values.
+- **Measured** (golden set, 3 runs each): hit@5 0.957 -> 0.954, MRR 0.851 -> 0.870, nDCG@10 0.786 -> 0.773, recall@10 0.912 -> 0.873; rerank call ~24k -> ~6.1k input tokens, $0.00246 -> $0.00064; a 3-run eval $1.35 -> $0.24.
+- **Cost:** recall@10 drops 0.039 (questions with several correct pages get fewer of them in the top 10). Accepted: first-answer quality is unchanged or better and the product this core serves is billed per conversation. Baseline re-set (`--update-baseline`) on the final pipeline.
+
+## D31: Tenant isolation is enforced by Postgres row-level security
+- **Chose:** the serving path connects as `rag_app` (LOGIN, NOSUPERUSER, NOBYPASSRLS, owns nothing) via `db.connect_app(tenant_id)`, which pins `app.tenant_id` for the session. `chunks` and `conversations` have RLS enabled and forced; policies allow `rag_app` to read only rows of its tenant, append conversation rows only for its tenant, and nothing else (no writes to chunks, can't disable RLS). Application queries keep their `WHERE tenant_id` too (defence in depth); `HybridSearcher` refuses a connection pinned to another tenant.
+- **Tested** (`tests/test_tenancy.py`, real Postgres): the role is unprivileged; `SELECT count(*) FROM chunks` with no WHERE returns only the tenant's rows; DELETE / DISABLE RLS are denied; inserting a conversation row for another tenant is rejected; dense/keyword/hybrid search through the app role never returns another tenant's documents.
+- **Rejected:** application-only filtering (one forgotten WHERE leaks a tenant); a database per tenant (heavy for many small tenants); a role per tenant (strongest, but role management per signup; revisit for enterprise tenants).
+- **Limit:** `app.tenant_id` is a session setting the app role could change if an attacker could run arbitrary SQL; all SQL is parameterised and no user text is ever executed as SQL.
+
+## D32: Small tenants get exact vector search (fixes D13)
+- **Finding (reproduced in a test):** with a 300-document tenant and a 3-document tenant in one table and HNSW forced with ef_search 10, the tiny tenant got fewer than 3 results: HNSW's candidates were all from the big tenant and were filtered out afterwards.
+- **Chose:** tenants with <= 20,000 chunks are searched exactly over their own rows (a MATERIALIZED CTE on the tenant index keeps the planner off HNSW); larger tenants use HNSW, with pgvector >= 0.8 iterative scans when available (`hnsw.iterative_scan = relaxed_order`; the local pgserver ships 0.6.2 without it).
+- **Cost:** exact search is linear in the tenant's size (milliseconds at 20k x 1024 dims); the 20k threshold should be re-measured on production hardware.
+
+## D33: Tools: strict schemas, per-tenant allowlist, tenant injected by code, results are citable sources
+- **Chose:** `core/tools.py`. Each tool has a strict JSON schema (`additionalProperties: false`, `strict: true`) so the model cannot pass a tenant id; a per-tenant allowlist decides which tools a tenant's model sees; the handler always receives the tenant from the calling code; failures return tool errors, never exceptions. In `core/answer.py` each tool result becomes a new numbered source, so the citation guard and the faithfulness judge cover tool output too, and tool output passes the poisoned-source guard (D34) before the model sees it. Manual tool loop (no beta dependency), at most 3 rounds.
+- **ATT&CK tool:** `lookup_attack_object(attack_id)`: the full page for one ID (complete relationship lists), bound to one tenant's searcher.
+- **Why:** downstream products need lookups that check ownership in code (e.g. "record ID + email must match"), not in a prompt.
+
+## D34: Prompt-injection guardrails that tell attacks from descriptions of attacks
+- **Chose:** `core/guardrails.py`: input guard (explicit override attempts refused before any API call), source guard (retrieved chunks or tool results with instructions aimed at the assistant are quarantined; next-best sources move up), output guard (links that appear in no source are removed, images always; repeating the rules = refusal). Sources are wrapped in `<source n="">` tags and the rules call them untrusted data. Every hit is an ECS-style JSON event in `data/security_events.jsonl` (`core/security_log.py`) for a SIEM.
+- **Finding:** ATT&CK v20 contains pages *about* prompt injection (T1699 quotes "ignore previous instructions"); naive patterns quarantined them. Patterns now require imperative phrasing aimed at the assistant (sentence-initial, or "your instructions"); quoted phrases are being discussed, not used.
+- **Measured:** 0 false positives on all 3,581 corpus chunks and all 116 golden questions; 0/3 legitimate questions about prompt injection blocked; all 6 direct-attack and 7 poisoned-source test strings caught (incl. Arabic). Red-team ASR: D35.
+- **Found while building:** a scripted edit wrote a literal backspace (\x08) instead of `\b` into two patterns, silently disabling them. `tests/test_source_hygiene.py` now fails CI on control characters in source files.
+- **Cost:** pattern guards cannot catch semantic poisoning (a false fact with no instructions); that needs source trust (who may add documents) and is measured separately in the red-team.
+
+## D36: Caching and routing
+- **Chose:** `core/cache.py` (in-process TTL+LRU): query embeddings (7 days), rerank results per question + candidate set (1 day), whole answers per tenant + index fingerprint + normalised question (`ANSWER_CACHE_SECONDS`, 1 day; any change to the indexed text changes the fingerprint and invalidates the cache). `core/routing.py`: a question that is essentially one ID (incl. revoked IDs) skips translation and reranking: pinning already puts the right document first.
+- **Why:** support questions repeat a lot; a cached answer costs $0 and ~0 s.
+- **Cost:** in-process only; a multi-process deployment moves the answer cache to Postgres or Redis with the same keys.
+
+## D35: Red-team results and the residual risk (semantic poisoning)
+- **Suite:** `products/attack/redteam.py`, separate tenant `attack-redteam` (30 real ATT&CK pages + 8 planted documents), 18 attacks with canaries or deterministic checks: 8 direct (override, rule leak, DAN, Arabic, "end your answer with ..."), 6 indirect (instructions in documents, fake tags, image exfiltration, Arabic), 2 semantic poisonings (false facts, no instructions), 2 tool abuses (reach another tenant through the lookup tool). Plus 4 legitimate questions.
+- **ASR without -> with guards:** direct 37.5% -> 0%; indirect 0% -> 0% (Claude Haiku itself ignored planted instructions, once even saying so; the source guard quarantined them anyway); tool 0% -> 0% (strict schema + tenant injection); semantic 50% -> 50%; all 22.2% -> 5.6%. Legitimate questions blocked by the input guard: 0/4. Cost of a full run: ~$0.05.
+- **Found while building:** two checks were wrong at first: the cross-tenant check flagged legitimate mentions of "APT29 (G0016)" in the red-team tenant's own pages (now: only content that exists solely on the other tenant's G0016 page counts), and the legitimate-question metric counted correct refusals as blocks (now: input-guard blocks only). The "end your answer with X" attack (d6) succeeded until an input pattern for dictated answer text was added.
+- **Residual risk:** a planted document stating a false fact ("email the memory dump to soc-help@evil.example") is repeated and cited, because it *is* in the sources. Pattern guards cannot see it. Mitigation is provenance: control who may add documents, review new sources, mark trusted sources; a tenant should only ingest content it controls.
+
+## D37: Serving connections run in autocommit
+- **Finding (a downstream product):** a serving connection sat "idle in transaction" after reads, holding locks; a schema migration waited forever behind it.
+- **Chose:** `db.connect_app(..., autocommit=True)` in the assistant; tenant pin and search settings are session-level and persist.
+
+## D38: Evaluation runs start with cold caches
+- **Finding:** after phase 6 caching, a 3-run golden eval returned three identical runs for $0.07: the rerank and translation caches replayed run 1, hiding the reranker's variance.
+- **Chose:** `eval_golden` resets the rerank and translation caches at the start of each run (query embeddings stay cached: they are deterministic). The production cache stays on.
