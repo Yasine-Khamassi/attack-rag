@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 import threading
 import time
 from pathlib import Path
@@ -35,7 +36,13 @@ def event(finding, tenant_id: str, conversation_id: str | None = None, path: Pat
                 "excerpt": finding.excerpt},
     }
     target = path or LOG_PATH
-    target.parent.mkdir(parents=True, exist_ok=True)
-    with _lock, target.open("a", encoding="utf-8") as f:
-        f.write(json.dumps(record, ensure_ascii=False) + "\n")
+    line = json.dumps(record, ensure_ascii=False)
+    try:
+        target.parent.mkdir(parents=True, exist_ok=True)
+        with _lock, target.open("a", encoding="utf-8") as f:
+            f.write(line + "\n")
+    except OSError:
+        # Read-only disk (serverless hosts): the platform's log collector reads stderr instead. Logging a blocked
+        # attack must never turn into an error for the person asking.
+        print(line, file=sys.stderr, flush=True)
     return record

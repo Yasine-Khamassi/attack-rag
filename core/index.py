@@ -17,8 +17,8 @@ import psycopg
 from psycopg import sql
 
 from core.chunking import Chunk, chunk_document
-from core.db import APP_ROLE, ensure_app_role
-from core.embeddings import OllamaEmbedder
+from core.db import APP_ROLE, admin_bypasses_rls, ensure_app_role
+from core.embeddings import Embedder
 from core.schema import Document
 
 
@@ -73,8 +73,14 @@ def ensure_schema(conn: psycopg.Connection, model: str, dim: int) -> None:
 def enable_row_level_security(conn: psycopg.Connection) -> None:
     """Tenant isolation in the database (DECISIONS D31). The serving role (db.APP_ROLE) may read only its own
     tenant's chunks and read/append only its own tenant's conversation log; it can never write chunks. The
-    admin connection (owner / superuser) that builds the index is not affected."""
+    admin connection (owner / superuser) that builds the index is not affected.
+
+    FORCE (row-level security for the table owner too) only when the admin role bypasses RLS anyway, as a
+    superuser does: on hosted Postgres the owner is often a plain role, and FORCE would hide every row from the
+    admin connection that builds the index (DECISIONS D41). The serving role is never the owner, so it is
+    restricted either way."""
     ensure_app_role(conn)
+    force = admin_bypasses_rls(conn)
     role, schema = sql.Identifier(APP_ROLE), sql.Identifier(conn.execute("SELECT current_schema()").fetchone()[0])
     same_tenant = "tenant_id = current_setting('app.tenant_id', true)"
     conn.execute(sql.SQL("GRANT USAGE ON SCHEMA {} TO {}").format(schema, role))
@@ -85,7 +91,8 @@ def enable_row_level_security(conn: psycopg.Connection) -> None:
                                    ("conversations", "conversations_tenant_read", "SELECT"),
                                    ("conversations", "conversations_tenant_append", "INSERT")):
         conn.execute(sql.SQL("ALTER TABLE {} ENABLE ROW LEVEL SECURITY").format(sql.Identifier(table)))
-        conn.execute(sql.SQL("ALTER TABLE {} FORCE ROW LEVEL SECURITY").format(sql.Identifier(table)))
+        if force:
+            conn.execute(sql.SQL("ALTER TABLE {} FORCE ROW LEVEL SECURITY").format(sql.Identifier(table)))
         exists = conn.execute("SELECT 1 FROM pg_policies WHERE schemaname = current_schema() AND tablename = %s "
                               "AND policyname = %s", (table, policy)).fetchone()
         if not exists:
@@ -111,7 +118,7 @@ def _cached(conn: psycopg.Connection, model: str, hashes: Iterable[str]) -> set[
     return {r[0] for r in rows}
 
 
-def index_documents(conn: psycopg.Connection, docs: Sequence[Document], embedder: OllamaEmbedder,
+def index_documents(conn: psycopg.Connection, docs: Sequence[Document], embedder: Embedder,
                     batch: int = 64, progress=print) -> dict[str, int]:
     """Chunk, embed what isn't cached, and replace each tenant's rows in `chunks` with the new set."""
     model = embedder.model

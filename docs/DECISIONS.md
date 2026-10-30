@@ -228,3 +228,12 @@ Never edit an old entry; add a new one that supersedes it.
 - **Finding:** a query embedding took ~2.1 s through `http://localhost:11434` and 0.02 s through `http://127.0.0.1:11434`. On Windows "localhost" resolves to ::1 first; Ollama listens on IPv4 only, and the IPv6 attempt took ~2 s to fail on every request (Python's urllib has no fast fallback to IPv4). With the question and its translation embedded separately, that was ~4 s of every answer. Phase 6 had put the ~2 s down to CPU embedding; it was the connection (the GPU embeds a query in ~20 ms).
 - **Chose:** `core.embeddings.OLLAMA_DEFAULT_URL = "http://127.0.0.1:11434"`, also used by `OllamaTranslator`; `OLLAMA_URL` still overrides. `.env.example` updated. Browsers were not affected (they fall back to IPv4 at once).
 - **Measured** on a downstream product with fresh questions: 7.7-10 s -> 3.1-4.2 s per answer; time outside the model calls 4.3 s -> 0.1-0.2 s. The model calls (translation, rerank, answer: ~1-1.5 s each, one after another) are now nearly all of it.
+
+## D41: The core runs on serverless hosts (hosted embeddings, shared spend ledger, plain-owner Postgres)
+- **Context:** a downstream deployment moves to a serverless host: no GPU for Ollama, a read-only disk, many short-lived processes, and hosted Postgres whose owner role is neither superuser nor BYPASSRLS.
+- **Chose:**
+  - `core.embeddings.CloudflareEmbedder`: the same bge-m3 model run by Cloudflare Workers AI ($0.012 per million tokens, a free daily allowance). `make_embedder()` picks it with `EMBEDDINGS_PROVIDER=cloudflare` (needs `CLOUDFLARE_ACCOUNT_ID` + `CLOUDFLARE_API_TOKEN`), otherwise Ollama as before. Prefixes, normalisation, dimension check and the query cache moved to a shared `Embedder` base class.
+  - `core.llm` spend ledger: `FileLedger` (the old JSON-lines file, path overridable with `LLM_USAGE_LOG`) is still the default; `set_ledger()` plugs in a shared one so `LLM_BUDGET_USD` is one limit for every process, not one per process.
+  - `core.security_log` never raises: on an unwritable disk the event goes to stderr, which the host's log collector keeps.
+  - Row-level security: `FORCE` only when the admin role bypasses RLS anyway (`core.db.admin_bypasses_rls`). On a plain owner role FORCE hid every row from the admin connection that builds the index. The serving role is never the owner, so its isolation is unchanged.
+- **Checked:** 138 tests pass (3 new embedder tests). Default behaviour on this machine unchanged.

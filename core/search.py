@@ -14,7 +14,7 @@ from dataclasses import dataclass
 import psycopg
 
 from core.bm25 import BM25
-from core.embeddings import OllamaEmbedder
+from core.embeddings import Embedder
 from core.index import to_pgvector
 from core.text import identifiers, normalize
 
@@ -51,7 +51,7 @@ EXACT_MAX_ROWS = 20_000  # tenants up to this many chunks get exact vector searc
 
 
 class HybridSearcher:
-    def __init__(self, conn: psycopg.Connection, tenant_id: str, embedder: OllamaEmbedder,
+    def __init__(self, conn: psycopg.Connection, tenant_id: str, embedder: Embedder,
                  aliases: dict[str, str] | None = None, links: dict[str, list[str]] | None = None,
                  exact_max_rows: int = EXACT_MAX_ROWS):
         """`aliases`: extra IDs that should resolve to a document (e.g. old IDs -> current doc_id).

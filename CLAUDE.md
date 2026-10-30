@@ -80,7 +80,8 @@ Do not start a phase until the previous gate passes.
 - Answers (fresh sample, full pipeline): 100% cited, faithfulness 0.970, refusals 12/12.
 - Never edit regexes or `\b` through shell heredocs (they became backspace characters twice); use the Edit tool.
   `tests/test_source_hygiene.py` guards the code.
-- Tag `core-v0.2.0` = the core used by the downstream product.
+- Tag `core-v0.3.0` = the core used by the downstream product (serverless-ready: `make_embedder()` with
+  `EMBEDDINGS_PROVIDER=cloudflare`, `set_ledger()` for a shared spend limit; D41).
 
 ## Next step
 All six phases are done. Owner: record the 90-second demo video, review the Arabic golden questions, rotate the

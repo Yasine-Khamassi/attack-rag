@@ -273,3 +273,7 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 ## 2026-10-30 · Core 0.2.2: 127.0.0.1 for Ollama (D40)
 - Profiling a slow answer found ~2.1 s per embedding request spent connecting to "localhost" (IPv6 tried first on Windows, Ollama on IPv4 only); 0.02 s via 127.0.0.1. Default changed in `core.embeddings` and `core.query`. Corrects the phase-6 note that blamed CPU embedding.
 - Downstream answer time 7.7-10 s -> 3.1-4.2 s. 135 tests pass; leak scan clean. Tag `core-v0.2.2`.
+
+## 2026-10-31 · Core 0.3.0: serverless-ready core (D41)
+- Hosted embeddings option (`CloudflareEmbedder`, same bge-m3 model, `make_embedder()`), pluggable spend ledger (`set_ledger`, `LLM_USAGE_LOG`), security log falls back to stderr on a read-only disk, FORCE row-level security only when the admin role bypasses RLS.
+- 138 tests pass; local defaults unchanged. Tag `core-v0.3.0`.

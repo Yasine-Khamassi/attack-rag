@@ -52,6 +52,13 @@ def app_password() -> str:
     return os.environ.get("APP_DB_PASSWORD", "rag-app-dev-only")
 
 
+def admin_bypasses_rls(conn: psycopg.Connection) -> bool:
+    """True when the connected role ignores row-level security (superuser or BYPASSRLS), as the local and CI
+    admin does. Hosted Postgres often gives the owner neither (DECISIONS D41)."""
+    row = conn.execute("SELECT rolsuper OR rolbypassrls FROM pg_roles WHERE rolname = current_user").fetchone()
+    return bool(row and row[0])
+
+
 def ensure_app_role(conn: psycopg.Connection) -> None:
     exists = conn.execute("SELECT 1 FROM pg_roles WHERE rolname = %s", (APP_ROLE,)).fetchone()
     if not exists:

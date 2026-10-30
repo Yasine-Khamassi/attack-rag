@@ -49,3 +49,43 @@ def test_wrong_dimension_is_an_error(calls):
 
 def test_known_models_have_dimensions():
     assert {m.dim for m in embeddings.MODELS.values()} <= {768, 1024}
+
+
+def test_cloudflare_embedder_calls_workers_ai(monkeypatch):
+    seen = []
+
+    def fake_urlopen(req, timeout):
+        seen.append(req)
+        texts = json.loads(req.data)["text"]
+        return io.BytesIO(json.dumps({"success": True, "result": {"shape": [len(texts), 2],
+                                                                  "data": [[3.0, 4.0] for _ in texts]}}).encode())
+
+    monkeypatch.setattr(embeddings.urllib.request, "urlopen", fake_urlopen)
+    model = EmbeddingModel("fake", dim=2, query_prefix="q: ", cloudflare="@cf/fake/model")
+    vecs = embeddings.CloudflareEmbedder(model, account_id="acc", token="tok", batch_size=2).embed_queries(
+        ["a", "b", "c"])
+    assert vecs.shape == (3, 2) and np.allclose(vecs[0], [0.6, 0.8])
+    assert [json.loads(r.data)["text"] for r in seen] == [["q: a", "q: b"], ["q: c"]]
+    assert seen[0].full_url == "https://api.cloudflare.com/client/v4/accounts/acc/ai/run/@cf/fake/model"
+    assert seen[0].get_header("Authorization") == "Bearer tok"
+
+
+def test_cloudflare_needs_a_hosted_model_and_credentials(monkeypatch):
+    monkeypatch.delenv("CLOUDFLARE_ACCOUNT_ID", raising=False)
+    monkeypatch.delenv("CLOUDFLARE_API_TOKEN", raising=False)
+    with pytest.raises(ValueError, match="not hosted"):
+        embeddings.CloudflareEmbedder(MODEL, account_id="a", token="t")
+    with pytest.raises(RuntimeError, match="CLOUDFLARE_ACCOUNT_ID"):
+        embeddings.CloudflareEmbedder("bge-m3")
+
+
+def test_make_embedder_follows_the_environment(monkeypatch):
+    monkeypatch.delenv("EMBEDDINGS_PROVIDER", raising=False)
+    assert type(embeddings.make_embedder()) is OllamaEmbedder
+    monkeypatch.setenv("EMBEDDINGS_PROVIDER", "cloudflare")
+    monkeypatch.setenv("CLOUDFLARE_ACCOUNT_ID", "a")
+    monkeypatch.setenv("CLOUDFLARE_API_TOKEN", "t")
+    assert type(embeddings.make_embedder()) is embeddings.CloudflareEmbedder
+    monkeypatch.setenv("EMBEDDINGS_PROVIDER", "nope")
+    with pytest.raises(ValueError, match="unknown EMBEDDINGS_PROVIDER"):
+        embeddings.make_embedder()
