@@ -26,6 +26,7 @@ class EmbeddingModel:
     query_prefix: str = ""
     doc_prefix: str = ""
     cloudflare: str = ""  # the same model on Workers AI, if it is hosted there
+    gateway: str = ""     # the model's id on Vercel AI Gateway (OpenAI-compatible embeddings), if offered there
 
 
 # Prefixes from each model card.
@@ -36,6 +37,10 @@ MODELS = {
         EmbeddingModel("snowflake-arctic-embed2", 1024, query_prefix="query: "),
         EmbeddingModel("embeddinggemma", 768,
                        query_prefix="task: search result | query: ", doc_prefix="title: none | text: "),
+        # Multilingual, 1024 dims like bge-m3; queries carry the model card's instruction, documents don't.
+        EmbeddingModel("qwen3-embedding-0.6b", 1024, gateway="alibaba/qwen3-embedding-0.6b",
+                       query_prefix="Instruct: Given a web search query, retrieve relevant passages that answer "
+                                    "the query\nQuery: "),
     ]
 }
 DEFAULT_MODEL = "bge-m3"  # chosen by the step 3b probe (DECISIONS D10); re-check on the phase 2 golden set
@@ -121,12 +126,45 @@ class CloudflareEmbedder(Embedder):
         return payload["result"]["data"]
 
 
-def make_embedder(model: str | EmbeddingModel = DEFAULT_MODEL) -> Embedder:
-    """The embedder this machine should use: EMBEDDINGS_PROVIDER=cloudflare on servers without the local model,
-    otherwise Ollama."""
+GATEWAY_URL = "https://ai-gateway.vercel.sh/v1"
+
+
+def gateway_token() -> str:
+    """Credential for Vercel AI Gateway: an explicit AI_GATEWAY_API_KEY, else the OIDC token Vercel gives every
+    deployment (no key to manage). Read at call time: the OIDC token is refreshed while the process runs."""
+    return os.environ.get("AI_GATEWAY_API_KEY") or os.environ.get("VERCEL_OIDC_TOKEN") or ""
+
+
+class GatewayEmbedder(Embedder):
+    """Embeddings through Vercel AI Gateway's OpenAI-compatible endpoint (DECISIONS D41)."""
+
+    def __init__(self, model: str | EmbeddingModel, batch_size: int = 32, timeout: float = 60):
+        super().__init__(model, batch_size, timeout)
+        if not self.model.gateway:
+            raise ValueError(f"{self.model.name} is not offered by the AI Gateway")
+
+    def _request(self, texts: list[str]) -> list[list[float]]:
+        token = gateway_token()
+        if not token:
+            raise RuntimeError("no AI Gateway credential: set AI_GATEWAY_API_KEY or run on Vercel (VERCEL_OIDC_TOKEN)")
+        req = urllib.request.Request(
+            f"{GATEWAY_URL}/embeddings", data=json.dumps({"model": self.model.gateway, "input": texts}).encode("utf-8"),
+            headers={"Content-Type": "application/json", "Authorization": f"Bearer {token}",
+                     "User-Agent": "rag-core-embeddings/1"})
+        with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+            data = json.load(resp)["data"]
+        return [d["embedding"] for d in sorted(data, key=lambda d: d["index"])]
+
+
+def make_embedder(model: str | EmbeddingModel | None = None) -> Embedder:
+    """The embedder this machine should use. EMBEDDINGS_PROVIDER: ollama (default, local GPU), cloudflare (same
+    bge-m3 on Workers AI) or gateway (Vercel AI Gateway). EMBEDDINGS_MODEL overrides the model name."""
+    model = model or os.environ.get("EMBEDDINGS_MODEL") or DEFAULT_MODEL
     provider = os.environ.get("EMBEDDINGS_PROVIDER", "ollama").strip().lower()
     if provider == "cloudflare":
         return CloudflareEmbedder(model)
+    if provider == "gateway":
+        return GatewayEmbedder(model)
     if provider != "ollama":
-        raise ValueError(f"unknown EMBEDDINGS_PROVIDER {provider!r} (ollama or cloudflare)")
+        raise ValueError(f"unknown EMBEDDINGS_PROVIDER {provider!r} (ollama, cloudflare or gateway)")
     return OllamaEmbedder(model)

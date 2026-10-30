@@ -80,3 +80,25 @@ def test_warns_once_near_budget(fake_claude, capsys):
     c.complete("two")
     assert capsys.readouterr().err.count("WARNING: Claude spend") == 1
     Claude._warned = False
+
+
+def test_gateway_mode_uses_the_deployment_token(monkeypatch, tmp_path):
+    monkeypatch.setenv("LLM_GATEWAY", "vercel")
+    monkeypatch.delenv("AI_GATEWAY_API_KEY", raising=False)
+    monkeypatch.setenv("VERCEL_OIDC_TOKEN", "oidc-token")
+    seen = {}
+
+    def create(**kwargs):
+        seen.update(kwargs)
+        return SimpleNamespace(content=[SimpleNamespace(type="text", text="ok")], stop_reason="end_turn",
+                               usage=SimpleNamespace(input_tokens=10, output_tokens=1))
+
+    c = Claude("claude-haiku-5-5", budget_usd=1.0, purpose="test", log=tmp_path / "usage.jsonl")
+    assert str(c.client.base_url).rstrip("/") == "https://ai-gateway.vercel.sh"
+    c.client = SimpleNamespace(with_options=lambda api_key: seen.update(api_key=api_key) or SimpleNamespace(
+        messages=SimpleNamespace(create=create)))
+    assert c.complete("hi") == "ok"
+    assert seen["api_key"] == "oidc-token" and seen["model"] == "anthropic/claude-haiku-5.5"
+    monkeypatch.delenv("VERCEL_OIDC_TOKEN")
+    with pytest.raises(RuntimeError, match="AI Gateway credential"):
+        c.complete("hi")

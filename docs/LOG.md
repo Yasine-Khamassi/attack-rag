@@ -277,3 +277,6 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 ## 2026-10-31 · Core 0.3.0: serverless-ready core (D41)
 - Hosted embeddings option (`CloudflareEmbedder`, same bge-m3 model, `make_embedder()`), pluggable spend ledger (`set_ledger`, `LLM_USAGE_LOG`), security log falls back to stderr on a read-only disk, FORCE row-level security only when the admin role bypasses RLS.
 - 138 tests pass; local defaults unchanged. Tag `core-v0.3.0`.
+
+## 2026-10-31 · Core 0.3.1: AI Gateway option (D41)
+- `LLM_GATEWAY=vercel` sends Claude calls through Vercel AI Gateway with the deployment's OIDC token; `GatewayEmbedder` + `qwen3-embedding-0.6b` for embeddings there. 140 tests pass. Tag `core-v0.3.1`.

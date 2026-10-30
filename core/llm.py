@@ -27,6 +27,14 @@ PRICES = {
     "claude-opus-5-5": (4.00, 20.00),
 }
 DEFAULT_MODEL = "claude-haiku-5-5"
+# The same models through Vercel AI Gateway (LLM_GATEWAY=vercel, DECISIONS D41): same prices, no markup, and on
+# Vercel the deployment's own OIDC token authenticates, so no API key is stored anywhere.
+GATEWAY_BASE_URL = "https://ai-gateway.vercel.sh"
+GATEWAY_IDS = {
+    "claude-haiku-5-5": "anthropic/claude-haiku-5.5",
+    "claude-sonnet-5-5": "anthropic/claude-sonnet-5.5",
+    "claude-opus-5-5": "anthropic/claude-opus-5.5",
+}
 WARN_AT = 0.8  # print a warning once spend passes this share of the budget
 
 
@@ -101,7 +109,14 @@ class Claude:
         self.model, self.purpose, self.log = model, purpose, log
         self._ledger = FileLedger(log) if log else None
         self.budget = float(budget_usd if budget_usd is not None else os.environ.get("LLM_BUDGET_USD", "5"))
-        self.client = anthropic.Anthropic()
+        self.gateway = os.environ.get("LLM_GATEWAY", "").strip().lower() == "vercel"
+        if self.gateway:
+            from core.embeddings import gateway_token
+
+            # Real credential supplied per call (create): the OIDC token is refreshed while the process runs.
+            self.client = anthropic.Anthropic(api_key=gateway_token() or "per-call", base_url=GATEWAY_BASE_URL)
+        else:
+            self.client = anthropic.Anthropic()
 
     def complete(self, prompt: str, system: str | None = None, max_tokens: int = 1024,
                  effort: str = "low") -> str:
@@ -126,9 +141,17 @@ class Claude:
         if self.model == "claude-haiku-5-5":
             # Simple, short tasks: no thinking, lowest effort (Haiku 5.5 allows disabling at effort <= high).
             kwargs["thinking"] = {"type": "disabled"}
+        client, model_id = self.client, self.model
+        if self.gateway:
+            from core.embeddings import gateway_token
+
+            token = gateway_token()
+            if not token:
+                raise RuntimeError("no AI Gateway credential: set AI_GATEWAY_API_KEY or run on Vercel")
+            client, model_id = self.client.with_options(api_key=token), GATEWAY_IDS[self.model]
         start = time.perf_counter()
-        response = self.client.messages.create(
-            model=self.model, max_tokens=max_tokens, output_config={"effort": effort}, messages=messages, **kwargs)
+        response = client.messages.create(
+            model=model_id, max_tokens=max_tokens, output_config={"effort": effort}, messages=messages, **kwargs)
         usage = response.usage
         cost = cost_usd(self.model, usage.input_tokens, usage.output_tokens)
         Claude.total_cost += cost

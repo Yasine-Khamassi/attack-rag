@@ -89,3 +89,29 @@ def test_make_embedder_follows_the_environment(monkeypatch):
     monkeypatch.setenv("EMBEDDINGS_PROVIDER", "nope")
     with pytest.raises(ValueError, match="unknown EMBEDDINGS_PROVIDER"):
         embeddings.make_embedder()
+
+
+def test_gateway_embedder_uses_the_deployment_token(monkeypatch):
+    seen = []
+
+    def fake_urlopen(req, timeout):
+        seen.append(req)
+        texts = json.loads(req.data)["input"]
+        rows = [{"index": i, "embedding": [1.0, 0.0]} for i in reversed(range(len(texts)))]
+        return io.BytesIO(json.dumps({"data": rows}).encode())
+
+    monkeypatch.setattr(embeddings.urllib.request, "urlopen", fake_urlopen)
+    monkeypatch.delenv("AI_GATEWAY_API_KEY", raising=False)
+    monkeypatch.setenv("VERCEL_OIDC_TOKEN", "oidc-1")
+    model = EmbeddingModel("fake", dim=2, query_prefix="q: ", gateway="vendor/fake")
+    e = embeddings.GatewayEmbedder(model)
+    assert e.embed_queries(["a", "b"]).shape == (2, 2)
+    body = json.loads(seen[0].data)
+    assert body == {"model": "vendor/fake", "input": ["q: a", "q: b"]}
+    assert seen[0].get_header("Authorization") == "Bearer oidc-1"
+    monkeypatch.setenv("VERCEL_OIDC_TOKEN", "oidc-2")  # refreshed token is picked up on the next call
+    e.embed_documents(["c"])
+    assert seen[1].get_header("Authorization") == "Bearer oidc-2"
+    monkeypatch.setenv("EMBEDDINGS_PROVIDER", "gateway")
+    monkeypatch.setenv("EMBEDDINGS_MODEL", "qwen3-embedding-0.6b")
+    assert embeddings.make_embedder().model.gateway == "alibaba/qwen3-embedding-0.6b"
