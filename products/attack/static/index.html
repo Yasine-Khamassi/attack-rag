@@ -3,87 +3,224 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ATT&amp;CK Analyst Assistant</title>
+<title>ATT&amp;CK Analyst Assistant · cited answers from MITRE ATT&amp;CK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#0f1419; --panel:#171e26; --line:#263241; --text:#e6edf3; --muted:#8b98a8; --accent:#4cc2ff;
-          --ok:#3fb950; --warn:#d29922; }
+  :root {
+    --paper:#f6f5f1; --surface:#ffffff; --ink:#16181d; --ink-2:#4b505b; --ink-3:#80848d; --line:#e3e1da;
+    --line-2:#d3d0c7; --accent:#b23b17; --accent-ink:#ffffff; --accent-soft:#f7e8e2; --ok:#2e7a4c; --warn:#9a5b0c;
+    --warn-soft:#fbf1df; --mono:"IBM Plex Mono", ui-monospace, Consolas, monospace;
+    --sans:"IBM Plex Sans", "IBM Plex Sans Arabic", "Segoe UI", Tahoma, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper:#111214; --surface:#18191c; --ink:#ecebe6; --ink-2:#b4b2ab; --ink-3:#86857f; --line:#2a2b2f;
+            --line-2:#3a3b40; --accent:#f08158; --accent-ink:#1a0d07; --accent-soft:#2b1d17; --ok:#6cc08d;
+            --warn:#e0a54f; --warn-soft:#2a2216; }
+  }
   * { box-sizing:border-box; }
-  body { margin:0; background:var(--bg); color:var(--text); font:15px/1.55 system-ui, "Segoe UI", Tahoma, sans-serif; }
-  main { max-width:860px; margin:0 auto; padding:28px 16px 60px; }
-  h1 { font-size:20px; margin:0 0 4px; }
-  .sub { color:var(--muted); margin:0 0 20px; }
-  form { display:flex; gap:8px; }
-  textarea { flex:1; resize:vertical; min-height:52px; padding:12px; border-radius:8px; border:1px solid var(--line);
-             background:var(--panel); color:var(--text); font:inherit; }
-  button { padding:0 18px; border:0; border-radius:8px; background:var(--accent); color:#00121f; font-weight:600;
-           cursor:pointer; }
-  button:disabled { opacity:.5; cursor:wait; }
-  .examples { margin:10px 0 24px; display:flex; flex-wrap:wrap; gap:6px; }
-  .examples button { background:var(--panel); color:var(--muted); border:1px solid var(--line); font-weight:400;
-                     padding:6px 10px; font-size:13px; }
-  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin-top:16px; }
-  .answer { white-space:pre-wrap; }
-  .answer a { color:var(--accent); text-decoration:none; font-size:12px; vertical-align:super; }
-  .refused { color:var(--warn); }
-  .sources ol { margin:8px 0 0; padding-inline-start:22px; }
-  .sources li { margin:4px 0; color:var(--muted); }
-  .sources li.cited { color:var(--text); }
-  .sources a { color:var(--accent); }
-  .meta { color:var(--muted); font-size:12px; margin-top:10px; }
-  .badge { display:inline-block; padding:1px 7px; border-radius:10px; font-size:12px; border:1px solid var(--line); }
-  .badge.ok { color:var(--ok); border-color:var(--ok); }
-  .badge.warn { color:var(--warn); border-color:var(--warn); }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; background:var(--paper); color:var(--ink); font:16px/1.65 var(--sans); }
+  :lang(ar), [dir="rtl"] { font-family:"IBM Plex Sans Arabic", var(--sans); }
+  a { color:inherit; }
+  .wrap { max-width:780px; margin:0 auto; padding:0 20px; }
+  .top { border-bottom:1px solid var(--line); }
+  .top .wrap { display:flex; align-items:center; gap:14px; height:56px; }
+  .brand { display:flex; align-items:baseline; gap:8px; font-weight:600; letter-spacing:-.01em; text-decoration:none; }
+  .brand b { font-family:var(--mono); font-weight:500; font-size:13px; padding:2px 6px; border:1px solid var(--ink);
+             border-radius:4px; letter-spacing:.02em; }
+  .top .meta { margin-inline-start:auto; color:var(--ink-3); font-size:13px; }
+  .top .meta a { text-decoration:none; border-bottom:1px solid var(--line-2); }
+  .hero { padding:56px 0 8px; }
+  h1 { font-size:clamp(30px, 5vw, 40px); line-height:1.12; letter-spacing:-.025em; font-weight:600; margin:0 0 12px; }
+  h1 span { color:var(--accent); }
+  .lede { color:var(--ink-2); margin:0 0 28px; max-width:600px; }
+  .composer { background:var(--surface); border:1px solid var(--line-2); border-radius:14px; padding:14px 14px 10px;
+              transition:border-color .15s, box-shadow .15s; }
+  .composer:focus-within { border-color:var(--ink-3); box-shadow:0 0 0 4px color-mix(in srgb, var(--ink) 6%, transparent); }
+  textarea { width:100%; border:0; outline:0; resize:none; background:transparent; color:var(--ink); font:inherit;
+             font-size:17px; min-height:56px; max-height:220px; padding:2px 4px; }
+  textarea::placeholder { color:var(--ink-3); }
+  .bar { display:flex; align-items:center; gap:12px; margin-top:6px; }
+  .hint { color:var(--ink-3); font-size:12.5px; }
+  kbd { font-family:var(--mono); font-size:11.5px; border:1px solid var(--line-2); border-bottom-width:2px;
+        border-radius:4px; padding:0 5px; background:var(--paper); }
+  .go { margin-inline-start:auto; display:inline-flex; align-items:center; gap:8px; height:38px; padding:0 16px;
+        border:0; border-radius:10px; background:var(--ink); color:var(--paper); font:inherit; font-weight:500;
+        font-size:15px; cursor:pointer; }
+  .go:hover { background:var(--accent); color:var(--accent-ink); }
+  .go:disabled { opacity:.45; cursor:progress; background:var(--ink); color:var(--paper); }
+  .go svg { width:16px; height:16px; }
+  .try { margin:22px 0 0; padding:0; list-style:none; border-top:1px solid var(--line); }
+  .try li { border-bottom:1px solid var(--line); }
+  .try button { all:unset; box-sizing:border-box; width:100%; display:flex; align-items:center; gap:12px;
+                padding:11px 2px; cursor:pointer; color:var(--ink-2); font-size:15px; }
+  .try button:hover, .try button:focus-visible { color:var(--ink); }
+  .try button:hover .arrow { transform:translateX(3px); opacity:1; }
+  .try .tag { font-family:var(--mono); font-size:11px; color:var(--ink-3); width:22px; flex:none; }
+  .try .arrow { margin-inline-start:auto; opacity:.35; transition:transform .15s, opacity .15s; flex:none; }
+  .try [dir="rtl"] { text-align:right; }
+  #thread { padding:12px 0 80px; }
+  .turn { padding:36px 0 8px; border-top:1px solid var(--line); margin-top:36px; animation:rise .25s ease-out; }
+  @keyframes rise { from { opacity:0; transform:translateY(6px); } }
+  @media (prefers-reduced-motion: reduce) { .turn { animation:none; } }
+  .q { font-size:22px; line-height:1.3; letter-spacing:-.015em; font-weight:500; margin:0 0 18px; }
+  .answer { font-size:17px; line-height:1.75; }
+  .answer p { margin:0 0 14px; }
+  .cite { display:inline-flex; align-items:center; justify-content:center; min-width:18px; height:18px; padding:0 4px;
+          margin:0 1px; border-radius:5px; background:var(--accent-soft); color:var(--accent); font:500 11px/1 var(--mono);
+          text-decoration:none; vertical-align:2px; }
+  .cite:hover, .cite.hot { background:var(--accent); color:var(--accent-ink); }
+  .grounding { display:flex; flex-wrap:wrap; gap:6px 18px; margin:6px 0 22px; color:var(--ink-3); font-size:13px; }
+  .grounding .ok { color:var(--ok); } .grounding .warn { color:var(--warn); }
+  .grounding span { display:inline-flex; align-items:center; gap:6px; }
+  .dot { width:7px; height:7px; border-radius:50%; background:currentColor; display:inline-block; }
+  .sources h3 { font-size:12px; font-weight:500; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-3);
+                margin:0 0 8px; }
+  .src { list-style:none; margin:0; padding:0; }
+  .src li { display:flex; align-items:baseline; gap:12px; padding:9px 10px; margin:0 -10px; border-radius:8px; }
+  .src li.hot { background:var(--accent-soft); }
+  .src .n { font:500 11px/1 var(--mono); color:var(--accent); width:18px; flex:none; }
+  .src .id { font:500 12.5px/1 var(--mono); color:var(--ink); background:var(--paper); border:1px solid var(--line);
+             padding:4px 6px; border-radius:5px; flex:none; }
+  .src a { text-decoration:none; color:var(--ink-2); }
+  .src a:hover { color:var(--ink); text-decoration:underline; text-underline-offset:3px; }
+  details.more { margin-top:12px; color:var(--ink-3); font-size:14px; }
+  details.more summary { cursor:pointer; list-style:none; }
+  details.more summary::-webkit-details-marker { display:none; }
+  details.more summary::before { content:"+ "; font-family:var(--mono); }
+  details.more[open] summary::before { content:"− "; }
+  .refusal { background:var(--warn-soft); border-radius:12px; padding:16px 18px; color:var(--ink-2); }
+  .refusal strong { color:var(--warn); font-weight:600; display:block; margin-bottom:4px; }
+  .steps { list-style:none; margin:0; padding:0; color:var(--ink-3); font-size:15px; }
+  .steps li { display:flex; align-items:center; gap:10px; padding:4px 0; }
+  .steps li.on { color:var(--ink); }
+  .steps li.done { color:var(--ink-2); }
+  .spin { width:14px; height:14px; border-radius:50%; border:2px solid var(--line-2); border-top-color:var(--accent);
+          animation:spin .8s linear infinite; flex:none; }
+  .steps li:not(.on) .spin { animation:none; border-top-color:var(--line-2); }
+  .steps li.done .spin { border-color:var(--ok); background:var(--ok); }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  body.asked .hero { padding-top:24px; }
+  body.asked h1, body.asked .lede, body.asked .try { display:none; }
+  body.asked .turn:first-child { margin-top:8px; border-top:0; padding-top:24px; }
+  footer { border-top:1px solid var(--line); color:var(--ink-3); font-size:13px; }
+  footer .wrap { padding-top:18px; padding-bottom:28px; display:flex; flex-wrap:wrap; gap:6px 20px; }
+  @media (max-width:560px) { .hero { padding-top:36px; } .hint { display:none; } .top .meta span { display:none; } }
 </style>
 </head>
 <body>
-<main>
-  <h1>ATT&amp;CK Analyst Assistant</h1>
-  <p class="sub">Ask about adversary techniques, detection and mitigation, in English or Arabic. Every sentence cites
-    the MITRE ATT&amp;CK page it comes from.</p>
-  <form id="f">
-    <textarea id="q" dir="auto" placeholder="How do I detect Kerberoasting?   ·   كيف أكتشف حقن العمليات؟" required></textarea>
-    <button id="go" type="submit">Ask</button>
-  </form>
-  <div class="examples" id="ex"></div>
-  <div id="out"></div>
+<header class="top"><div class="wrap">
+  <a class="brand" href="/"><b>ATT&amp;CK</b> Analyst</a>
+  <div class="meta"><span>MITRE ATT&amp;CK v20 · 2,530 objects · </span><a href="https://github.com/Yasine-Khamassi/attack-rag" target="_blank" rel="noopener">How it works</a></div>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Ask ATT&amp;CK.<br><span>Get an answer you can check.</span></h1>
+    <p class="lede">Techniques, groups, software, detections and mitigations, in English or Arabic. Every sentence links
+      to the ATT&amp;CK page it came from, and the assistant says so when the pages don't answer the question.</p>
+    <form id="f" class="composer">
+      <textarea id="q" dir="auto" rows="2" placeholder="How do I detect Kerberoasting?" aria-label="Your question" required></textarea>
+      <div class="bar">
+        <span class="hint"><kbd>Enter</kbd> to ask · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line</span>
+        <button class="go" id="go" type="submit">Ask
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </button>
+      </div>
+    </form>
+    <ul class="try" id="ex" aria-label="Example questions"></ul>
+  </section>
+  <section id="thread" aria-live="polite"></section>
 </main>
+
+<footer><div class="wrap">
+  <span>Answers can be wrong. Check the linked ATT&amp;CK page before acting on one.</span>
+  <span>Hybrid search (BM25 + bge-m3) · Claude Haiku 5.5 · ATT&amp;CK® is a MITRE trademark</span>
+</div></footer>
+
 <script>
-const EXAMPLES = ["How do I detect Kerberoasting?", "Which malware does APT29 use?", "What does T1070.001 mean?",
-                  "كيف أمنع المهاجمين من استخدام PowerShell بشكل خبيث؟", "ما هي البرمجيات التي تستخدمها مجموعة Lazarus؟"];
+const EXAMPLES = [
+  ["EN", "How do I detect Kerberoasting?"], ["EN", "Which malware does APT29 use?"],
+  ["EN", "What does T1070.001 mean?"], ["AR", "كيف أمنع المهاجمين من استخدام PowerShell بشكل خبيث؟"],
+  ["AR", "ما هي البرمجيات التي تستخدمها مجموعة Lazarus؟"]];
+const STEPS = ["Searching 3,581 ATT&CK passages", "Ranking the best pages", "Writing a cited answer"];
 const $ = id => document.getElementById(id);
 const CONVERSATION = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())).replace(/[^A-Za-z0-9-]/g, "");
-const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-for (const e of EXAMPLES) {
-  const b = document.createElement("button"); b.type = "button"; b.textContent = e; b.dir = "auto";
-  b.onclick = () => { $("q").value = e; ask(); }; $("ex").appendChild(b);
-}
-$("f").onsubmit = ev => { ev.preventDefault(); ask(); };
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const arrow = '<svg class="arrow" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
 
+for (const [lang, text] of EXAMPLES) {
+  const li = document.createElement("li");
+  li.innerHTML = `<button type="button"><span class="tag">${lang}</span><span dir="auto">${esc(text)}</span>${arrow}</button>`;
+  li.querySelector("button").onclick = () => { $("q").value = text; grow(); ask(); };
+  $("ex").appendChild(li);
+}
+const grow = () => { const t = $("q"); t.style.height = "auto"; t.style.height = Math.min(t.scrollHeight, 220) + "px"; };
+$("q").addEventListener("input", grow);
+$("q").addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); ask(); } });
+$("f").onsubmit = e => { e.preventDefault(); ask(); };
+
+let busy = false;
 async function ask() {
-  const question = $("q").value.trim(); if (!question) return;
-  $("go").disabled = true; $("out").innerHTML = '<div class="card meta">Searching ATT&amp;CK and writing a cited answer…</div>';
+  const question = $("q").value.trim();
+  if (!question || busy) return;
+  busy = true; $("go").disabled = true;
+  document.body.classList.add("asked");  // after the first question the answers matter more than the intro
+  $("q").placeholder = "Ask a follow-up or a new question";
+  const turn = document.createElement("article");
+  turn.className = "turn";
+  turn.innerHTML = `<h2 class="q" dir="auto">${esc(question)}</h2>
+    <ol class="steps">${STEPS.map((s, i) => `<li class="${i ? "" : "on"}"><span class="spin"></span>${s}</li>`).join("")}</ol>`;
+  $("thread").prepend(turn);
+  window.scrollTo({top: 0, behavior: "smooth"});
+  const items = turn.querySelectorAll(".steps li");
+  let step = 0;
+  const timer = setInterval(() => {  // the API answers in one call; the steps show where the time usually goes
+    if (step < items.length - 1) { items[step].className = "done"; items[++step].className = "on"; }
+  }, 1600);
   try {
-    const r = await fetch("/api/ask", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({question, conversation_id: CONVERSATION})});
+    const r = await fetch("/api/ask", {method: "POST", headers: {"Content-Type": "application/json"},
+                                      body: JSON.stringify({question, conversation_id: CONVERSATION})});
     const d = await r.json();
-    if (!r.ok) throw new Error(d.detail || r.statusText);
-    render(d);
-  } catch (e) { $("out").innerHTML = `<div class="card refused">Error: ${esc(String(e.message || e))}</div>`; }
-  finally { $("go").disabled = false; }
+    if (!r.ok) throw new Error(typeof d.detail === "string" ? d.detail : r.statusText);
+    render(turn, question, d);
+    $("q").value = ""; grow();
+  } catch (e) {
+    turn.innerHTML = `<h2 class="q" dir="auto">${esc(question)}</h2><div class="refusal"><strong>Something went wrong</strong>${esc(e.message || e)}. Try again in a moment.</div>`;
+  } finally { clearInterval(timer); busy = false; $("go").disabled = false; }
 }
 
-function render(d) {
-  const url = n => (d.sources.find(s => s.n === n) || {}).url;
+function render(turn, question, d) {
+  const byN = Object.fromEntries(d.sources.map(s => [s.n, s]));
+  const cited = d.sources.filter(s => s.cited), unused = d.sources.filter(s => !s.cited);
+  const chip = n => byN[n] ? `<a class="cite" data-n="${n}" href="${esc(byN[n].url || "#")}" target="_blank" rel="noopener" title="${esc(byN[n].doc_id + " · " + byN[n].title)}">${n}</a>` : "";
   const body = d.refused
-    ? '<p class="refused">The ATT&amp;CK sources don\'t answer this question, so no answer is given.</p>'
-    : `<div class="answer" dir="auto">${esc(d.answer).replace(/\[(\d{1,2})\]/g, (m, n) =>
-        url(+n) ? `<a href="${url(+n)}" target="_blank" rel="noopener">[${n}]</a>` : m)}</div>`;
-  const sources = d.sources.map(s => `<li class="${s.cited ? "cited" : ""}"><a href="${s.url || "#"}" target="_blank"
-      rel="noopener">${esc(s.doc_id)}</a> ${esc(s.title)}${s.cited ? "" : " (not cited)"}</li>`).join("");
-  const c = d.checks, full = c.citation_coverage === 1;
-  $("out").innerHTML = `<div class="card">${body}
-    <div class="meta"><span class="badge ${full ? "ok" : "warn"}">citations ${Math.round(c.citation_coverage*100)}%</span>
-      retrieval ${d.timing.retrieval_s}s · answer ${d.timing.answer_s}s · $${d.timing.cost_usd ?? "?"}</div></div>
-    <div class="card sources"><strong>Sources</strong><ol>${sources}</ol></div>`;
+    ? `<div class="refusal"><strong>No grounded answer</strong>The ATT&amp;CK pages found for this question don't answer it, so the assistant doesn't guess. Try naming a technique, group or tool.</div>`
+    : `<div class="answer" dir="auto">${esc(d.answer).split(/\n{2,}/).map(p =>
+        `<p>${p.replace(/\s*\[(\d{1,2})\]/g, (m, n) => chip(+n))}</p>`).join("")}</div>`;
+  const row = s => `<li data-n="${s.n}"><span class="n">${s.n}</span><span class="id">${esc(s.doc_id)}</span>
+      <a href="${esc(s.url || "#")}" target="_blank" rel="noopener" dir="auto">${esc(s.title)}</a></li>`;
+  const c = d.checks || {}, t = d.timing || {};
+  const full = c.citation_coverage === 1;
+  const secs = [t.retrieval_s, t.answer_s].filter(x => typeof x === "number").reduce((a, b) => a + b, 0);
+  const grounding = d.refused ? "" : `<div class="grounding">
+      <span class="${full ? "ok" : "warn"}"><i class="dot"></i>${full ? "Every sentence cited" : Math.round((c.citation_coverage || 0) * 100) + "% of sentences cited"}</span>
+      <span>${cited.length} of ${d.sources.length} retrieved pages used</span>
+      ${secs ? `<span>${secs.toFixed(1)} s</span>` : ""}${t.cost_usd != null ? `<span>$${Number(t.cost_usd).toFixed(4)}</span>` : ""}</div>`;
+  turn.innerHTML = `<h2 class="q" dir="auto">${esc(question)}</h2>${body}${grounding}
+    <div class="sources">${cited.length ? `<h3>Sources</h3><ul class="src">${cited.map(row).join("")}</ul>` : ""}
+    ${unused.length ? `<details class="more"><summary>${unused.length} more retrieved, not used</summary><ul class="src">${unused.map(row).join("")}</ul></details>` : ""}</div>`;
+  turn.querySelectorAll(".cite").forEach(a => {  // hovering a citation highlights its source, and back
+    const li = turn.querySelector(`.src li[data-n="${a.dataset.n}"]`);
+    a.onmouseenter = () => li && li.classList.add("hot"); a.onmouseleave = () => li && li.classList.remove("hot");
+  });
+  turn.querySelectorAll(".src li").forEach(li => {
+    const chips = turn.querySelectorAll(`.cite[data-n="${li.dataset.n}"]`);
+    li.onmouseenter = () => chips.forEach(x => x.classList.add("hot"));
+    li.onmouseleave = () => chips.forEach(x => x.classList.remove("hot"));
+  });
 }
 </script>
 </body>

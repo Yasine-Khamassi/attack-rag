@@ -266,3 +266,6 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 ## 2026-10-30 · Core 0.2.1: word-based answer language (D39)
 - `core.query.is_arabic` replaces the letter-share rule in the answer language check and repair. No change on this project's golden set or phase-6 answers (checked offline, $0); 135 tests pass. Tag `core-v0.2.1`.
+
+## 2026-10-30 · Web page redesign
+- `products/attack/static/index.html`: editorial layout (IBM Plex Sans/Mono + Plex Arabic, light and dark), citation chips linked to a numbered source list (hover highlights both), ATT&CK IDs in mono, "every sentence cited" line with time and cost, step-by-step loading state, a designed refusal state, the intro collapses after the first question. No API change; 135 tests pass.
