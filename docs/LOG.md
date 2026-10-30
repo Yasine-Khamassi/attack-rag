@@ -269,3 +269,7 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 ## 2026-10-30 · Web page redesign
 - `products/attack/static/index.html`: editorial layout (IBM Plex Sans/Mono + Plex Arabic, light and dark), citation chips linked to a numbered source list (hover highlights both), ATT&CK IDs in mono, "every sentence cited" line with time and cost, step-by-step loading state, a designed refusal state, the intro collapses after the first question. No API change; 135 tests pass.
+
+## 2026-10-30 · Core 0.2.2: 127.0.0.1 for Ollama (D40)
+- Profiling a slow answer found ~2.1 s per embedding request spent connecting to "localhost" (IPv6 tried first on Windows, Ollama on IPv4 only); 0.02 s via 127.0.0.1. Default changed in `core.embeddings` and `core.query`. Corrects the phase-6 note that blamed CPU embedding.
+- Downstream answer time 7.7-10 s -> 3.1-4.2 s. 135 tests pass; leak scan clean. Tag `core-v0.2.2`.

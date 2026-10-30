@@ -41,7 +41,9 @@ class OllamaTranslator:
     def __init__(self, model: str = "qwen2.5:3b", target: str = "English", domain: str = "",
                  url: str | None = None, threshold: float = 0.3, timeout: float = 300):
         self.model, self.target, self.threshold, self.timeout = model, target, threshold, timeout
-        self.url = (url or os.environ.get("OLLAMA_URL", "http://localhost:11434")).rstrip("/")
+        from core.embeddings import OLLAMA_DEFAULT_URL  # 127.0.0.1 on purpose, see there
+
+        self.url = (url or os.environ.get("OLLAMA_URL", OLLAMA_DEFAULT_URL)).rstrip("/")
         subject = f"{domain} question" if domain else "question"
         self.prompt = (f"Translate this {subject} into {target}. Keep technical terms, names and IDs exactly as "
                        f"written. Reply with the {target} translation only.\n\n")

@@ -37,13 +37,16 @@ MODELS = {
     ]
 }
 DEFAULT_MODEL = "bge-m3"  # chosen by the step 3b probe (DECISIONS D10); re-check on the phase 2 golden set
+# 127.0.0.1, not "localhost": on Windows "localhost" tries IPv6 (::1) first, Ollama listens on IPv4 only, and every
+# request waited ~2 s for that attempt to fail (DECISIONS D40). Override with OLLAMA_URL.
+OLLAMA_DEFAULT_URL = "http://127.0.0.1:11434"
 
 
 class OllamaEmbedder:
     def __init__(self, model: str | EmbeddingModel, url: str | None = None, batch_size: int = 16,
                  timeout: float = 600):
         self.model = MODELS[model] if isinstance(model, str) else model
-        self.url = (url or os.environ.get("OLLAMA_URL", "http://localhost:11434")).rstrip("/")
+        self.url = (url or os.environ.get("OLLAMA_URL", OLLAMA_DEFAULT_URL)).rstrip("/")
         self.batch_size = batch_size
         self.query_cache = TTLCache(max_items=4096, ttl_seconds=7 * 86_400)
         self.timeout = timeout
@@ -67,7 +70,7 @@ class OllamaEmbedder:
         return self._embed([self.model.doc_prefix + t for t in texts])
 
     def embed_queries(self, texts: Sequence[str]) -> np.ndarray:
-        """Query vectors are cached in memory (phase 6): a repeated question skips ~2 s of CPU embedding."""
+        """Query vectors are cached in memory (phase 6): a repeated question skips the embedding request."""
         missing = [t for t in dict.fromkeys(texts) if self.query_cache.get(t) is None]
         if missing:
             for t, v in zip(missing, self._embed([self.model.query_prefix + t for t in missing])):
