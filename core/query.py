@@ -22,6 +22,19 @@ def arabic_share(text: str) -> float:
     return len(_ARABIC.findall(text)) / len(letters) if letters else 0.0
 
 
+_WORD = re.compile(r"[^\W\d_]+")
+
+
+def is_arabic(text: str, threshold: float = 0.3) -> bool:
+    """Language of a question or answer. Counts words as well as letters: in "بكم Asteroid Gun؟" the Latin name has
+    more letters than the Arabic words, but the person is writing Arabic (1 of 3 words; letters alone said English)."""
+    words = _WORD.findall(text)
+    if not words:
+        return False
+    arabic_words = sum(1 for w in words if _ARABIC.search(w))
+    return arabic_words / len(words) >= threshold or arabic_share(text) >= threshold
+
+
 class OllamaTranslator:
     """Translate Arabic-script questions to `target` (e.g. "English"). Other text passes through unchanged."""
 

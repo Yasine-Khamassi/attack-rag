@@ -263,3 +263,6 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 **Next**
 - Owner: record the 90-second demo; review the Arabic golden questions.
 - Possible core work: document provenance / trusted sources (D35), pgvector >= 0.8 for iterative scans, persistent answer cache for multi-process deployments.
+
+## 2026-10-30 · Core 0.2.1: word-based answer language (D39)
+- `core.query.is_arabic` replaces the letter-share rule in the answer language check and repair. No change on this project's golden set or phase-6 answers (checked offline, $0); 135 tests pass. Tag `core-v0.2.1`.

@@ -19,7 +19,7 @@ import re
 from dataclasses import asdict, dataclass, field
 
 from core.guardrails import check_source, clean_output
-from core.query import arabic_share
+from core.query import is_arabic
 
 NO_ANSWER = "NO_ANSWER"
 _CITATION = re.compile(r"\[(\d{1,2})\]")
@@ -81,7 +81,7 @@ class Answer:
     def language_ok(self) -> bool:
         if self.refused:
             return True
-        return (arabic_share(self.question) >= 0.3) == (arabic_share(self.text) >= 0.3)
+        return is_arabic(self.question) == is_arabic(self.text)
 
 
 def claim_sentences(text: str) -> list[str]:
@@ -221,7 +221,7 @@ class Answerer:
         text, repaired, findings = a.text, False, list(a.security)
         # Language guard: one repair call when the answer is not in the question's language.
         if not a.language_ok:
-            target = "Arabic" if arabic_share(a.question) >= 0.3 else "English"
+            target = "Arabic" if is_arabic(a.question) else "English"
             text = self.llm.complete(LANGUAGE_REPAIR.format(language=target, answer=text), max_tokens=1024)
             repaired = True
         # Output guard: links no source contains are removed; repeating the rules means refusing.

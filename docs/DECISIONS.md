@@ -218,3 +218,8 @@ Never edit an old entry; add a new one that supersedes it.
 ## D38: Evaluation runs start with cold caches
 - **Finding:** after phase 6 caching, a 3-run golden eval returned three identical runs for $0.07: the rerank and translation caches replayed run 1, hiding the reranker's variance.
 - **Chose:** `eval_golden` resets the rerank and translation caches at the start of each run (query embeddings stay cached: they are deterministic). The production cache stays on.
+
+## D39: Answer language is decided by words, not only letters
+- **Finding:** short Arabic questions built around Latin-script names (tools, groups, products) have more Latin letters than Arabic ones, so the letter-share rule (Arabic if >= 30% of letters) called them English: the model answered in English and the language guard didn't repair it. Seen in a downstream product's evaluation (4 of 30 Arabic questions).
+- **Chose:** `core.query.is_arabic`: Arabic if >= 30% of *words* contain Arabic letters, or >= 30% of letters are Arabic. Used by the answer language check and the repair target. Translation routing keeps the letter share.
+- **Checked:** 0 classification changes on the 116 golden questions and the 104 phase-6 questions and answers, so earlier results stand; new unit test.

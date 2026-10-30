@@ -133,3 +133,11 @@ def test_nothing_cited_becomes_refusal():
     raw = Answerer(SequenceLLM("This answer has no citations at all, sadly."), persona="p").answer(
         "How does it work?", SOURCES, CHUNKS, guards=False)
     assert not raw.refused and raw.uncited
+
+
+def test_language_counts_words_not_only_letters():
+    from core.query import arabic_share, is_arabic
+    mixed = "ما هو Mimikatz وPowerSploit؟"  # Arabic sentence, Latin names: far more Latin letters than Arabic
+    assert arabic_share(mixed) < 0.3 and is_arabic(mixed)
+    assert is_arabic("ما هي التقنية T1003.001؟") and not is_arabic("What is T1059?") and not is_arabic("T1003")
+    assert check(mixed, "تستخدم المجموعة البرمجية [1].", [SimpleNamespace(n=1, doc_id="x", text="")]).language_ok
