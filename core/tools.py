@@ -9,6 +9,8 @@ Security rules, enforced here rather than trusted to the model:
 
 from __future__ import annotations
 
+import sys
+
 from collections.abc import Callable
 from dataclasses import dataclass, field
 
@@ -68,6 +70,8 @@ class ToolRegistry:
             return error, True
         try:
             result = tool.handler(tenant_id, args)
-        except Exception as e:  # a failing tool must not crash the conversation
-            return f"tool failed: {type(e).__name__}: {e}", True
+        except Exception as e:  # a failing tool must not crash the conversation, but it must not vanish either (D44)
+            print(f"ERROR: tool {name} failed for tenant {tenant_id}: {type(e).__name__}: {e}", file=sys.stderr,
+                  flush=True)
+            return f"tool failed: {type(e).__name__}", True
         return str(result)[:MAX_RESULT_CHARS], False

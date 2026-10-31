@@ -27,6 +27,9 @@ PRICES = {
     "claude-opus-5-5": (4.00, 20.00),
 }
 DEFAULT_MODEL = "claude-haiku-5-5"
+# One slow call must not hold a request for the SDK's default 10 minutes (D44). LLM_TIMEOUT_S overrides.
+TIMEOUT_S = float(os.environ.get("LLM_TIMEOUT_S", "30"))
+MAX_RETRIES = 1
 # The same models through Vercel AI Gateway (LLM_GATEWAY=vercel, DECISIONS D41): same prices, no markup, and on
 # Vercel the deployment's own OIDC token authenticates, so no API key is stored anywhere.
 GATEWAY_BASE_URL = "https://ai-gateway.vercel.sh"
@@ -114,9 +117,10 @@ class Claude:
             from core.embeddings import gateway_token
 
             # Real credential supplied per call (create): the OIDC token is refreshed while the process runs.
-            self.client = anthropic.Anthropic(api_key=gateway_token() or "per-call", base_url=GATEWAY_BASE_URL)
+            self.client = anthropic.Anthropic(api_key=gateway_token() or "per-call", base_url=GATEWAY_BASE_URL,
+                                              timeout=TIMEOUT_S, max_retries=MAX_RETRIES)
         else:
-            self.client = anthropic.Anthropic()
+            self.client = anthropic.Anthropic(timeout=TIMEOUT_S, max_retries=MAX_RETRIES)
 
     def complete(self, prompt: str, system: str | None = None, max_tokens: int = 1024,
                  effort: str = "low") -> str:
@@ -161,7 +165,10 @@ class Claude:
             "cost_usd": round(cost, 8),
             "seconds": round(time.perf_counter() - start, 2), "stop_reason": response.stop_reason,
         }
-        book.record(record)
+        try:
+            book.record(record)
+        except Exception as e:  # the call is already paid for: keep the answer, but say loudly what wasn't counted
+            print(f"ERROR: spend not recorded ({type(e).__name__}): {json.dumps(record)}", file=sys.stderr, flush=True)
         if response.stop_reason == "refusal":
             raise RuntimeError(f"model refused ({getattr(response.stop_details, 'category', None)})")
         return response

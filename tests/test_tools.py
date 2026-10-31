@@ -39,7 +39,7 @@ def test_validation_and_tenant_injection():
     assert seen == []                                                                                 # never ran
     text, err = REG.call("tenant-a", "lookup_item", {"item_id": "x"})
     assert not err and text == "x belongs to tenant-a: details here" and seen == [("tenant-a", {"item_id": "x"})]
-    assert REG.call("tenant-a", "lookup_item", {"item_id": "boom"}) == ("tool failed: ValueError: bad id", True)
+    assert REG.call("tenant-a", "lookup_item", {"item_id": "boom"}) == ("tool failed: ValueError", True)  # detail -> log (D44)
 
 
 def response(*blocks, stop="end_turn"):

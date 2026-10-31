@@ -102,3 +102,25 @@ def test_gateway_mode_uses_the_deployment_token(monkeypatch, tmp_path):
     monkeypatch.delenv("VERCEL_OIDC_TOKEN")
     with pytest.raises(RuntimeError, match="AI Gateway credential"):
         c.complete("hi")
+
+
+def test_a_failed_spend_record_keeps_the_paid_answer(fake_claude, capsys):
+    make, reply, log = fake_claude
+    c = make(budget=1.0)
+
+    class Broken:
+        def spent(self):
+            return 0.0
+
+        def record(self, r):
+            raise OSError("read-only file system")
+    c._ledger = Broken()
+    assert c.complete("hi") == "ok"
+    assert "spend not recorded" in capsys.readouterr().err
+
+
+def test_claude_client_has_a_timeout(monkeypatch):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key-not-real")
+    monkeypatch.delenv("LLM_GATEWAY", raising=False)
+    c = Claude("claude-haiku-5-5", budget_usd=1.0, purpose="test")
+    assert c.client.timeout == 30 and c.client.max_retries == 1
