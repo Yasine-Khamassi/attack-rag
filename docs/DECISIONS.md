@@ -257,3 +257,7 @@ Never edit an old entry; add a new one that supersedes it.
 ## D45: "number" tool arguments
 - **Problem (found by a downstream test through the real tool registry):** the argument check's type map knew `string`, `integer` and `boolean` only, so a parameter declared `"type": "number"` fell back to `string` and every real number was refused ("argument 'amount' must be number"); the tool never ran.
 - **Fix:** `number` accepts ints and floats; booleans are refused for every non-boolean type (in Python `True` is an `int`).
+
+## D46: Translate while searching
+- **Why:** a non-English question waited for its translation (one LLM call, ~1 s) before any search started; a downstream store measured answers as translate -> rerank -> answer in a row.
+- **Chose:** `HybridSearcher.hybrid` starts the translation in a small thread pool and searches the question as written meanwhile; the rankings and their order are the same as before. The caller's context variables go along (`contextvars.copy_context`), so per-request cost counting still sees the call. Errors from the translator surface exactly as before.

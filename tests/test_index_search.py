@@ -158,3 +158,35 @@ def test_linked_documents_reach_the_reranker(conn, embedder, indexed):
     assert all(h.doc_id != "B1" for h in hits)
     without = s.hybrid("credential dumping memory", reranker=WordReranker("attachment"), rerank_depth=1)
     assert without[0].doc_id == "A1"                    # no expansion: A2 never reaches the reranker
+
+
+def test_translation_runs_while_the_original_is_searched(conn, indexed):
+    """D46: the translator (an LLM call) overlaps the search of the question as written; results are unchanged and
+    the caller's context reaches the translator's thread."""
+    import contextvars
+    import time
+    marker = contextvars.ContextVar("marker", default=None)
+
+    class SlowEmbedder(FakeEmbedder):
+        def _embed(self, texts):
+            time.sleep(0.3)
+            return super()._embed(texts)
+
+    class SlowTranslator:
+        seen = None
+
+        def translate(self, q):
+            SlowTranslator.seen = marker.get()
+            time.sleep(0.3)
+            return "scheduled task persistence"
+
+    s = HybridSearcher(conn, "tenant-a", SlowEmbedder())
+    token = marker.set("request-1")
+    try:
+        t0 = time.perf_counter()
+        hits = s.hybrid("سؤال", translator=SlowTranslator())
+        took = time.perf_counter() - t0
+    finally:
+        marker.reset(token)
+    assert hits[0].doc_id == "A3" and SlowTranslator.seen == "request-1"
+    assert took < 0.85, f"{took:.2f}s: translation didn't overlap the first search (sequential is about 0.9s)"

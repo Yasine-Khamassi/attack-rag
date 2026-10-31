@@ -9,7 +9,9 @@ it stops the very top ranks from dominating.
 
 from __future__ import annotations
 
+import contextvars
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 
 import psycopg
@@ -49,6 +51,7 @@ def rrf(rankings: list[list[str]], k: int = 60) -> list[tuple[str, float]]:
 
 
 EXACT_MAX_ROWS = 20_000  # tenants up to this many chunks get exact vector search (D32)
+_POOL = ThreadPoolExecutor(max_workers=8, thread_name_prefix="translate")
 
 
 class HybridSearcher:
@@ -144,12 +147,14 @@ class HybridSearcher:
           candidates, up to `max_expanded`. Lets the reranker reach answers one hop away (question -> topic ->
           its countermeasure) that share no words with the question;
         - pin_ids: documents named by ID in the question go first."""
+        # The translation (an LLM call) runs while the question is searched as written (D46): same rankings, same
+        # order, about one model call less waiting. The caller's context goes along (per-request cost counting).
+        pending = _POOL.submit(contextvars.copy_context().run, translator.translate, query) if translator else None
         queries = [query]
-        if translator is not None and (translated := translator.translate(query)):
+        rankings: list[list[Hit]] = [self._dense_or_nothing(query, depth), self.keyword(query, depth, depth)]
+        if pending is not None and (translated := pending.result()):
             queries.append(translated)
-        rankings: list[list[Hit]] = []
-        for q in queries:
-            rankings += [self._dense_or_nothing(q, depth), self.keyword(q, depth, depth)]
+            rankings += [self._dense_or_nothing(translated, depth), self.keyword(translated, depth, depth)]
         best_chunk = {h.doc_id: h.chunk_id for ranking in reversed(rankings) for h in reversed(ranking)}
         ranked = [(d, best_chunk[d], s) for d, s in rrf([[h.doc_id for h in r] for r in rankings], rrf_k)]
 

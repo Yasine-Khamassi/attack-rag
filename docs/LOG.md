@@ -292,3 +292,6 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 ## 2026-10-31 · Core 0.3.5: number tool arguments (D45)
 - `"type": "number"` parameters accept ints and floats (they were refused as not-a-string); booleans refused for non-boolean types. 154 tests pass. Tag `core-v0.3.5`.
+
+## 2026-10-31 · Core 0.3.6: translate while searching (D46)
+- The translation runs in parallel with the original-language search; same results, one model call less waiting. 155 tests pass. Tag `core-v0.3.6`.
