@@ -1,5 +1,8 @@
 # CLAUDE.md — attack-rag (PUBLIC repo)
 
+**Start here:** `docs/STATUS.md` (verified facts with dates; trust it over memory), then `docs/tasks/README.md`
+(open tasks, one file each). When a task finishes, move its file to `docs/tasks/done/` and update STATUS + LOG.
+
 Read this first every session. Then read `docs/LOG.md` (latest entry) and `docs/DECISIONS.md`.
 
 ## What this repo is
