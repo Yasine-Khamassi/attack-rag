@@ -9,6 +9,7 @@ it stops the very top ranks from dominating.
 
 from __future__ import annotations
 
+import sys
 from dataclasses import dataclass
 
 import psycopg
@@ -53,10 +54,13 @@ EXACT_MAX_ROWS = 20_000  # tenants up to this many chunks get exact vector searc
 class HybridSearcher:
     def __init__(self, conn: psycopg.Connection, tenant_id: str, embedder: Embedder,
                  aliases: dict[str, str] | None = None, links: dict[str, list[str]] | None = None,
-                 exact_max_rows: int = EXACT_MAX_ROWS):
+                 exact_max_rows: int = EXACT_MAX_ROWS, dense_fallback: bool = False):
         """`aliases`: extra IDs that should resolve to a document (e.g. old IDs -> current doc_id).
         `links`: doc_id -> related doc_ids worth showing the reranker when that doc ranks high (one hop).
-        `exact_max_rows`: below this tenant size, dense search is exact over the tenant's rows (see dense())."""
+        `exact_max_rows`: below this tenant size, dense search is exact over the tenant's rows (see dense()).
+        `dense_fallback`: if the embedding service fails (down, rate-limited), answer from keyword search alone
+        instead of failing the request (D42). Off by default so evaluations never silently lose dense search."""
+        self.dense_fallback = dense_fallback
         session_tenant = conn.execute("SELECT current_setting('app.tenant_id', true)").fetchone()[0]
         if session_tenant and session_tenant != tenant_id:
             raise PermissionError(f"connection is pinned to tenant {session_tenant!r}, not {tenant_id!r}")
@@ -106,6 +110,16 @@ class HybridSearcher:
         rows = self.conn.execute(query_sql, params).fetchall()
         return self._hits(_collapse(rows, self.chunk_doc), k)
 
+    def _dense_or_nothing(self, query: str, depth: int) -> list[Hit]:
+        try:
+            return self.dense(query, depth, depth)
+        except Exception as e:
+            if not self.dense_fallback:
+                raise
+            print(f"WARNING: dense search unavailable ({type(e).__name__}: {e}); keyword search only",
+                  file=sys.stderr, flush=True)
+            return []
+
     def keyword(self, query: str, k: int = 10, depth: int = 50) -> list[Hit]:
         return self._hits(_collapse(self.bm25.search(query, depth), self.chunk_doc), k)
 
@@ -135,7 +149,7 @@ class HybridSearcher:
             queries.append(translated)
         rankings: list[list[Hit]] = []
         for q in queries:
-            rankings += [self.dense(q, depth, depth), self.keyword(q, depth, depth)]
+            rankings += [self._dense_or_nothing(q, depth), self.keyword(q, depth, depth)]
         best_chunk = {h.doc_id: h.chunk_id for ranking in reversed(rankings) for h in reversed(ranking)}
         ranked = [(d, best_chunk[d], s) for d, s in rrf([[h.doc_id for h in r] for r in rankings], rrf_k)]
 

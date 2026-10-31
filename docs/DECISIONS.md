@@ -238,3 +238,8 @@ Never edit an old entry; add a new one that supersedes it.
   - Row-level security: `FORCE` only when the admin role bypasses RLS anyway (`core.db.admin_bypasses_rls`). On a plain owner role FORCE hid every row from the admin connection that builds the index. The serving role is never the owner, so its isolation is unchanged.
 - **Checked:** 138 tests pass (3 new embedder tests). Default behaviour on this machine unchanged.
 - **0.3.1, keyless option:** Vercel AI Gateway for both model calls and embeddings (`LLM_GATEWAY=vercel`, `EMBEDDINGS_PROVIDER=gateway`). Same Claude prices, no markup, and on Vercel the deployment's OIDC token (`VERCEL_OIDC_TOKEN`, read at call time because it is refreshed) authenticates, so no API key is stored in the host. bge-m3 is not on the gateway; `qwen3-embedding-0.6b` (multilingual, 1024 dims, $0.01 per million tokens) is registered with its query instruction. Switching models means re-indexing. 140 tests pass.
+
+## D42: Keyword-only fallback when the embedding service fails (opt-in)
+- **Finding:** a hosted embedding endpoint on a free tier answered HTTP 429 after a few requests; every question then failed with a server error, although keyword search alone could have answered most of them.
+- **Chose:** `HybridSearcher(dense_fallback=True)` skips the dense ranking when the embedder raises (logged to stderr) and fuses the keyword rankings only. Off by default so evaluations never silently lose dense search. `GatewayEmbedder` also retries a 429 twice, waiting what Retry-After asks (at most 2 s).
+- **Checked:** 142 tests pass (2 new).

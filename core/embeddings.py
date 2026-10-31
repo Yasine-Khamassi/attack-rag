@@ -10,6 +10,8 @@ from __future__ import annotations
 
 import json
 import os
+import time
+import urllib.error
 import urllib.request
 from collections.abc import Sequence
 from dataclasses import dataclass
@@ -151,8 +153,15 @@ class GatewayEmbedder(Embedder):
             f"{GATEWAY_URL}/embeddings", data=json.dumps({"model": self.model.gateway, "input": texts}).encode("utf-8"),
             headers={"Content-Type": "application/json", "Authorization": f"Bearer {token}",
                      "User-Agent": "rag-core-embeddings/1"})
-        with urllib.request.urlopen(req, timeout=self.timeout) as resp:
-            data = json.load(resp)["data"]
+        for attempt in range(3):
+            try:
+                with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+                    data = json.load(resp)["data"]
+                break
+            except urllib.error.HTTPError as e:  # rate limited: wait as asked (at most 2 s), then try again
+                if e.code != 429 or attempt == 2:
+                    raise
+                time.sleep(min(float(e.headers.get("Retry-After") or 1), 2.0))
         return [d["embedding"] for d in sorted(data, key=lambda d: d["index"])]
 
 
