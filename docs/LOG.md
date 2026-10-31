@@ -289,3 +289,6 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 ## 2026-10-31 · Core 0.3.4: timeouts and loud failures (D44)
 - Claude calls time out after 30 s with one retry; a spend record that fails is logged and the paid answer kept; failing tools are logged and the model gets only the error type. 153 tests pass. Tag `core-v0.3.4`.
+
+## 2026-10-31 · Core 0.3.5: number tool arguments (D45)
+- `"type": "number"` parameters accept ints and floats (they were refused as not-a-string); booleans refused for non-boolean types. 154 tests pass. Tag `core-v0.3.5`.

@@ -83,3 +83,12 @@ def test_no_tools_for_tenant_means_plain_answer():
     hits = [SimpleNamespace(doc_id="D1", chunk_id="D1#0", title="Doc 1", url=None)]
     a = Answerer(Plain(), persona="p").answer("q?", hits, {"D1#0": "t"}, tools=REG, tenant_id="tenant-b")
     assert a.cited == [1]
+
+
+def test_number_arguments_accept_ints_and_floats_not_bools():
+    """D45: "number" was missing from the type map, so it fell back to string and refused every real number."""
+    price = Tool("price", "Price of an amount.", {"amount": {"type": "number", "description": "amount"}},
+                 lambda tenant_id, a: f"{a['amount']}", required=("amount",))
+    assert price.validate({"amount": 249}) is None and price.validate({"amount": 62.25}) is None
+    assert price.validate({"amount": "249"}) and price.validate({"amount": True})
+    assert LOOKUP.validate({"item_id": True})  # a bool is not a string either

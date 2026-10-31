@@ -15,7 +15,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 
 MAX_RESULT_CHARS = 3000
-_TYPES = {"string": str, "integer": int, "boolean": bool}
+_TYPES = {"string": str, "integer": int, "number": (int, float), "boolean": bool}  # JSON Schema types (D45)
 
 
 @dataclass(frozen=True)
@@ -41,7 +41,7 @@ class Tool:
             return f"missing argument(s): {missing}"
         for name, value in args.items():
             expected = _TYPES.get(self.parameters[name].get("type", "string"), str)
-            if not isinstance(value, expected) or (expected is int and isinstance(value, bool)):
+            if not isinstance(value, expected) or (expected is not bool and isinstance(value, bool)):  # True is an int
                 return f"argument {name!r} must be {self.parameters[name].get('type', 'string')}"
             if (choices := self.parameters[name].get("enum")) and value not in choices:
                 return f"argument {name!r} must be one of {choices}"

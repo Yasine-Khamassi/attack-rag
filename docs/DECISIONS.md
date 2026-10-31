@@ -253,3 +253,7 @@ Never edit an old entry; add a new one that supersedes it.
 - **Finding:** the Claude client used the SDK default (10 min, 2 retries), so one hung call could hold a request and everything queued behind it; a spend ledger that failed to write after a paid call raised and lost the answer; a failing tool returned its error text to the model and logged nothing, so an outage looked like ordinary "no answer" replies.
 - **Chose:** 30 s timeout (`LLM_TIMEOUT_S`) and 1 retry for both direct and gateway clients; a failed `record()` prints the uncounted cost to stderr and keeps the answer; a failing tool is logged to stderr and the model only sees the error type.
 - **Checked:** 153 tests pass (2 new); leak scan clean.
+
+## D45: "number" tool arguments
+- **Problem (found by a downstream test through the real tool registry):** the argument check's type map knew `string`, `integer` and `boolean` only, so a parameter declared `"type": "number"` fell back to `string` and every real number was refused ("argument 'amount' must be number"); the tool never ran.
+- **Fix:** `number` accepts ints and floats; booleans are refused for every non-boolean type (in Python `True` is an `int`).
