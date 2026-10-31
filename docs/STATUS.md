@@ -8,8 +8,8 @@ Last full check: **2026-10-31**.
 | Fact | Value | Checked |
 |---|---|---|
 | Repo | github.com/Yasine-Khamassi/attack-rag, **public**, branch `master` | push 2026-10-31 |
-| Latest core tag | **core-v0.3.2** (keyword fallback D42; AI Gateway option and serverless support D41) | tag pushed 2026-10-31 |
-| Tests | **142 pass** (`python -m pytest -q`) | 2026-10-31 |
+| Latest core tag | **core-v0.3.3** (self-talk guard D43; keyword fallback D42; AI Gateway option and serverless support D41) | tag pushed 2026-10-31 |
+| Tests | **151 pass** (`python -m pytest -q`) | 2026-10-31 |
 | CI | GitHub Actions green on 3652a1e (core 0.3.2) | `gh run list` 2026-10-31 |
 | Leak scan | `bash ../leak-scan.sh`: CLEAN | 2026-10-31 |
 | Phases | all 6 done (retrieval, eval, cited answers, tenant isolation, security, cost) | LOG 2026-10-30 |

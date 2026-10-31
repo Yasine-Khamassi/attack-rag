@@ -283,3 +283,6 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 ## 2026-10-31 · Core 0.3.2: keyword-only fallback (D42)
 - Opt-in `dense_fallback` in `HybridSearcher`; 429 retry in `GatewayEmbedder`. 142 tests pass. Tag `core-v0.3.2`.
+
+## 2026-10-31 · Core 0.3.3: self-talk guard (D43)
+- Narration about the answer's language and "let me check" asides are removed before the citation guard. 151 tests pass; leak scan clean. Tag `core-v0.3.3`. Closes task T-006.

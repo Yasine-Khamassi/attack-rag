@@ -106,6 +106,31 @@ def _is_claim(text: str) -> bool:
     return len(_CITATION.sub("", text).split()) >= MIN_WORDS and not text.rstrip().endswith(":")
 
 
+# The model narrating its own instructions instead of answering: "The question is in English, so I answer in
+# English.", "...let me check availability:", "السؤال بالعربي، فسأجيب بالعربي." It survives the citation guard when
+# it sits before a citation on the same line (D43), so it is removed first. Narrow on purpose: only talk about the
+# answer's language, and "let me check/look/see/verify".
+_LANG_WORD = r"(?:english|arabic|عربي|العربي[ةه]|انجليزي|الانجليزي[ةه]|الإنجليزي[ةه])"
+_SELF_TALK = re.compile(
+    r"(?:\.\.\.|…)?\s*(?:"
+    r"(?:since |because |as )?the (?:question|user|request|message)\b[^.!?\n]{0,80}?\b" + _LANG_WORD + r"\b[^.!?\n]*[.!?:]"
+    r"|i(?: will|'ll| am going to|'m going to| should)? (?:answer|reply|respond)\b[^.!?\n]{0,30}?\bin " + _LANG_WORD
+    + r"\b[^.!?\n]*[.!?:]"
+    r"|let me (?:check|look|see|verify)\b[^.!?:\n]*[.!?:]"
+    r"|السؤال\s+(?:مكتوب\s+)?(?:بالعربي|بالانجليزي|بالإنجليزي|باللغ[ةه]\s+\S+)[ةه]?[^.!؟\n]*[.!؟:،]"
+    r"|ف?سأجيب\s+(?:بالعربي|بالانجليزي|بالإنجليزي|باللغ[ةه]\s+\S+)[ةه]?[^.!؟\n]*[.!؟:]"
+    r")", re.IGNORECASE)
+
+
+def strip_self_talk(text: str) -> tuple[str, list[str]]:
+    """Remove sentences where the model talks about its instructions (see _SELF_TALK). Returns (text, removed)."""
+    removed = [m.group(0).strip() for m in _SELF_TALK.finditer(text) if m.group(0).strip()]
+    if not removed:
+        return text, []
+    text = _SELF_TALK.sub(" ", text)
+    return "\n".join(re.sub(r"[ \t]{2,}", " ", line).strip() for line in text.split("\n")).strip(), removed
+
+
 def strip_uncited(text: str) -> tuple[str, list[str]]:
     """Citation guard: remove every claim that no citation covers (text after a line's last citation, or a whole
     claim line without one). Headings and short fragments stay. Returns (new text, removed claims)."""
@@ -230,8 +255,11 @@ class Answerer:
             findings += [asdict(f) for f in found]
             if any(f.rule == "system_rules_leak" for f in found):
                 text = NO_ANSWER
-        # Citation guard: claims without a citation are removed; nothing cited left -> refusal.
+        # Self-talk guard (D43), then the citation guard: claims without a citation are removed; nothing cited
+        # left -> refusal.
+        text, talk = strip_self_talk(text)
         text, removed = strip_uncited(text)
+        removed = talk + removed
         if not _CITATION.search(text):
             text = NO_ANSWER
         out = check(a.question, text, a.sources)

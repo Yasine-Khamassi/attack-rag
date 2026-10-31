@@ -13,6 +13,7 @@ and [../LOG.md](../LOG.md). Run the leak scan before committing.
 | [T-003 Document provenance / trusted sources](open/T-003-provenance.md) | Claude | todo |
 | [T-004 Shared answer cache](open/T-004-shared-answer-cache.md) | Claude | todo |
 | [T-005 pgvector iterative scans locally](open/T-005-pgvector-iterative-scans.md) | Claude | todo |
-| [T-006 Keep reasoning text out of answers](open/T-006-no-reasoning-text.md) | Claude | todo |
+
+Done: [T-006 Keep reasoning text out of answers](done/T-006-no-reasoning-text.md) (2026-10-31).
 
 Finished build steps are documented in [../steps/](../steps/) and the LOG.

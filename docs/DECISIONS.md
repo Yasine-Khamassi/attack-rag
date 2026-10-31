@@ -243,3 +243,8 @@ Never edit an old entry; add a new one that supersedes it.
 - **Finding:** a hosted embedding endpoint on a free tier answered HTTP 429 after a few requests; every question then failed with a server error, although keyword search alone could have answered most of them.
 - **Chose:** `HybridSearcher(dense_fallback=True)` skips the dense ranking when the embedder raises (logged to stderr) and fuses the keyword rankings only. Off by default so evaluations never silently lose dense search. `GatewayEmbedder` also retries a 429 twice, waiting what Retry-After asks (at most 2 s).
 - **Checked:** 142 tests pass (2 new).
+
+## D43: Self-talk guard
+- **Finding:** answers sometimes opened with the model narrating its rules ("The question is in English, so I answer in English.") or thinking aloud ("...let me check the sources:"), although the prompt says never to mention the rules. The citation guard only trims text after a line's last citation, so a narration before a citation on the same line survived.
+- **Chose:** `strip_self_talk()` runs in the answer guards before the citation guard. Narrow patterns on purpose: talk about the answer's language (English and Arabic forms) and "let me check/look/see/verify". Removed text is listed in `Answer.removed`.
+- **Checked:** 151 tests pass (9 new: 5 narrations removed, 4 real answers untouched, including "Let me know ...").
