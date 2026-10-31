@@ -252,4 +252,4 @@ Never edit an old entry; add a new one that supersedes it.
 ## D44: Timeouts and loud failures (from a downstream production audit)
 - **Finding:** the Claude client used the SDK default (10 min, 2 retries), so one hung call could hold a request and everything queued behind it; a spend ledger that failed to write after a paid call raised and lost the answer; a failing tool returned its error text to the model and logged nothing, so an outage looked like ordinary "no answer" replies.
 - **Chose:** 30 s timeout (`LLM_TIMEOUT_S`) and 1 retry for both direct and gateway clients; a failed `record()` prints the uncounted cost to stderr and keeps the answer; a failing tool is logged to stderr and the model only sees the error type.
-- **Checked:** 154 tests pass (2 new); leak scan clean.
+- **Checked:** 153 tests pass (2 new); leak scan clean.
