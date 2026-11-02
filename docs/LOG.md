@@ -307,3 +307,6 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 ## 2026-11-03 · Core 0.3.10: more override wordings (D51)
 - "Ignore your previous instructions" and "تجاهل تعليماتك" now trip the guards. Tag `core-v0.3.10`.
+
+## 2026-11-03 · Core 0.3.11: invisible letters and lowercase names (D52)
+- Guards ignore tatweel, diacritics and zero-width characters. `written_in` no longer takes a lowercase product name for an English sentence. Tag `core-v0.3.11`.

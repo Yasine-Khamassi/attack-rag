@@ -283,3 +283,6 @@ Never edit an old entry; add a new one that supersedes it.
 ## D51: "Ignore your previous instructions" is an override too
 - **Why:** a test downstream found that the input and source guards matched "ignore all previous instructions" but not "ignore your previous instructions", or the Arabic "تجاهل تعليماتك". The model had been refusing those on its own, which isn't a guard.
 - **Chose:** the patterns allow "your" before "previous", and the Arabic possessive forms. Sentence-start rules stay, so text describing such an attack still isn't flagged.
+
+## D52: Invisible letters, and names in lowercase English
+- **From an independent review.** Arabic tatweel, diacritics and zero-width characters got an override past every guard pattern ("تجـاهل التعليمات"), so they are removed before matching. And `written_in` called any three lowercase English words a sentence, which refused a good Arabic answer about a "slim fit cotton" shirt: the repair has to keep names, so it failed the same check. Now a run needs a little word such as "the" or "is", and a rewrite is judged only on the word count.

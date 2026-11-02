@@ -294,7 +294,7 @@ class Answerer:
             target = "Arabic" if arabic else "English"
             text = self.llm.complete(LANGUAGE_REPAIR.format(language=target, answer=text), max_tokens=1024)
             repaired = True
-            if a.language and not written_in(_CITATION.sub("", text), a.language):
+            if a.language and not written_in(_CITATION.sub("", text), a.language, strict=False):
                 text = NO_ANSWER  # the rewrite failed or commented on the text: nothing the reader should get
         # Output guard: links no source contains are removed; repeating the rules means refusing.
         if self.security:

@@ -35,20 +35,28 @@ def is_arabic(text: str, threshold: float = 0.3) -> bool:
     return arabic_words / len(words) >= threshold or arabic_share(text) >= threshold
 
 
-# Three lowercase English words in a row: names are mostly capitalised and short, so this is English sentence text.
-_ENGLISH_RUN = re.compile(r"\b[a-z][a-z'-]*[\s,]+[a-z][a-z'-]*[\s,]+[a-z][a-z'-]*\b")
+# Three or more lowercase English words in a row, one of them a little word no product name is made of. That's a sentence;
+# "slim fit cotton" is a name.
+_ENGLISH_RUN = re.compile(r"\b[a-z'-]+(?:[\s,]+[a-z'-]+){2,}\b")
+_ENGLISH_GLUE = {"the", "a", "an", "is", "are", "was", "and", "or", "of", "for", "in", "on", "at", "to", "with", "you", "your", "we",
+                 "our", "it", "its", "this", "that", "not", "but", "so", "if", "can", "have", "has", "from", "as", "be", "i"}
 
 
-def written_in(text: str, language: str) -> bool:
+def _has_english_sentence(text: str) -> bool:
+    return any(_ENGLISH_GLUE & set(re.split(r"[\s,]+", m.group(0))) for m in _ENGLISH_RUN.finditer(text))
+
+
+def written_in(text: str, language: str, strict: bool = True) -> bool:
     """Is this answer in `language` ("ar" or "en")? Counted in words: a name in the other script doesn't change it, while
     an English answer full of long Arabic names can pass is_arabic on letters alone. An Arabic answer also fails on a
-    stretch of English sentence, which the word count alone misses ("Under 10 ريال, the in-stock knives are ...")."""
+    stretch of English sentence, which the word count alone misses ("Under 10 ريال, the in-stock knives are ...").
+    `strict=False` skips that: for a rewrite, which has to keep names as they are and shouldn't be refused over them."""
     words = _WORD.findall(text)
     if not words:
         return True
     arabic = sum(1 for w in words if _ARABIC.search(w)) / len(words)
     if language == "ar":
-        return arabic >= 0.3 and not _ENGLISH_RUN.search(text)
+        return arabic >= 0.3 and not (strict and _has_english_sentence(text))
     return 1 - arabic >= 0.4
 
 

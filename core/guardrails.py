@@ -69,7 +69,13 @@ class Finding:
     ref: str = ""   # e.g. the chunk_id of a quarantined source
 
 
+# Letters that change nothing a reader sees: Arabic tatweel and diacritics, zero-width and direction marks. Left in, "تجـاهل"
+# or an invisible character inside a phrase walks past every pattern.
+_INVISIBLE = re.compile("[\u0640\u064B-\u0652\u200B-\u200F\u202A-\u202E\u2060\uFEFF]")
+
+
 def _scan(text: str, patterns: list[re.Pattern], where: str, ref: str = "") -> list[Finding]:
+    text = _INVISIBLE.sub("", text)
     out = []
     for p in patterns:
         if m := p.search(text):

@@ -276,3 +276,18 @@ def test_thinking_is_passed_on_only_when_asked():
     assert seen == {"thinking": True, "max_tokens": 2048}  # thinking counts as output
     Answerer(Records(), persona="p").answer("How?", SOURCES, CHUNKS)
     assert seen == {"thinking": False, "max_tokens": 1024}
+
+def test_a_name_in_lowercase_english_isnt_an_english_sentence():
+    from core.query import written_in
+    assert written_in("عندنا قميص slim fit cotton بـ 120 ريال ومتوفر الحين.", "ar")
+    assert not written_in("عندنا قميص بـ 120 ريال، this is the one for you وهو متوفر الحين.", "ar")
+    assert written_in("عندنا قميص cotton and linen shirt بـ 120 ريال ومتوفر الحين.", "ar", strict=False)
+
+
+def test_a_rewrite_that_keeps_a_name_is_accepted():
+    class Rewrites(FakeLLM):
+        def complete(self, prompt, system=None, max_tokens=1024, effort="low"):
+            return self.reply if system else "عندنا cotton and linen shirt بـ 120 ريال ومتوفر الحين عندنا [1]."
+    a = Answerer(Rewrites("We have the cotton and linen shirt at 120 SAR right now [1]."), persona="p").answer(
+        "سؤال بالعربي؟", SOURCES, CHUNKS, language="ar")
+    assert not a.refused and a.language_repaired and "cotton" in a.text
