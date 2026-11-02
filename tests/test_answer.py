@@ -229,3 +229,50 @@ def test_a_stretch_of_english_inside_an_arabic_answer_is_caught():
     assert written_in("Royal Oud Set بـ 590 درهم ومتوفر الحين.", "ar")  # a name isn't a sentence
     assert written_in("candy knife بـ 30 ريال ومتوفرة الحين.", "ar")     # nor is a lowercase one
     assert written_in("تواصل معنا على help@example.com أو https://example.com/a/b.", "ar")
+
+def test_a_failed_language_rewrite_never_reaches_the_reader():
+    class Rewrites(FakeLLM):
+        def complete(self, prompt, system=None, max_tokens=1024, effort="low"):
+            self.calls.append({"prompt": prompt, "system": system})
+            return self.reply if system else "The text you've given is already fine, so here is a note about it [1]."
+    a = Answerer(Rewrites("The first answer came out in the wrong language entirely [1]."), persona="p").answer(
+        "سؤال بالعربي؟", SOURCES, CHUNKS, language="ar")
+    assert a.refused and a.language_repaired
+    # Without an explicit language, existing callers keep whatever the rewrite gave.
+    b = Answerer(Rewrites("The first answer came out in the wrong language entirely [1]."), persona="p").answer(
+        "سؤال بالعربي؟", SOURCES, CHUNKS)
+    assert not b.refused and "already fine" in b.text
+
+
+def test_the_language_is_repeated_after_tool_results():
+    class ToolLLM:
+        def __init__(self):
+            self.messages = []
+
+        def create(self, messages, system=None, max_tokens=1024, effort="low", tools=None):
+            self.messages = list(messages)
+            if len(messages) == 1:
+                call = SimpleNamespace(type="tool_use", id="1", name="lookup", input={})
+                return SimpleNamespace(content=[call])
+            return SimpleNamespace(content=[SimpleNamespace(type="text", text="الجواب هنا مع رقم المصدر الصحيح [1].")])
+
+    tools = SimpleNamespace(specs=lambda t: [{"name": "lookup"}], call=lambda t, n, a: ("result", False))
+    llm = ToolLLM()
+    Answerer(llm, persona="p").answer("سؤال؟", SOURCES, CHUNKS, tools=tools, tenant_id="t", language="ar")
+    last = llm.messages[-1]["content"]
+    assert last[0]["type"] == "tool_result" and "Write the answer in Arabic." in last[-1]["text"]
+    llm = ToolLLM()
+    Answerer(llm, persona="p").answer("سؤال؟", SOURCES, CHUNKS, tools=tools, tenant_id="t")
+    assert all(block["type"] == "tool_result" for block in llm.messages[-1]["content"])
+
+def test_thinking_is_passed_on_only_when_asked():
+    seen = {}
+
+    class Records:
+        def complete(self, prompt, system=None, max_tokens=1024, effort="low", thinking=False):
+            seen.update(thinking=thinking, max_tokens=max_tokens)
+            return "Attackers inject code into processes [1]."
+    Answerer(Records(), persona="p", thinking=True).answer("How?", SOURCES, CHUNKS)
+    assert seen == {"thinking": True, "max_tokens": 2048}  # thinking counts as output
+    Answerer(Records(), persona="p").answer("How?", SOURCES, CHUNKS)
+    assert seen == {"thinking": False, "max_tokens": 1024}

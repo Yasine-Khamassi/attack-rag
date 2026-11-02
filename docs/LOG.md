@@ -301,3 +301,6 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 ## 2026-11-03 · Core 0.3.8: English stretches in Arabic answers (D48)
 - `written_in` catches an English sentence inside an Arabic answer. Tag `core-v0.3.8`.
+
+## 2026-11-03 · Core 0.3.9: checked language rewrites, optional thinking (D49, D50)
+- The language reminder follows tool results, a failed rewrite becomes a refusal, and the answerer can think before writing. Tag `core-v0.3.9`.

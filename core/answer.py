@@ -45,8 +45,8 @@ RULES = """Rules:
 
 
 LANGUAGE_REPAIR = """Rewrite this answer in {language}. Keep every citation marker like [2] exactly where it is, keep
-IDs, product and group names in Latin script, and do not add or remove any information. Reply with the rewritten
-answer only.
+IDs, product and group names in Latin script, and do not add or remove any information. If part of it is already in
+{language}, keep that part as it is. Reply with the rewritten answer only, with no comment about the text.
 
 {answer}"""
 
@@ -193,13 +193,16 @@ class Answerer:
     core.llm.Claude provides both."""
 
     def __init__(self, llm, persona: str, max_sources: int = 6, max_chars: int = 1500, effort: str = "medium",
-                 security: bool = True, rules: str | None = None, allow_questions: bool = False):
+                 security: bool = True, rules: str | None = None, allow_questions: bool = False, thinking: bool = False):
         """`rules`: replaces the default answer rules; it must keep the citation and NO_ANSWER contract the guards
-        rely on. `allow_questions`: the answer may ask the reader something, which no source can back."""
+        rely on. `allow_questions`: the answer may ask the reader something, which no source can back. `thinking`: the
+        model reasons before writing, so the reasoning stays out of the answer (D50)."""
         self.llm, self.persona = llm, persona
         self.max_sources, self.max_chars, self.effort, self.security = max_sources, max_chars, effort, security
         self.rules = rules if rules is not None else RULES.format(no_answer=NO_ANSWER)
         self.allow_questions = allow_questions
+        self.thinking = thinking
+        self._call = {"thinking": True, "max_tokens": 2048} if thinking else {"max_tokens": 1024}  # thinking counts as output
 
     def sources(self, hits, chunk_text: dict[str, str]) -> tuple[list[Source], list[dict]]:
         """Top sources, numbered 1..n. With security on, sources containing instructions are quarantined first
@@ -234,13 +237,15 @@ class Answerer:
                       "is given a source number; cite it like the other sources."
         earlier = f"<conversation_so_far>\n{history}\n</conversation_so_far>\n\n" if history else ""
         prompt = f"{earlier}Sources:\n\n{listing}\n\nQuestion: {question}"
+        reminder = None
         if language:  # last, where the model reads it just before writing; a rule in the system text isn't enough
-            prompt += f"\n\nWrite the answer in {'Arabic' if language == 'ar' else 'English'}."
+            reminder = f"Write the answer in {'Arabic' if language == 'ar' else 'English'}."
+            prompt += f"\n\n{reminder}"
         if not specs:
-            text = self.llm.complete(prompt, system=system, max_tokens=1024, effort=self.effort)
+            text = self.llm.complete(prompt, system=system, effort=self.effort, **self._call)
         else:
             text, sources, tool_findings = self._answer_with_tools(prompt, system, sources, specs, tools, tenant_id,
-                                                                   max_tool_rounds)
+                                                                   max_tool_rounds, reminder)
             findings += tool_findings
         raw = self._with_security(check(question, text, sources), findings, language)
         return self.guard(raw, system) if guards else raw
@@ -250,12 +255,12 @@ class Answerer:
         quarantined = [f["ref"] for f in findings if f["where"] == "source" and f["ref"]]
         return Answer(**{**a.__dict__, "quarantined": quarantined, "security": findings, "language": language})
 
-    def _answer_with_tools(self, prompt, system, sources, specs, tools, tenant_id, max_rounds):
+    def _answer_with_tools(self, prompt, system, sources, specs, tools, tenant_id, max_rounds, reminder=None):
         sources, findings = list(sources), []
         messages = [{"role": "user", "content": prompt}]
         for round_ in range(max_rounds + 1):
-            response = self.llm.create(messages, system=system, max_tokens=1024, effort=self.effort,
-                                       tools=specs if round_ < max_rounds else None)
+            response = self.llm.create(messages, system=system, effort=self.effort,
+                                       tools=specs if round_ < max_rounds else None, **self._call)
             calls = [b for b in response.content if b.type == "tool_use"]
             if not calls:
                 break
@@ -274,6 +279,8 @@ class Answerer:
                     output = f"Source [{n}]:\n{output}"
                 results.append({"type": "tool_result", "tool_use_id": call.id, "content": output,
                                 **({"is_error": True} if is_error else {})})
+            if reminder:  # tool results are often in another language, and the answer then drifts into it
+                results.append({"type": "text", "text": f"{reminder} Reply to the reader directly, with no notes about them or the results."})
             messages.append({"role": "user", "content": results})
         return "".join(b.text for b in response.content if b.type == "text").strip(), sources, findings
 
@@ -287,6 +294,8 @@ class Answerer:
             target = "Arabic" if arabic else "English"
             text = self.llm.complete(LANGUAGE_REPAIR.format(language=target, answer=text), max_tokens=1024)
             repaired = True
+            if a.language and not written_in(_CITATION.sub("", text), a.language):
+                text = NO_ANSWER  # the rewrite failed or commented on the text: nothing the reader should get
         # Output guard: links no source contains are removed; repeating the rules means refusing.
         if self.security:
             text, found = clean_output(text, [s.text for s in a.sources], system or RULES)

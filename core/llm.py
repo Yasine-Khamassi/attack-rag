@@ -123,14 +123,15 @@ class Claude:
             self.client = anthropic.Anthropic(timeout=TIMEOUT_S, max_retries=MAX_RETRIES)
 
     def complete(self, prompt: str, system: str | None = None, max_tokens: int = 1024,
-                 effort: str = "low") -> str:
+                 effort: str = "low", thinking: bool = False) -> str:
         response = self.create([{"role": "user", "content": prompt}], system=system, max_tokens=max_tokens,
-                               effort=effort)
+                               effort=effort, thinking=thinking)
         return "".join(b.text for b in response.content if b.type == "text").strip()
 
     def create(self, messages: list, system: str | None = None, max_tokens: int = 1024, effort: str = "low",
-               tools: list | None = None):
-        """One Messages API call with the budget check and usage logging. Returns the SDK response."""
+               tools: list | None = None, thinking: bool = False):
+        """One Messages API call with the budget check and usage logging. Returns the SDK response. `thinking`: let the
+        model reason before it writes. Without it a long prompt can make it reason in the visible text (D50)."""
         book = self._ledger or ledger()
         spent = book.spent()
         if spent >= self.budget:
@@ -142,7 +143,9 @@ class Claude:
         kwargs = {"system": system} if system else {}
         if tools:
             kwargs["tools"] = tools
-        if self.model == "claude-haiku-5-5":
+        if thinking:
+            kwargs["thinking"] = {"type": "adaptive"}
+        elif self.model == "claude-haiku-5-5":
             # Simple, short tasks: no thinking, lowest effort (Haiku 5.5 allows disabling at effort <= high).
             kwargs["thinking"] = {"type": "disabled"}
         client, model_id = self.client, self.model

@@ -271,3 +271,11 @@ Never edit an old entry; add a new one that supersedes it.
 ## D48: An Arabic answer with a stretch of English fails the language check
 - **Why:** a live answer opened in English and carried on in Arabic. Enough of its words were Arabic to pass, so the language guard never rewrote it.
 - **Chose:** `written_in(text, "ar")` also fails on three lowercase English words in a row. Names are mostly capitalised and short, so they don't trigger it, and a false alarm costs only one rewrite call that keeps names as they are. It applies only when a caller sets `language`, so the golden numbers don't change.
+
+## D49: A language rewrite is checked too, and the language is repeated after tool results
+- **Why:** answers drifted into the language of an English tool result, and the rewrite meant to fix that sometimes commented on the text instead ("The text you've given is already..."), which then reached the reader.
+- **Chose:** when a caller sets `language`, the reminder is repeated after tool results, and a rewrite that isn't in that language becomes a refusal. The rewrite prompt also says to keep what's already right and not to comment. Callers that don't set `language` behave as before, apart from those two prompt sentences.
+
+## D50: Answers can think first
+- **Why:** `Claude.create` turns thinking off on Haiku to stay cheap and fast. On a longer prompt the model then reasons in the visible text before answering, usually in English, which is the root of what D43 and D49 kept patching. Measured on 18 answers: reasoning reached the text in 7 with thinking off, 0 with it on. A sharper instruction with thinking off still leaked in 4 of 24.
+- **Chose:** an optional `thinking` on the answerer. Off by default, so other callers and the golden numbers don't change. It costs about 2.5 s and $0.0002 more per answer at effort `low`; `medium` was no faster and cost more.
