@@ -19,13 +19,16 @@ import re
 from dataclasses import asdict, dataclass, field
 
 from core.guardrails import check_source, clean_output
-from core.query import is_arabic
+from core.query import is_arabic, written_in
+from core.text import normalize
 
 NO_ANSWER = "NO_ANSWER"
 _CITATION = re.compile(r"\[(\d{1,2})\]")
 # Sentence ends within a line: . ! ? and the Arabic question mark (lines are split first).
 _SENTENCE = re.compile(r"(?<=[.!?؟])\s+")
 MIN_WORDS = 4  # shorter fragments ("Mitigations:") are headings, not claims
+MAX_QUESTION_WORDS = 12  # a longer "question" is a claim wearing a question mark
+_CLAUSE = re.compile(r"[,،;:—–]")
 
 RULES = """Rules:
 - Use only the numbered sources below. Do not add facts from memory, and do not add details the sources don't
@@ -71,6 +74,7 @@ class Answer:
     language_repaired: bool = False                          # the language guard rewrote the answer
     quarantined: list[str] = field(default_factory=list)    # chunk ids withheld: they contained instructions
     security: list[dict] = field(default_factory=list)      # guardrail findings (core.guardrails.Finding)
+    language: str | None = None                              # "ar" or "en" if the caller decided; else from the question
 
     @property
     def citation_coverage(self) -> float:
@@ -81,6 +85,8 @@ class Answer:
     def language_ok(self) -> bool:
         if self.refused:
             return True
+        if self.language:
+            return written_in(self.text, self.language)
         return is_arabic(self.question) == is_arabic(self.text)
 
 
@@ -131,17 +137,38 @@ def strip_self_talk(text: str) -> tuple[str, list[str]]:
     return "\n".join(re.sub(r"[ \t]{2,}", " ", line).strip() for line in text.split("\n")).strip(), removed
 
 
-def strip_uncited(text: str) -> tuple[str, list[str]]:
+def asks(text: str, known: str = "") -> bool:
+    """A question back to the reader, which has no fact to cite. It may not carry a claim: a link (or the output guard's
+    mark where one was), a percentage, a clause before the question ("Everything is half price today, want some?") or a
+    new number. A reference number the reader gave (`known`, their question) is only repeated back."""
+    t = text.strip()
+    if not t.endswith(("?", "؟")) or len(t.split()) > MAX_QUESTION_WORDS or re.search(r"https?://|\[link removed\]|[%٪]", t):
+        return False
+    if any(_is_claim(clause) for clause in _CLAUSE.split(t)[:-1]):
+        return False
+    return set(re.findall(r"\d+", normalize(t))) <= set(re.findall(r"\d{3,}", normalize(known)))
+
+
+def only_asks(text: str, known: str = "") -> bool:
+    """True when the text does nothing but ask: no claim anywhere, at least one question."""
+    fragments = [f for line in text.split("\n") for f in _SENTENCE.split(line) if f.strip()]
+    return any(asks(f, known) for f in fragments) and not any(_is_claim(f) and not asks(f, known) for f in fragments)
+
+
+def strip_uncited(text: str, allow_questions: bool = False, known: str = "") -> tuple[str, list[str]]:
     """Citation guard: remove every claim that no citation covers (text after a line's last citation, or a whole
-    claim line without one). Headings and short fragments stay. Returns (new text, removed claims)."""
+    claim line without one). Headings and short fragments stay; with `allow_questions`, so do questions back to the
+    reader. Returns (new text, removed claims)."""
     kept_lines, removed = [], []
     for line in text.split("\n"):
         fragments = _SENTENCE.split(line)
         last = max((i for i, f in enumerate(fragments) if _CITATION.search(f)), default=-1)
-        tail = " ".join(fragments[last + 1:]).strip()
+        after = fragments[last + 1:]
+        questions = [f for f in after if allow_questions and asks(f, known)]
+        tail = " ".join(f for f in after if f not in questions).strip()
         if tail and _is_claim(tail):
             removed.append(tail)
-            line = " ".join(fragments[:last + 1]).rstrip()
+            line = " ".join(fragments[:last + 1] + questions).rstrip()
             if not line.strip():
                 continue
         kept_lines.append(line)
@@ -166,9 +193,13 @@ class Answerer:
     core.llm.Claude provides both."""
 
     def __init__(self, llm, persona: str, max_sources: int = 6, max_chars: int = 1500, effort: str = "medium",
-                 security: bool = True):
+                 security: bool = True, rules: str | None = None, allow_questions: bool = False):
+        """`rules`: replaces the default answer rules; it must keep the citation and NO_ANSWER contract the guards
+        rely on. `allow_questions`: the answer may ask the reader something, which no source can back."""
         self.llm, self.persona = llm, persona
         self.max_sources, self.max_chars, self.effort, self.security = max_sources, max_chars, effort, security
+        self.rules = rules if rules is not None else RULES.format(no_answer=NO_ANSWER)
+        self.allow_questions = allow_questions
 
     def sources(self, hits, chunk_text: dict[str, str]) -> tuple[list[Source], list[dict]]:
         """Top sources, numbered 1..n. With security on, sources containing instructions are quarantined first
@@ -185,33 +216,39 @@ class Answerer:
         return out, findings
 
     def answer(self, question: str, hits, chunk_text: dict[str, str], guards: bool = True,
-               tools=None, tenant_id: str | None = None, max_tool_rounds: int = 3) -> Answer:
+               tools=None, tenant_id: str | None = None, max_tool_rounds: int = 3, history: str | None = None,
+               language: str | None = None) -> Answer:
         """With `guards` (default), the language and citation guards run after the model (see module docs).
         With `tools` (a core.tools.ToolRegistry) and `tenant_id`, the model may call that tenant's allowed tools;
-        each tool result becomes a new numbered source the answer can cite."""
+        each tool result becomes a new numbered source the answer can cite.
+        `history`: the conversation so far, as text, shown to the model as context and never as a source.
+        `language`: "ar" or "en", when the caller knows better than the question's letters can say."""
         sources, findings = self.sources(hits, chunk_text)
         specs = tools.specs(tenant_id) if tools is not None and tenant_id else []
         if not sources and not specs:
-            return self._with_security(check(question, NO_ANSWER, sources), findings)
+            return self._with_security(check(question, NO_ANSWER, sources), findings, language)
         listing = "\n\n".join(f'<source n="{s.n}">\n{s.text}\n</source>' for s in sources) or "(none)"
-        system = f"{self.persona}\n\n{RULES.format(no_answer=NO_ANSWER)}"
+        system = f"{self.persona}\n\n{self.rules}"
         if specs:
             system += "\n- Tools: call one when the sources are missing something it can look up. Each tool result " \
                       "is given a source number; cite it like the other sources."
-        prompt = f"Sources:\n\n{listing}\n\nQuestion: {question}"
+        earlier = f"<conversation_so_far>\n{history}\n</conversation_so_far>\n\n" if history else ""
+        prompt = f"{earlier}Sources:\n\n{listing}\n\nQuestion: {question}"
+        if language:  # last, where the model reads it just before writing; a rule in the system text isn't enough
+            prompt += f"\n\nWrite the answer in {'Arabic' if language == 'ar' else 'English'}."
         if not specs:
             text = self.llm.complete(prompt, system=system, max_tokens=1024, effort=self.effort)
         else:
             text, sources, tool_findings = self._answer_with_tools(prompt, system, sources, specs, tools, tenant_id,
                                                                    max_tool_rounds)
             findings += tool_findings
-        raw = self._with_security(check(question, text, sources), findings)
+        raw = self._with_security(check(question, text, sources), findings, language)
         return self.guard(raw, system) if guards else raw
 
     @staticmethod
-    def _with_security(a: Answer, findings: list[dict]) -> Answer:
+    def _with_security(a: Answer, findings: list[dict], language: str | None = None) -> Answer:
         quarantined = [f["ref"] for f in findings if f["where"] == "source" and f["ref"]]
-        return Answer(**{**a.__dict__, "quarantined": quarantined, "security": findings})
+        return Answer(**{**a.__dict__, "quarantined": quarantined, "security": findings, "language": language})
 
     def _answer_with_tools(self, prompt, system, sources, specs, tools, tenant_id, max_rounds):
         sources, findings = list(sources), []
@@ -246,7 +283,8 @@ class Answerer:
         text, repaired, findings = a.text, False, list(a.security)
         # Language guard: one repair call when the answer is not in the question's language.
         if not a.language_ok:
-            target = "Arabic" if is_arabic(a.question) else "English"
+            arabic = a.language == "ar" if a.language else is_arabic(a.question)
+            target = "Arabic" if arabic else "English"
             text = self.llm.complete(LANGUAGE_REPAIR.format(language=target, answer=text), max_tokens=1024)
             repaired = True
         # Output guard: links no source contains are removed; repeating the rules means refusing.
@@ -258,10 +296,10 @@ class Answerer:
         # Self-talk guard (D43), then the citation guard: claims without a citation are removed; nothing cited
         # left -> refusal.
         text, talk = strip_self_talk(text)
-        text, removed = strip_uncited(text)
+        text, removed = strip_uncited(text, self.allow_questions, a.question)
         removed = talk + removed
-        if not _CITATION.search(text):
+        if not _CITATION.search(text) and not (self.allow_questions and only_asks(text, a.question)):
             text = NO_ANSWER
         out = check(a.question, text, a.sources)
         return Answer(**{**out.__dict__, "removed": removed, "language_repaired": repaired,
-                         "quarantined": a.quarantined, "security": findings})
+                         "quarantined": a.quarantined, "security": findings, "language": a.language})

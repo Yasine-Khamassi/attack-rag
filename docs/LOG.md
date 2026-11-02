@@ -295,3 +295,6 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 ## 2026-10-31 · Core 0.3.6: translate while searching (D46)
 - The translation runs in parallel with the original-language search; same results, one model call less waiting. 155 tests pass. Tag `core-v0.3.6`.
+
+## 2026-11-02 · Core 0.3.7: questions back, earlier turns, explicit language (D47)
+- Optional `allow_questions`, `history`, `language` and `rules` on the answerer. `written_in` checks an answer's language by words. Default behaviour unchanged. 164 tests pass. Tag `core-v0.3.7`.

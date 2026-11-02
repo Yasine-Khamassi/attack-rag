@@ -259,5 +259,11 @@ Never edit an old entry; add a new one that supersedes it.
 - **Fix:** `number` accepts ints and floats; booleans are refused for every non-boolean type (in Python `True` is an `int`).
 
 ## D46: Translate while searching
-- **Why:** a non-English question waited for its translation (one LLM call, ~1 s) before any search started; a downstream store measured answers as translate -> rerank -> answer in a row.
+- **Why:** a non-English question waited for its translation (one LLM call, ~1 s) before any search started; a downstream product measured answers as translate -> rerank -> answer in a row.
 - **Chose:** `HybridSearcher.hybrid` starts the translation in a small thread pool and searches the question as written meanwhile; the rankings and their order are the same as before. The caller's context variables go along (`contextvars.copy_context`), so per-request cost counting still sees the call. Errors from the translator surface exactly as before.
+
+## D47: Answers can ask back, use earlier turns and take a language
+- **Why:** a downstream assistant had to hold a conversation, not only answer one question. The citation guard removed every question back to the reader ("which version do you mean?") and turned a reply that only asked into a refusal, the answerer saw one question at a time, and the language was guessed from the question's letters, so an English question naming something in Arabic got an Arabic answer.
+- **Chose, all optional, so existing callers and the golden numbers don't change:** `allow_questions` keeps a question back without a citation; `history` gives the model earlier turns as context, never as a source; `language` sets the answer's language and is stated last in the prompt; `rules` replaces the default answer rules, as long as the citation and NO_ANSWER contract stays.
+- **A question can't carry a claim:** at most 12 words, no link, no percentage, no statement before it ("Everything is half price today, want some?"), and no number the reader didn't give as a reference of three or more digits. An independent review found the first version let such sentences through. A short statement with no comma can still pass, so a caller should only turn this on where a wrong question does little harm.
+- **Not done:** a golden re-run, because nothing changes unless a caller opts in.
