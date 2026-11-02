@@ -310,3 +310,6 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 ## 2026-11-03 · Core 0.3.11: invisible letters and lowercase names (D52)
 - Guards ignore tatweel, diacritics and zero-width characters. `written_in` no longer takes a lowercase product name for an English sentence. Tag `core-v0.3.11`.
+
+## 2026-11-03 · Core 0.3.12: test wording
+- Reworded test strings and two doc examples to stay on the security subject. No behaviour change. Tag `core-v0.3.12`.

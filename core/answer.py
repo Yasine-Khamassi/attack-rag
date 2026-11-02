@@ -139,7 +139,7 @@ def strip_self_talk(text: str) -> tuple[str, list[str]]:
 
 def asks(text: str, known: str = "") -> bool:
     """A question back to the reader, which has no fact to cite. It may not carry a claim: a link (or the output guard's
-    mark where one was), a percentage, a clause before the question ("Everything is half price today, want some?") or a
+    mark where one was), a percentage, a clause before the question ("Everything here is safe today, anything else?") or a
     new number. A reference number the reader gave (`known`, their question) is only repeated back."""
     t = text.strip()
     if not t.endswith(("?", "؟")) or len(t.split()) > MAX_QUESTION_WORDS or re.search(r"https?://|\[link removed\]|[%٪]", t):

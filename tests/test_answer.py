@@ -169,7 +169,7 @@ def test_a_claim_is_not_let_through_by_a_question_mark():
                    "Would it surprise you that " + "very " * 20 + "many systems are open?",
                    "Every system here is patched and fully safe today, anything else?",
                    "كل الأنظمة هنا محمية بالكامل وما فيها أي خطر، تبغى شي ثاني؟",
-                   "Do you want the half price option at 50% off?"):
+                   "Do you want the fix that stops 50% of these attacks?"):
         assert guarded(f"{cited} {sneaky}", allow_questions=True)[0].text == cited
         assert guarded(sneaky, allow_questions=True)[0].refused
     assert guarded("Did you know that the fix costs 500 this week?", allow_questions=True)[0].refused
@@ -212,10 +212,10 @@ def test_history_is_context_and_comes_before_the_sources():
 
 def test_an_explicit_language_decides_the_check_and_the_prompt():
     from core.query import written_in
-    assert written_in("X Y costs 110 AED", "en") and not written_in("هذا النص بالعربي فقط", "en")
+    assert written_in("X Y uses 110 ports", "en") and not written_in("هذا النص بالعربي فقط", "en")
     assert written_in("سعره عشرة", "ar") and written_in("", "ar") and written_in("", "en")
     # Long Arabic names can tip the letter count, but this is English with names in it.
-    english = "With 300 درهم you can get several good options like دهن عود هندي for your home today"
+    english = "With this tool you can get several good results like كشف الهجمات السريع for your team today"
     assert written_in(english, "en") and not written_in(english, "ar")
     llm = FakeLLM("هذا جواب بالعربي كما طلب السائل تماما [1].")
     a = Answerer(llm, persona="p").answer("How much is X?", SOURCES, CHUNKS, language="ar")
@@ -224,10 +224,10 @@ def test_an_explicit_language_decides_the_check_and_the_prompt():
 
 def test_a_stretch_of_english_inside_an_arabic_answer_is_caught():
     from core.query import written_in
-    mixed = "Under 10 ريال, the in-stock knives are Bioblade Knife، Blood Knife، كلها بـ 6 ريال ومتوفرة الحين."
+    mixed = "In most cases, the attackers are using Mimikatz، PowerSploit، كلها أدوات تسرق البيانات من الأجهزة."
     assert not written_in(mixed, "ar")
-    assert written_in("Royal Oud Set بـ 590 درهم ومتوفر الحين.", "ar")  # a name isn't a sentence
-    assert written_in("candy knife بـ 30 ريال ومتوفرة الحين.", "ar")     # nor is a lowercase one
+    assert written_in("Cobalt Strike Beacon أداة تسرق البيانات من الأجهزة.", "ar")  # a name isn't a sentence
+    assert written_in("cobalt strike أداة تسرق البيانات من الأجهزة.", "ar")  # nor is a lowercase one
     assert written_in("تواصل معنا على help@example.com أو https://example.com/a/b.", "ar")
 
 def test_a_failed_language_rewrite_never_reaches_the_reader():
@@ -279,15 +279,15 @@ def test_thinking_is_passed_on_only_when_asked():
 
 def test_a_name_in_lowercase_english_isnt_an_english_sentence():
     from core.query import written_in
-    assert written_in("عندنا قميص slim fit cotton بـ 120 ريال ومتوفر الحين.", "ar")
-    assert not written_in("عندنا قميص بـ 120 ريال، this is the one for you وهو متوفر الحين.", "ar")
-    assert written_in("عندنا قميص cotton and linen shirt بـ 120 ريال ومتوفر الحين.", "ar", strict=False)
+    assert written_in("تستخدم المجموعة cobalt strike beacon لسرقة البيانات من الأجهزة.", "ar")
+    assert not written_in("تستخدم المجموعة أدوات كثيرة، this is the one for you لسرقة البيانات.", "ar")
+    assert written_in("تستخدم المجموعة cat and mouse game لسرقة البيانات من الأجهزة.", "ar", strict=False)
 
 
 def test_a_rewrite_that_keeps_a_name_is_accepted():
     class Rewrites(FakeLLM):
         def complete(self, prompt, system=None, max_tokens=1024, effort="low"):
-            return self.reply if system else "عندنا cotton and linen shirt بـ 120 ريال ومتوفر الحين عندنا [1]."
-    a = Answerer(Rewrites("We have the cotton and linen shirt at 120 SAR right now [1]."), persona="p").answer(
+            return self.reply if system else "تستخدم المجموعة cat and mouse game لسرقة البيانات من الأجهزة [1]."
+    a = Answerer(Rewrites("The group plays the cat and mouse game to steal data right now [1]."), persona="p").answer(
         "سؤال بالعربي؟", SOURCES, CHUNKS, language="ar")
-    assert not a.refused and a.language_repaired and "cotton" in a.text
+    assert not a.refused and a.language_repaired and "mouse" in a.text

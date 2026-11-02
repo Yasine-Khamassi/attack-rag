@@ -36,7 +36,7 @@ def is_arabic(text: str, threshold: float = 0.3) -> bool:
 
 
 # Three or more lowercase English words in a row, one of them a little word no product name is made of. That's a sentence;
-# "slim fit cotton" is a name.
+# "cobalt strike beacon" is a name.
 _ENGLISH_RUN = re.compile(r"\b[a-z'-]+(?:[\s,]+[a-z'-]+){2,}\b")
 _ENGLISH_GLUE = {"the", "a", "an", "is", "are", "was", "and", "or", "of", "for", "in", "on", "at", "to", "with", "you", "your", "we",
                  "our", "it", "its", "this", "that", "not", "but", "so", "if", "can", "have", "has", "from", "as", "be", "i"}
@@ -49,7 +49,7 @@ def _has_english_sentence(text: str) -> bool:
 def written_in(text: str, language: str, strict: bool = True) -> bool:
     """Is this answer in `language` ("ar" or "en")? Counted in words: a name in the other script doesn't change it, while
     an English answer full of long Arabic names can pass is_arabic on letters alone. An Arabic answer also fails on a
-    stretch of English sentence, which the word count alone misses ("Under 10 ريال, the in-stock knives are ...").
+    stretch of English sentence, which the word count alone misses ("In most cases, the attackers use Mimikatz لسرقة البيانات ...").
     `strict=False` skips that: for a rewrite, which has to keep names as they are and shouldn't be refused over them."""
     words = _WORD.findall(text)
     if not words:
