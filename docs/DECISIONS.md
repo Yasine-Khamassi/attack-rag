@@ -267,3 +267,7 @@ Never edit an old entry; add a new one that supersedes it.
 - **Chose, all optional, so existing callers and the golden numbers don't change:** `allow_questions` keeps a question back without a citation; `history` gives the model earlier turns as context, never as a source; `language` sets the answer's language and is stated last in the prompt; `rules` replaces the default answer rules, as long as the citation and NO_ANSWER contract stays.
 - **A question can't carry a claim:** at most 12 words, no link, no percentage, no statement before it ("Everything is half price today, want some?"), and no number the reader didn't give as a reference of three or more digits. An independent review found the first version let such sentences through. A short statement with no comma can still pass, so a caller should only turn this on where a wrong question does little harm.
 - **Not done:** a golden re-run, because nothing changes unless a caller opts in.
+
+## D48: An Arabic answer with a stretch of English fails the language check
+- **Why:** a live answer opened in English and carried on in Arabic. Enough of its words were Arabic to pass, so the language guard never rewrote it.
+- **Chose:** `written_in(text, "ar")` also fails on three lowercase English words in a row. Names are mostly capitalised and short, so they don't trigger it, and a false alarm costs only one rewrite call that keeps names as they are. It applies only when a caller sets `language`, so the golden numbers don't change.

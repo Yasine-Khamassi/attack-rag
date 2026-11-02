@@ -221,3 +221,11 @@ def test_an_explicit_language_decides_the_check_and_the_prompt():
     a = Answerer(llm, persona="p").answer("How much is X?", SOURCES, CHUNKS, language="ar")
     assert a.language_ok and not a.language_repaired and "Write the answer in Arabic." in llm.calls[0]["prompt"]
     assert "Write the answer in" not in guarded("Attackers inject code [1].")[1].calls[0]["prompt"]
+
+def test_a_stretch_of_english_inside_an_arabic_answer_is_caught():
+    from core.query import written_in
+    mixed = "Under 10 ريال, the in-stock knives are Bioblade Knife، Blood Knife، كلها بـ 6 ريال ومتوفرة الحين."
+    assert not written_in(mixed, "ar")
+    assert written_in("Royal Oud Set بـ 590 درهم ومتوفر الحين.", "ar")  # a name isn't a sentence
+    assert written_in("candy knife بـ 30 ريال ومتوفرة الحين.", "ar")     # nor is a lowercase one
+    assert written_in("تواصل معنا على help@example.com أو https://example.com/a/b.", "ar")

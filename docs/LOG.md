@@ -298,3 +298,6 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 ## 2026-11-02 · Core 0.3.7: questions back, earlier turns, explicit language (D47)
 - Optional `allow_questions`, `history`, `language` and `rules` on the answerer. `written_in` checks an answer's language by words. Default behaviour unchanged. 164 tests pass. Tag `core-v0.3.7`.
+
+## 2026-11-03 · Core 0.3.8: English stretches in Arabic answers (D48)
+- `written_in` catches an English sentence inside an Arabic answer. Tag `core-v0.3.8`.

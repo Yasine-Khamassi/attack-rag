@@ -35,14 +35,21 @@ def is_arabic(text: str, threshold: float = 0.3) -> bool:
     return arabic_words / len(words) >= threshold or arabic_share(text) >= threshold
 
 
+# Three lowercase English words in a row: names are mostly capitalised and short, so this is English sentence text.
+_ENGLISH_RUN = re.compile(r"\b[a-z][a-z'-]*[\s,]+[a-z][a-z'-]*[\s,]+[a-z][a-z'-]*\b")
+
+
 def written_in(text: str, language: str) -> bool:
     """Is this answer in `language` ("ar" or "en")? Counted in words: a name in the other script doesn't change it, while
-    an English answer full of long Arabic names can pass is_arabic on letters alone."""
+    an English answer full of long Arabic names can pass is_arabic on letters alone. An Arabic answer also fails on a
+    stretch of English sentence, which the word count alone misses ("Under 10 ريال, the in-stock knives are ...")."""
     words = _WORD.findall(text)
     if not words:
         return True
     arabic = sum(1 for w in words if _ARABIC.search(w)) / len(words)
-    return arabic >= 0.3 if language == "ar" else 1 - arabic >= 0.4
+    if language == "ar":
+        return arabic >= 0.3 and not _ENGLISH_RUN.search(text)
+    return 1 - arabic >= 0.4
 
 
 class OllamaTranslator:
