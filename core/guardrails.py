@@ -28,9 +28,9 @@ from dataclasses import dataclass
 _START = r"(?:^|[.!?:;\n]\s*)(?:please\s+|now\s+)?"
 # 1. Direct attempts to override the assistant's rules (English + Arabic).
 OVERRIDE = [
-    _START + r"(?:ignore|disregard|forget) (?:all |any |the )?(?:previous|prior|above|earlier|your|these) "
+    _START + r"(?:ignore|disregard|forget) (?:all |any |the )?(?:(?:your )?(?:previous|prior|above|earlier)|your|these) "
              r"(?:instructions|rules|prompts?|directions)",
-    r"\b(?:ignore|disregard|forget) (?:all )?your (?:instructions|rules|guidelines)",
+    r"\b(?:ignore|disregard|forget) (?:all )?your (?:(?:previous|prior|earlier) )?(?:instructions|rules|guidelines)",
     r"\b(?:reveal|print|show|repeat|output|leak|tell) (?:me )?your (?:system prompt|hidden prompt|instructions|rules|prompt)",
     _START + r"you are now (?:a |an |in |my |\w+,? (?:an? )?(?:ai|assistant|model|chat ?bot)\b)",
     r"\bpretend (?:to be|you are)\b.{0,60}\b(?:without|no) (?:rules|restrictions|limits|filters)\b",
@@ -39,7 +39,7 @@ OVERRIDE = [
     r"\b(?:end|finish|close|start|begin|sign) (?:your|the|each) (?:answer|reply|response|message)s? with\b",
     r"(?:اختم|ابدأ|أنه|انه|ابدا) (?:إجابتك|اجابتك|ردك|الإجابة|الاجابة|الرد) (?:بالنص|بعبارة|بكلمة|ب)",
     _START + r"(?:answer|respond|reply) without (?:any )?(?:citations|sources|rules)\b",
-    r"(?:^|[.!؟:\n]\s*)تجاهل (?:جميع |كل )?(?:التعليمات|الأوامر|القواعد)",
+    r"(?:^|[.!؟:\n]\s*)تجاهل (?:جميع |كل )?(?:التعليمات|الأوامر|القواعد|تعليماتك|أوامرك|قواعدك)",
     r"(?:اكشف|اعرض|اطبع|كرر) (?:لي )?(?:تعليماتك|قواعدك|موجه النظام الخاص بك)",
     r"(?:^|[.!؟:\n]\s*)أنت الآن (?:مساعد|نموذج|في وضع)",
 ]

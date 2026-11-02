@@ -279,3 +279,7 @@ Never edit an old entry; add a new one that supersedes it.
 ## D50: Answers can think first
 - **Why:** `Claude.create` turns thinking off on Haiku to stay cheap and fast. On a longer prompt the model then reasons in the visible text before answering, usually in English, which is the root of what D43 and D49 kept patching. Measured on 18 answers: reasoning reached the text in 7 with thinking off, 0 with it on. A sharper instruction with thinking off still leaked in 4 of 24.
 - **Chose:** an optional `thinking` on the answerer. Off by default, so other callers and the golden numbers don't change. It costs about 2.5 s and $0.0002 more per answer at effort `low`; `medium` was no faster and cost more.
+
+## D51: "Ignore your previous instructions" is an override too
+- **Why:** a test downstream found that the input and source guards matched "ignore all previous instructions" but not "ignore your previous instructions", or the Arabic "تجاهل تعليماتك". The model had been refusing those on its own, which isn't a guard.
+- **Chose:** the patterns allow "your" before "previous", and the Arabic possessive forms. Sentence-start rules stay, so text describing such an attack still isn't flagged.

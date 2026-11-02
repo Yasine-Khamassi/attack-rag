@@ -304,3 +304,6 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 ## 2026-11-03 · Core 0.3.9: checked language rewrites, optional thinking (D49, D50)
 - The language reminder follows tool results, a failed rewrite becomes a refusal, and the answerer can think before writing. Tag `core-v0.3.9`.
+
+## 2026-11-03 · Core 0.3.10: more override wordings (D51)
+- "Ignore your previous instructions" and "تجاهل تعليماتك" now trip the guards. Tag `core-v0.3.10`.
