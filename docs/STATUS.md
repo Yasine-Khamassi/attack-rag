@@ -20,7 +20,7 @@ Last full check: **2026-10-31**.
 | Local services | Ollama `bge-m3` at `127.0.0.1:11434` (D40); local Postgres via pgserver in `data/pgdata` (recovers ~40 s after an unclean stop) | 2026-10-31 |
 
 ## Run
-`docs/steps/` has one file per build step. Commands are in CLAUDE.md "Commands". Embeddings: `make_embedder()` picks
+`docs/steps/` has one file per build step. Commands are in the README. Embeddings: `make_embedder()` picks
 Ollama by default, `EMBEDDINGS_PROVIDER=cloudflare|gateway` on servers; Claude through Vercel AI Gateway with
 `LLM_GATEWAY=vercel` (D41).
 

@@ -113,3 +113,12 @@ Layout: `core/` is the reusable RAG core (schema, search, rerank, answers, guard
 ## Project log
 
 Progress and numbers per step: [docs/LOG.md](docs/LOG.md). Step-by-step explanations: [docs/steps/](docs/steps/).
+
+## Commands
+- `make install` — create `.venv` and install the package + pytest
+- `make ingest` — download ATT&CK (cached in `data/raw/`) and build `data/processed/*.jsonl`
+- `make test` — run pytest (real-data tests skip until `make ingest` has run; DB tests use DATABASE_URL or pgserver)
+- `make db` — Postgres + pgvector in Docker (optional; without it `core/db.py` starts pgserver)
+- `python -m products.attack.index` — chunk + embed + write the pgvector index (needs `ollama serve`)
+- `python -m products.attack.retrieval_check [--stack haiku|local]` — stage-by-stage ablation + phase 1 gate (~$0.11 per Haiku run)
+- `python -m products.attack.embedding_probe [model ...]` — embedding-model probe (needs `ollama serve`; ~7 min/model first run, cached after)

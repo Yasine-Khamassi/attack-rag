@@ -1,4 +1,4 @@
-"""core/ must stay corpus-agnostic (see CLAUDE.md). This fails if a corpus word leaks into it."""
+"""core/ must stay corpus-agnostic. This fails if a corpus word leaks into it."""
 
 import re
 from pathlib import Path
