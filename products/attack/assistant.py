@@ -12,6 +12,7 @@ Try it:  python -m products.attack.assistant "How do I detect Kerberoasting?"
 from __future__ import annotations
 
 import json
+import re
 import sys
 import threading
 import time
@@ -33,10 +34,24 @@ from products.attack.ingest import DOCS_PATH, TENANT_ID
 from products.attack.settings import ANSWER_CACHE_SECONDS, LLM_MODEL, RERANK_CHARS, USE_TOOLS
 from products.attack.tools import attack_tools
 
-PERSONA = ("You are an assistant for SOC analysts. You answer questions about adversary behaviour, detection and "
-           "mitigation using MITRE ATT&CK. Be precise and practical; mention ATT&CK IDs when the sources give them. "
+PERSONA = ("You answer questions about how cyber attackers work and how to spot or stop them, using MITRE ATT&CK. "
+           "Write the way a helpful colleague talks: short, everyday words. Start with the answer itself, with no lead-in, "
+           "and never mention 'the sources' or 'the pages'. Say what to do or what to look for. At most 3 short sentences, "
+           "or a short list when the question asks for several things. "
+           "Use the names of things, not their codes: no IDs such as T1558.003, S0245, DET0157 or AN0444, unless the "
+           "question itself asks about an ID. A Windows event number someone can look up in their logs is fine. "
+           "Don't use words like analytic, adversary, telemetry, TTP, procedure or anomalous: say attacker, unusual, and so on. "
+           "If you must use a technical term, explain it in a few words. "
            "In a source header, 'Previously: T1032' means T1032 is an older, revoked ID of that same entry, so a "
            "question about T1032 is answered by that source.")
+# Rules that must always hold run as code (step 7). A code in brackets after a name goes, unless the question asked about a code.
+ANY_ID = re.compile(r"\b(?:T\d{4}(?:\.\d{3})?|TA\d{4}|S\d{4}|G\d{4}|C\d{4}|M\d{4}|DS\d{4}|DET\d{4}|AN\d{4})\b", re.IGNORECASE)
+ID_IN_BRACKETS = re.compile(r"\s*\((?:T\d{4}(?:\.\d{3})?|TA\d{4}|S\d{4}|G\d{4}|C\d{4}|M\d{4}|DS\d{4}|DET\d{4}|AN\d{4})\)")
+
+
+def without_codes(text: str, question: str) -> str:
+    """Kerberoasting (T1558.003) reads as Kerberoasting. Someone asking about an ID still gets the IDs."""
+    return text if ANY_ID.search(question) else ID_IN_BRACKETS.sub("", text)
 
 
 class Assistant:
@@ -77,6 +92,7 @@ class Assistant:
             t1 = time.perf_counter()
             answer = self.answerer.answer(question, hits, self.searcher.chunk_text, tools=self.tools,
                                           tenant_id=self.tenant_id)
+            answer = Answer(**{**answer.__dict__, "text": without_codes(answer.text, question)})
             t2 = time.perf_counter()
             timing = {"retrieval_s": round(t1 - t0, 2), "answer_s": round(t2 - t1, 2),
                       "cost_usd": round(Claude.total_cost - cost0, 6), "cache": False, "route": route_reason}

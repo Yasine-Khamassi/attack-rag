@@ -286,3 +286,11 @@ Never edit an old entry; add a new one that supersedes it.
 
 ## D52: Invisible letters, and names in lowercase English
 - **From an independent review.** Arabic tatweel, diacritics and zero-width characters got an override past every guard pattern ("تجـاهل التعليمات"), so they are removed before matching. And `written_in` called any three lowercase English words a sentence, which refused a good Arabic answer naming "cobalt strike beacon": the repair has to keep names, so it failed the same check. Now a run needs a little word such as "the" or "is", and a rewrite is judged only on the word count.
+
+## D53: Answers in short, everyday words, with no codes
+- **Chose:** the persona asks for at most 3 short sentences or a short list, no IDs unless the question asks about one, no words like "analytic" or "adversary". `without_codes` in `products/attack/assistant.py` removes a code in brackets after a name, because rules that must hold run as code (step 7). A sentence built around a code still relies on the prompt: the eval found none.
+- **Why:** the owner read a real answer ("detected by the analytic AN0444 in DET0157") and called it empty jargon. The old prompt told the model to mention IDs.
+- **Kept in `products/`, not `core/`:** this is how this assistant talks, and `core/` is used by other things at pinned versions.
+- **Cost:** faithfulness fell from 0.970 to 0.923 on the same sample, and fully faithful answers from 81.6% to 60%. Partly supported sentences rose from 8 of 136 to 17 of 116. Unsupported stayed at 0. Accepted: an answer people can read is the point, and each sentence still links to its source.
+- **Rejected:** a separate plain-words rewrite step after the answer. It's one more model call on every question, and a rewrite can lose the citations.
+

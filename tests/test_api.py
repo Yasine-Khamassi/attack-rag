@@ -59,3 +59,13 @@ def test_conversation_id_is_passed_and_validated(client):
     assert c.post("/api/ask", json={"question": "q?", "conversation_id": "abc-123"}).status_code == 200
     assert fake.conversation_id == "abc-123"
     assert c.post("/api/ask", json={"question": "q?", "conversation_id": "bad id; drop"}).status_code == 422
+
+
+def test_codes_in_brackets_leave_the_answer_unless_the_question_asked_about_a_code():
+    from products.attack.assistant import without_codes
+    assert without_codes("Kerberoasting (T1558.003) uses tickets [1].", "How do I detect Kerberoasting?") == "Kerberoasting uses tickets [1]."
+    assert without_codes("BADCALL (S0245) and FALLCHILL (S0181) [1].", "What does Lazarus use?") == "BADCALL and FALLCHILL [1]."
+    assert without_codes("See rule DET0157 (DET0157) and Event ID 4769 [1].", "How?") == "See rule DET0157 and Event ID 4769 [1]."
+    assert without_codes("It's now T1685.005 (Clear Windows Event Logs) [1].", "What does T1070.001 mean?") == "It's now T1685.005 (Clear Windows Event Logs) [1]."
+    assert without_codes("Clear logs (T1685.005) [1].", "what is t1070?") == "Clear logs (T1685.005) [1]."
+

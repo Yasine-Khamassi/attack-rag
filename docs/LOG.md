@@ -328,3 +328,10 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 - **Key check, because the owner asked who can use it:** `.env` is ignored and no commit ever touched it. No key-shaped text in the files or in all of history. No GitHub secrets, and CI uses no key. The app listens on 127.0.0.1 only. The README now says each person uses their own key, and which parts run locally.
 - **Scrolling:** the empty page was 8 px taller than a 701 px window, so it scrolled by almost nothing. Spacing trimmed. The page has no scroll code or animation now.
 
+## 2026-11-04 · The old design back, and answers in plain words
+- **The plain page was a wrong guess.** The owner asked about words, not the look. The page is back to its earlier design, with plain words, English examples and no codes in the source list.
+- **Answers:** the owner called "detected by the analytic AN0444 in DET0157" empty jargon. The prompt told the model to mention IDs. It now asks for short, everyday words with no codes, and code strips any code in brackets unless the question asks about one (D53).
+- **Measured, seed 12, the same sample as before:** answers with a code the question didn't ask about 0 of 40 (32 of 38 answers held a code before, IDs in questions included), jargon words 9 answers to 0, talk about "the sources" 12 to 4, median length 82 to 70 words. Fully cited 100%, refusals 12/12, language 100%, answered 40/40. Faithfulness 0.970 to 0.923, fully faithful answers 81.6% to 60%: partly supported sentences 8 of 136 to 17 of 116, unsupported 0 in both.
+- **Attacks:** 1 of 18 gets through with guards on, as before. With them off, 1 of 18 now, 4 of 18 before. Saved as `redteam.json` and `redteam_before_plain.json`.
+- Spend: about $0.60. Search code didn't change, so its scores stand.
+
