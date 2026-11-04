@@ -321,3 +321,10 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 - **Found when starting the app:** after an unclean stop, the database takes about 40 s to recover and the app's first try gives up after 10 s. The helper then stays stuck, so the app needs a restart. It's in the README's run steps. `core/` wasn't changed.
 - No search or answer code changed, so no paid eval was needed. One real question checked it, at about $0.001.
 
+## 2026-11-04 · A plain page, in simple English
+- **Owner asked for an English website with nothing fancy.** The page is now white with black text and blue links, in the computer's own font. No web fonts, dark theme, colored heading, animation, arrows or keyboard hints.
+- **Gone:** the Arabic examples, the fake progress steps (the API answers in one call, so they were only timed guesses), the unused sources, and the time and cost under each answer.
+- **Kept:** every feature that matters. An Arabic question still gets an Arabic answer, follow-up questions still work, and every sentence still links to its source.
+- **Key check, because the owner asked who can use it:** `.env` is ignored and no commit ever touched it. No key-shaped text in the files or in all of history. No GitHub secrets, and CI uses no key. The app listens on 127.0.0.1 only. The README now says each person uses their own key, and which parts run locally.
+- **Scrolling:** the empty page was 8 px taller than a 701 px window, so it scrolled by almost nothing. Spacing trimmed. The page has no scroll code or animation now.
+

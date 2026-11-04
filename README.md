@@ -9,9 +9,9 @@ The answers come from [MITRE ATT&CK](https://attack.mitre.org), the public guide
 | You ask | You get |
 |---|---|
 | "How do I detect Kerberoasting?" | The event IDs and logs to watch, with a link to the ATT&CK page behind each sentence |
-| "ما هي البرمجيات التي تستخدمها مجموعة Lazarus؟" | An answer in Arabic, from pages written in English |
+| A question in Arabic | An answer in Arabic, from pages written in English |
 | "What does T1070.001 mean?" | That exact entry, found by its ID |
-| A made-up ID, or something off-topic | "ATT&CK doesn't answer this", not a guess |
+| A made-up ID, or something off-topic | "No answer found", not a guess |
 
 ## How well it works
 
@@ -83,11 +83,13 @@ flowchart LR
 4. **Claude writes the answer from those pages only.** Then code, not the model, checks that every sentence has a real source and that the language is right. Anything that fails is removed.
 5. **Each team's data stays apart.** The database enforces this itself with row-level security, so even a query with a mistake in it can't read another team's rows. Tools are limited per team too, and the model never gets to choose whose data it sees.
 
+**What runs where:** the search model (bge-m3) runs on your computer through Ollama. Translating, picking the best pages and writing the answer use Claude over the internet, with your API key.
+
 **Built with:** Python, FastAPI, Postgres with pgvector and row-level security, BM25, bge-m3 through Ollama, and Claude Haiku 5.5. `core/` is the part any set of documents could reuse, and `products/attack/` is what's specific to ATT&CK.
 
 ## What went wrong along the way
 
-- **Search by meaning can't find IDs.** All three models tried missed plain questions like "ما هي التقنية T1003.001؟". That's why search by exact word is in there ([step 3](docs/steps/03-database-and-embeddings.md)).
+- **Search by meaning can't find IDs.** All three models tried missed plain questions asking in Arabic what T1003.001 is. That's why search by exact word is in there ([step 3](docs/steps/03-database-and-embeddings.md)).
 - **The tests found missing data that no model could fix.** "How do I stop X?" scored far below everything else, because MITRE keeps that advice in the links between pages, and the import had thrown those away ([step 5](docs/steps/05-golden-set-and-eval.md)).
 - **Rules in the prompt can't be trusted.** One extra sentence in the prompt dropped fully sourced answers from 94.7% to 30%. A carefully tuned prompt still slipped from 97.5% to 89.7% on new questions. Rules that must always hold now run as code after the model ([step 7](docs/steps/06-cited-answers.md)).
 - **Saved answers hid the real score.** After caching was added, three test runs came back identical, because they were replaying the first run. Tests now start empty ([D38](docs/DECISIONS.md)).
@@ -95,7 +97,7 @@ flowchart LR
 
 ## Run it
 
-You need Python 3.11 or newer, [Ollama](https://ollama.com), and a Claude API key.
+You need Python 3.11 or newer, [Ollama](https://ollama.com), and your own Claude API key. This repo doesn't include a key, so whoever runs it uses their own and pays for their own questions.
 
 ```bash
 make install    # once: creates .venv and installs everything, including a local Postgres
