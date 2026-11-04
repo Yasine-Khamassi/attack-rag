@@ -37,7 +37,7 @@ def test_page_and_health(client):
     c = client(FakeAssistant())
     assert c.get("/api/health").json() == {"ok": True}
     page = c.get("/")
-    assert page.status_code == 200 and "ATT&amp;CK Analyst Assistant" in page.text
+    assert page.status_code == 200 and "ATT&amp;CK Assistant" in page.text
 
 
 def test_ask_returns_cited_answer(client):

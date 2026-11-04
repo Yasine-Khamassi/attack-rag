@@ -313,3 +313,11 @@ Append-only. One entry per work session: what was done, numbers, problems, next 
 
 ## 2026-11-03 · Core 0.3.12: test wording
 - Reworded test strings and two doc examples to stay on the security subject. No behaviour change. Tag `core-v0.3.12`.
+
+## 2026-11-04 · Plain words on the page and in the README
+- **Page:** the heading, intro, progress steps, source line and "no answer" message now use everyday words. The search and model names are gone from the footer.
+- **Page bug fixed:** a failed request showed the browser's parsing error ("Unexpected token 'I'"). It now says it couldn't answer and to try again.
+- **README:** results in plain words, with the exact scores kept in a closed section for engineers. The answer scores now match the latest saved run, `answers_eval_phase6.json` (faithfulness 0.970, language 97.4%, fully faithful answers 81.6%). The old table showed an earlier run's 0.960 and 100%, and left out the 81.6%. The empty demo video line is gone (T-001 is still open).
+- **Found when starting the app:** after an unclean stop, the database takes about 40 s to recover and the app's first try gives up after 10 s. The helper then stays stuck, so the app needs a restart. It's in the README's run steps. `core/` wasn't changed.
+- No search or answer code changed, so no paid eval was needed. One real question checked it, at about $0.001.
+

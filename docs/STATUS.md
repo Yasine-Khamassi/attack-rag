@@ -9,9 +9,9 @@ Last full check: **2026-10-31**.
 |---|---|---|
 | Repo | github.com/Yasine-Khamassi/attack-rag, **public**, branch `master` | push 2026-10-31 |
 | Latest core tag | **core-v0.3.12** (invisible letters, lowercase names D52; more override wordings D51; optional thinking D50; checked language rewrites D49; English stretches in Arabic answers D48; questions back, earlier turns, explicit language D47; translate while searching D46; number tool arguments D45; timeouts, loud failures D44; self-talk guard D43; keyword fallback D42; AI Gateway option and serverless support D41) | tag pushed 2026-10-31 |
-| Tests | **153 pass** (`python -m pytest -q`) | 2026-10-31 |
+| Tests | **172 pass** (`python -m pytest -q`) | 2026-11-04 |
 | CI | GitHub Actions green on 3652a1e (core 0.3.2) | `gh run list` 2026-10-31 |
-| Leak scan | `bash ../leak-scan.sh`: CLEAN | 2026-10-31 |
+| Leak scan | `bash ../leak-scan.sh staged`: CLEAN | 2026-11-04 |
 | Phases | all 6 done (retrieval, eval, cited answers, tenant isolation, security, cost) | LOG 2026-10-30 |
 | Retrieval | golden set 116 questions: hit@5 0.951, recall@10 0.877, nDCG 0.766 (3 cold runs) | LOG phase 2 |
 | Answers | 100% cited, faithfulness 0.97, refusals 12/12 | LOG phase 3 |

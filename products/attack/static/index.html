@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ATT&amp;CK Analyst Assistant · cited answers from MITRE ATT&amp;CK</title>
+<title>ATT&amp;CK Assistant · answers you can check</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -112,17 +112,18 @@
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <a class="brand" href="/"><b>ATT&amp;CK</b> Analyst</a>
-  <div class="meta"><span>MITRE ATT&amp;CK v20 · 2,530 objects · </span><a href="https://github.com/Yasine-Khamassi/attack-rag" target="_blank" rel="noopener">How it works</a></div>
+  <a class="brand" href="/"><b>ATT&amp;CK</b> Assistant</a>
+  <div class="meta"><span>MITRE ATT&amp;CK · 2,530 pages · </span><a href="https://github.com/Yasine-Khamassi/attack-rag" target="_blank" rel="noopener">How it works</a></div>
 </div></header>
 
 <main class="wrap">
   <section class="hero">
-    <h1>Ask ATT&amp;CK.<br><span>Get an answer you can check.</span></h1>
-    <p class="lede">Techniques, groups, software, detections and mitigations, in English or Arabic. Every sentence links
-      to the ATT&amp;CK page it came from, and the assistant says so when the pages don't answer the question.</p>
+    <h1>Ask how attackers work.<br><span>Check every answer.</span></h1>
+    <p class="lede">Attack methods, hacking groups, the tools they use, and how to spot or stop them. Ask in English or Arabic.
+      Answers come from MITRE ATT&amp;CK, the public guide security teams use. Every sentence links to its page, and if the
+      pages don't have the answer, it tells you instead of guessing.</p>
     <form id="f" class="composer">
-      <textarea id="q" dir="auto" rows="2" placeholder="How do I detect Kerberoasting?" aria-label="Your question" required></textarea>
+      <textarea id="q" dir="auto" rows="2" maxlength="500" placeholder="How do I detect Kerberoasting?" aria-label="Your question" required></textarea>
       <div class="bar">
         <span class="hint"><kbd>Enter</kbd> to ask · <kbd>Shift</kbd>+<kbd>Enter</kbd> new line</span>
         <button class="go" id="go" type="submit">Ask
@@ -137,7 +138,7 @@
 
 <footer><div class="wrap">
   <span>Answers can be wrong. Check the linked ATT&amp;CK page before acting on one.</span>
-  <span>Hybrid search (BM25 + bge-m3) · Claude Haiku 5.5 · ATT&amp;CK® is a MITRE trademark</span>
+  <span>ATT&amp;CK® is a trademark of MITRE</span>
 </div></footer>
 
 <script>
@@ -145,7 +146,7 @@ const EXAMPLES = [
   ["EN", "How do I detect Kerberoasting?"], ["EN", "Which malware does APT29 use?"],
   ["EN", "What does T1070.001 mean?"], ["AR", "كيف أمنع المهاجمين من استخدام PowerShell بشكل خبيث؟"],
   ["AR", "ما هي البرمجيات التي تستخدمها مجموعة Lazarus؟"]];
-const STEPS = ["Searching 3,581 ATT&CK passages", "Ranking the best pages", "Writing a cited answer"];
+const STEPS = ["Searching ATT&CK", "Picking the best pages", "Writing the answer"];
 const $ = id => document.getElementById(id);
 const CONVERSATION = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now())).replace(/[^A-Za-z0-9-]/g, "");
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -180,15 +181,17 @@ async function ask() {
   const timer = setInterval(() => {  // the API answers in one call; the steps show where the time usually goes
     if (step < items.length - 1) { items[step].className = "done"; items[++step].className = "on"; }
   }, 1600);
+  let problem = "It couldn't answer just now. Try again in a moment.";
   try {
     const r = await fetch("/api/ask", {method: "POST", headers: {"Content-Type": "application/json"},
                                       body: JSON.stringify({question, conversation_id: CONVERSATION})});
-    const d = await r.json();
-    if (!r.ok) throw new Error(typeof d.detail === "string" ? d.detail : r.statusText);
+    const d = await r.json().catch(() => null);
+    if (r.status === 503) problem = "It has reached its spending limit for now. Try again later.";
+    if (!r.ok || !d) throw new Error(problem);
     render(turn, question, d);
     $("q").value = ""; grow();
   } catch (e) {
-    turn.innerHTML = `<h2 class="q" dir="auto">${esc(question)}</h2><div class="refusal"><strong>Something went wrong</strong>${esc(e.message || e)}. Try again in a moment.</div>`;
+    turn.innerHTML = `<h2 class="q" dir="auto">${esc(question)}</h2><div class="refusal"><strong>That didn't work</strong>${esc(problem)}</div>`;
   } finally { clearInterval(timer); busy = false; $("go").disabled = false; }
 }
 
@@ -197,7 +200,7 @@ function render(turn, question, d) {
   const cited = d.sources.filter(s => s.cited), unused = d.sources.filter(s => !s.cited);
   const chip = n => byN[n] ? `<a class="cite" data-n="${n}" href="${esc(byN[n].url || "#")}" target="_blank" rel="noopener" title="${esc(byN[n].doc_id + " · " + byN[n].title)}">${n}</a>` : "";
   const body = d.refused
-    ? `<div class="refusal"><strong>No grounded answer</strong>The ATT&amp;CK pages found for this question don't answer it, so the assistant doesn't guess. Try naming a technique, group or tool.</div>`
+    ? `<div class="refusal"><strong>ATT&amp;CK doesn't answer this</strong>The pages found don't cover it, so there's no guess here. Try naming an attack method, a hacking group or a tool.</div>`
     : `<div class="answer" dir="auto">${esc(d.answer).split(/\n{2,}/).map(p =>
         `<p>${p.replace(/\s*\[(\d{1,2})\]/g, (m, n) => chip(+n))}</p>`).join("")}</div>`;
   const row = s => `<li data-n="${s.n}"><span class="n">${s.n}</span><span class="id">${esc(s.doc_id)}</span>
@@ -206,12 +209,12 @@ function render(turn, question, d) {
   const full = c.citation_coverage === 1;
   const secs = [t.retrieval_s, t.answer_s].filter(x => typeof x === "number").reduce((a, b) => a + b, 0);
   const grounding = d.refused ? "" : `<div class="grounding">
-      <span class="${full ? "ok" : "warn"}"><i class="dot"></i>${full ? "Every sentence cited" : Math.round((c.citation_coverage || 0) * 100) + "% of sentences cited"}</span>
-      <span>${cited.length} of ${d.sources.length} retrieved pages used</span>
-      ${secs ? `<span>${secs.toFixed(1)} s</span>` : ""}${t.cost_usd != null ? `<span>$${Number(t.cost_usd).toFixed(4)}</span>` : ""}</div>`;
+      <span class="${full ? "ok" : "warn"}"><i class="dot"></i>${full ? "Every sentence has a source" : Math.round((c.citation_coverage || 0) * 100) + "% of sentences have a source"}</span>
+      <span>Used ${cited.length} of ${d.sources.length} pages found</span>
+      ${secs ? `<span>${secs.toFixed(1)} s</span>` : ""}${t.cost_usd != null ? `<span>Cost $${Number(t.cost_usd).toFixed(4)}</span>` : ""}</div>`;
   turn.innerHTML = `<h2 class="q" dir="auto">${esc(question)}</h2>${body}${grounding}
     <div class="sources">${cited.length ? `<h3>Sources</h3><ul class="src">${cited.map(row).join("")}</ul>` : ""}
-    ${unused.length ? `<details class="more"><summary>${unused.length} more retrieved, not used</summary><ul class="src">${unused.map(row).join("")}</ul></details>` : ""}</div>`;
+    ${unused.length ? `<details class="more"><summary>${unused.length} more found, not used</summary><ul class="src">${unused.map(row).join("")}</ul></details>` : ""}</div>`;
   turn.querySelectorAll(".cite").forEach(a => {  // hovering a citation highlights its source, and back
     const li = turn.querySelector(`.src li[data-n="${a.dataset.n}"]`);
     a.onmouseenter = () => li && li.classList.add("hot"); a.onmouseleave = () => li && li.classList.remove("hot");
